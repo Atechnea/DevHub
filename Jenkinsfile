@@ -33,7 +33,7 @@ pipeline {
       steps {
           dir('Test') {
             echo 'Ejecutando los tests...'
-            catchError(buildResult: 'FAILURE', stageResult: 'FAILED') {
+            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                 bat 'npx jest Test'
             }
 
