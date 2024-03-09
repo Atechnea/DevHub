@@ -8,10 +8,10 @@ pipeline {
 
 
   parameters {
-    string(name: 'container_nombre', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
-    string(name: 'containerimage_name', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
-    string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
-    string(name: 'container_port', defaultValue: '3000', description: 'Puerto que usa el contenedor')
+    string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
+    string(name: 'imagen_contenedor', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
+    string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
+    string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
   }
 
   
@@ -57,14 +57,14 @@ pipeline {
               echo 'Eliminando version actual...'
               bat "docker stop ${container_name}"
               bat "docker rm ${container_name}"
-              bat "docker rmi ${containerimage_name}:${tag_image}"
+              bat "docker rmi ${imagen_contenedor}:${tag_imagen}"
             } catch (Exception e) {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
           }
           //Sube la nueva
           echo 'Creando version actual...'
-          bat "docker build -t ${containerimage_name}:${tag_image} ."
+          bat "docker build -t ${imagen_contenedor}:${tag_imagen} ."
         }
       }
     }
@@ -72,7 +72,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Generando nueva version...'
-        bat "docker run -d -p ${container_port}:${container_port} --name ${container_nombre} ${containerimage_name}:${tag_image}"
+        bat "docker run -d -p ${puerto_contenedor}:${puerto_contenedor} --name ${nombre_contenedor} ${imagen_contenedor}:${tag_imagen}"
       }
     }
   }
