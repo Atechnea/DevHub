@@ -4,14 +4,15 @@ pipeline {
   tools
   {
     nodejs "node"
+    docker "docker-tool"
   }
 
 
   parameters {
-    string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
-    string(name: 'containerimage_name', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
-    string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
-    string(name: 'container_port', defaultValue: '8080', description: 'Puerto que usa el contenedor')
+    string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
+    string(name: 'nombre_imagen', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
+    string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
+    string(name: 'puerto_contenedor', defaultValue: '8080', description: 'Puerto que usa el contenedor')
   }
 
   
@@ -55,17 +56,16 @@ pipeline {
           script {
             try {
               echo 'Eliminando version actual...'
-              bat 'docker stop ${container_name}'
-              bat 'docker rm ${container_name}'
-              bat 'docker rmi ${containerimage_name}:${tag_image}'
+              bat "docker stop ${nombre_contenedor}"
+              bat "docker rm ${nombre_contenedor}"
+              bat "docker rmi ${nombre_imagen}:${tag_imagen}"
             } catch (Exception e) {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
           }
           //Sube la nueva
           echo 'Creando version actual...'
-          bat 'npm run build'
-          bat 'docker build -t ${containerimage_name}:${tag_image} .'
+          bat "docker build -t ${nombre_imagen}:${tag_imagen} ."
         }
       }
     }
@@ -73,7 +73,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Generando nueva version...'
-        sh 'docker run -d -p ${container_port}:${container_port} --name ${container_name} ${containerimage_name}:${tag_image}'
+        sh 'docker run -d -p ${puerto_contenedor}:${puerto_contenedor} --name ${nombre_contenedor} ${nombre_imagen}:${tag_imagen}'
       }
     }*/
   }
