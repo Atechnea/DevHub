@@ -1,6 +1,6 @@
 {
-  "name": "devhub",
-  "version": "0.0.0",
+  "name": "trabajo",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -18,5 +18,12 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2"
+  },
+  "description": "GPS Project",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
