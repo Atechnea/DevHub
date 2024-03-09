@@ -17,7 +17,7 @@ pipeline {
         git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
         dir('Test') {
           echo 'Descargando la ultima version...'
-          bat "${params.nodejs_path} npm install"
+          bat label: 'npm install', script: "${params.nodejs_path} npm install"
         }
         
       }
