@@ -14,7 +14,7 @@ pipeline {
 
         dir('Test') {
           echo 'Descargando la ultima version...'
-          git branch: 'develop', url: 'https://github.com/Atechnea/DevHub.git'
+          git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
           sh 'npm install'
         }
         
