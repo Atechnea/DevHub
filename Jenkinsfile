@@ -28,7 +28,7 @@ pipeline {
       }
     }
 
-    /*
+    
     stage('Testing') {
       steps {
           echo 'Ejecutando los tests...'
@@ -43,6 +43,7 @@ pipeline {
       }
     }
 
+    /*
     stage('Build') {
       steps {
         dir('Test') {
