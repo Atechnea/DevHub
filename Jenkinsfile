@@ -1,6 +1,10 @@
 pipeline {
   agent any
   
+  options {
+    skipDefaultCheckout()
+  }
+
   tools
   {
     nodejs "node"
