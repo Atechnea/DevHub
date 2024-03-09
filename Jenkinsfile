@@ -1,8 +1,13 @@
 pipeline {
   agent any
+  
+  tools
+  {
+    nodejs "node"
+  }
+
 
   parameters {
-    string(name: 'nodejs_path', defaultValue: 'C:\\Nodejs\\node.exe', description: 'Ruta al ejecutable de Node.js')
     string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
     string(name: 'containerimage_name', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
     string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
@@ -17,7 +22,7 @@ pipeline {
         git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
         dir('Test') {
           echo 'Descargando la ultima version...'
-          bat label: 'npm install', script: "${params.nodejs_path} npm install"
+          bat "npm install"
         }
         
       }
