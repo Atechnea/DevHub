@@ -1,5 +1,5 @@
 //No hacer caso a este test es una prueba de pipeline
 
 test('prueba', () => {
-  expect(3).toBe(3);
+  expect(1).toBe(3);
 });
