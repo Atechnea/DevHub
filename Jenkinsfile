@@ -55,8 +55,8 @@ pipeline {
           script {
             try {
               echo 'Eliminando version actual...'
-              bat "docker stop ${container_name}"
-              bat "docker rm ${container_name}"
+              bat "docker stop ${nombre_contenedor}"
+              bat "docker rm ${nombre_contenedor}"
               bat "docker rmi ${imagen_contenedor}:${tag_imagen}"
             } catch (Exception e) {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
