@@ -1,9 +1,8 @@
 pipeline {
   agent any
 
-    tools {
-        // Use the name of your Git installation here
-        git 'git-tool'
+    options {
+        skipDefaultCheckout()
     }
 
   parameters {
