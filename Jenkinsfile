@@ -31,14 +31,16 @@ pipeline {
     
     stage('Testing') {
       steps {
-          echo 'Ejecutando los tests...'
-          catchError(buildResult: 'FAILED', stageResult: 'FAILED') {
-              bat 'npx jest Test'
-          }
+          dir('Test') {
+            echo 'Ejecutando los tests...'
+            catchError(buildResult: 'FAILED', stageResult: 'FAILED') {
+                bat 'npx jest Test'
+            }
 
-          script {
-            currentBuild.result = 'FAILURE'
-            echo 'Los tests fallaron. Por favor, revise los resultados.'
+            script {
+              currentBuild.result = 'FAILURE'
+              echo 'Los tests fallaron. Por favor, revise los resultados.'
+            }
           }
       }
     }
