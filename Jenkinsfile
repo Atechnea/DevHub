@@ -48,7 +48,7 @@ pipeline {
       }
     }
 
-    /*
+    
     stage('Build') {
       steps {
         dir('Test') {
@@ -56,20 +56,20 @@ pipeline {
             try {
               echo 'Eliminando version actual...'
               bat 'docker stop ${container_name}'
-              sh 'docker rm ${container_name}'
-              sh 'docker rmi ${containerimage_name}:${tag_image}'
+              bat 'docker rm ${container_name}'
+              bat 'docker rmi ${containerimage_name}:${tag_image}'
             } catch (Exception e) {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
           }
           //Sube la nueva
           echo 'Creando version actual...'
-          sh 'npm run build'
-          sh 'docker build -t ${containerimage_name}:${tag_image} .'
+          bat 'npm run build'
+          bat 'docker build -t ${containerimage_name}:${tag_image} .'
         }
       }
     }
-
+    /*
     stage('Deploy') {
       steps {
         echo 'Generando nueva version...'
