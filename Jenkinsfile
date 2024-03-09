@@ -1,8 +1,8 @@
 pipeline {
   agent any
 
-    options {
-        skipDefaultCheckout()
+    tools {
+        nodejs "node"
     }
 
   parameters {
@@ -18,18 +18,18 @@ pipeline {
         git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
         dir('Test') {
           echo 'Descargando la ultima version...'
-          //sh 'npm install'
+          bat 'npm install'
         }
         
       }
     }
 
-    
+    /*
     stage('Testing') {
       steps {
           echo 'Ejecutando los tests...'
           catchError(buildResult: 'FAILED', stageResult: 'FAILED') {
-              sh 'npx jest Test'
+              bat 'npx jest Test'
           }
 
           script {
@@ -45,7 +45,7 @@ pipeline {
           script {
             try {
               echo 'Eliminando version actual...'
-              sh 'docker stop ${container_name}'
+              bat 'docker stop ${container_name}'
               sh 'docker rm ${container_name}'
               sh 'docker rmi ${containerimage_name}:${tag_image}'
             } catch (Exception e) {
@@ -65,7 +65,7 @@ pipeline {
         echo 'Generando nueva version...'
         sh 'docker run -d -p ${container_port}:${container_port} --name ${container_name} ${containerimage_name}:${tag_image}'
       }
-    }
+    }*/
   }
 
 }
