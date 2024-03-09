@@ -72,7 +72,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Generando nueva version...'
-        bat "docker run -d -p ${container_port}:${container_port} --name ${container_name} ${containerimage_name}:${tag_image}"
+        bat "docker run -d -p ${container_port}:${container_port} --name ${container_nombre} ${containerimage_name}:${tag_image}"
       }
     }
   }
