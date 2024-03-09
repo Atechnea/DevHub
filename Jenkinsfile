@@ -62,10 +62,12 @@ pipeline {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
           }
-          //Sube la nueva
-          echo 'Creando version actual...'
-          bat "docker build -t ${imagen_contenedor}:${tag_imagen} ."
         }
+        
+        //Sube la nueva
+        echo 'Creando version actual...'
+        bat "docker build -t ${imagen_contenedor}:${tag_imagen} ."
+        
       }
     }
     
