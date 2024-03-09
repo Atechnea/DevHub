@@ -1,6 +1,11 @@
 pipeline {
   agent any
 
+    tools {
+        // Use the name of your Git installation here
+        git 'gittool'
+    }
+
   parameters {
     string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
     string(name: 'containerimage_name', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
