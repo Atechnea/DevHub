@@ -28,7 +28,6 @@ pipeline {
       }
     }
 
-    
     stage('Testing') {
       steps {
           dir('Test') {
@@ -37,10 +36,12 @@ pipeline {
                 bat 'npx jest Test'
             }
 
-            script {
-              currentBuild.result = 'FAILURE'
-              echo 'Los tests fallaron. Por favor, revise los resultados.'
-            }
+            if (currentBuild.result == 'FAILURE') {
+                echo 'Los tests han fallado. Realizando acción específica...'
+                error 'Los tests han fallado.' // Marca la etapa como fallida
+              } else {
+                echo 'Los tests han pasado satisfactoriamente.'
+              }
           }
       }
     }
