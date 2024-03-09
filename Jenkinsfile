@@ -11,10 +11,9 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-
+        git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
         dir('Test') {
           echo 'Descargando la ultima version...'
-          git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
           sh 'npm install'
         }
         
