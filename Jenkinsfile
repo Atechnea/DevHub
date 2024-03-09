@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Use the name of your Git installation here
-        git 'gittool'
+        git 'git-tool'
     }
 
   parameters {
