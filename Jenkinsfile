@@ -11,7 +11,7 @@ pipeline {
   }
 
     environment { 
-      registry = 'joseantoniotortosa/devhu' 
+      registry = 'joseantoniotortosa/devhub' 
       registryCredential = 'id' 
       dockerImage = '' 
     }
