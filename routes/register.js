@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 
 const user_regex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
-const name_regex = /^[^\d]+$/;
+const name_regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
 const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const pw_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
@@ -36,15 +36,17 @@ router.post('/registrar', function(req, res) {
     else if (!pw_regex.test(contrasena))
         res.status(422).json({ error: pw_error });
     else {
+        //Anaidir a base de datos
         pool.getConnection(async function(err, con) {
             if(err) res.status(500).json({ error: db_error });
             else {
                 try {
+                    //Crear hash password
                     var hashedpw = await bcrypt.hash(contrasena, 10);
                     var sql = "INSERT INTO usuarios (usuario, nombre, apellido, email, contrasena, es_empresa) VALUES (?, ?, ?, ?, ?, ?)";
                     con.query(sql, [usuario, nombre, apellido, email, hashedpw, empresa], function(err, result) {
                         con.release();
-                        if(err) 
+                        if(err)
                             res.status(422).json({ error: exists_error });
                         else
                             res.send("");
