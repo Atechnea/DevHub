@@ -1,35 +1,86 @@
 pipeline {
-    agent any // El agente donde se ejecutará el pipeline, "any" significa que puede ejecutarse en cualquier agente disponible
-    
-    stages {
-        stage('Clonar repositorio') { // Definición de una etapa llamada "Clonar repositorio"
-            steps {
-                git 'https://github.com/Atechnea/DevHub.git' // Clona el repositorio desde GitHub
-            }
+  agent any
+  
+  options {
+    skipDefaultCheckout()
+  }
+
+  tools
+  {
+    nodejs "node"
+  }
+
+
+  parameters {
+    string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
+    string(name: 'imagen_contenedor', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
+    string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
+    string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
+  }
+
+  
+
+  stages {
+    stage('Install') {
+      steps {
+        git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
+        dir('Test') {
+          echo 'Descargando la ultima version...'
+          bat "npm install"
         }
         
-        stage('Compilar') { // Definición de una etapa llamada "Compilar"
-            steps {
-                // Aquí colocarías los comandos necesarios para compilar tu proyecto
-                // Ejemplo:
-                sh 'mvn clean compile' // Ejecuta el comando Maven para limpiar y compilar el proyecto
-            }
-        }
-        
-        stage('Pruebas') { // Definición de una etapa llamada "Pruebas"
-            steps {
-                // Aquí colocarías los comandos necesarios para ejecutar tus pruebas
-                // Ejemplo:
-                sh 'mvn test' // Ejecuta el comando Maven para ejecutar las pruebas unitarias
-            }
-        }
-        
-        stage('Desplegar') { // Definición de una etapa llamada "Desplegar"
-            steps {
-                // Aquí colocarías los comandos necesarios para desplegar tu aplicación
-                // Ejemplo:
-                sh 'mvn deploy' // Ejecuta el comando Maven para desplegar la aplicación
-            }
-        }
+      }
     }
+
+
+    stage('Testing') {
+      steps {
+          dir('Test') {
+            echo 'Ejecutando los tests...'
+            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                bat 'npx jest Test'
+            }
+          }
+          script {
+            if (currentBuild.result == 'FAILURE') {
+                  echo 'Los tests han fallado. Realizando acción específica...'
+                  error 'Los tests han fallado.' // Marca la etapa como fallida
+                } else {
+                  echo 'Los tests han pasado satisfactoriamente.'
+            }
+          }
+      }
+    }
+
+    
+    stage('Build') {
+      steps {
+        dir('Test') {
+          script {
+            try {
+              echo 'Eliminando version actual...'
+              bat "docker stop ${nombre_contenedor}"
+              bat "docker rm ${nombre_contenedor}"
+              bat "docker rmi ${imagen_contenedor}:${tag_imagen}"
+            } catch (Exception e) {
+              echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
+            }
+          }
+        }
+        
+        //Sube la nueva
+        echo 'Creando version actual...'
+        bat "docker build -t ${imagen_contenedor}:${tag_imagen} ."
+        
+      }
+    }
+    
+    stage('Deploy') {
+      steps {
+        echo 'Generando nueva version...'
+        bat "docker run -d -p ${puerto_contenedor}:${puerto_contenedor} --name ${nombre_contenedor} ${imagen_contenedor}:${tag_imagen}"
+      }
+    }
+  }
+
 }
