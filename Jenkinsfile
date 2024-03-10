@@ -26,55 +26,43 @@ pipeline {
       }
     }
 
-    stage('Testing') {
-      steps {
-        dir('Test') {
-          echo 'Ejecutando los tests...'
-          catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-            sh 'npx jest Test'
-          }
-        }
-        script {
-          if (currentBuild.result == 'FAILURE') {
-            echo 'Los tests han fallado. Realizando acción específica...'
-            error 'Los tests han fallado.' // Marca la etapa como fallida
-          } else {
-            echo 'Los tests han pasado satisfactoriamente.'
-          }
+  stage('Testing') {
+    steps {
+      dir('Test') {
+        echo 'Ejecutando los tests...'
+        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+          sh 'npx jest Test'
         }
       }
-    }
-
-    // Docker Hub
-    stage('Build') {
-      steps {
-        dir('Test') {
-          script {
-            // Sube la nueva
-            echo 'Creando versión actual...'
-            dockerImage = docker.build(registry)
-          }
+      script {
+        if (currentBuild.result == 'FAILURE') {
+          echo 'Los tests han fallado. Realizando acción específica...'
+          error 'Los tests han fallado.' //Si los test no funcionan, marcamos la etapa como fallida
+        } else {
+          echo 'Los tests han pasado satisfactoriamente.'
         }
-      }
-    }
-
-    // Docker Hub
-    stage('Deploy') {
-      steps {
-        script {
-          echo 'Generando nueva versión...'
-          docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
-            dockerImage.push("${env.BUILD_NUMBER}")
-            dockerImage.push("latest")
-          }
-        }
-      }
-    }
-
-    stage('Cleaning up') {
-      steps {
-        sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
   }
+
+  stage('Build') {
+    steps {
+        script {
+          echo 'Creando versión actual...'
+          dockerImage = docker.build(registry)
+        }
+    }
+  }
+
+  stage('Deploy') {
+    steps {
+      script {
+        echo 'Generando nueva versión...'
+        docker.withRegistry('', registryCredential) {
+          dockerImage.push()
+        }
+      }
+    }
+  }
+}
 }
