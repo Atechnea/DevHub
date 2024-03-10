@@ -99,7 +99,7 @@ pipeline {
       }
     }
 
-    //Red local
+    //Red local.
     /*
     stage('Deploy') {
       steps {
