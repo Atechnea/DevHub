@@ -97,7 +97,7 @@ pipeline {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
 
-            dockerImage = docker build -t ${imagen_contenedor}:${tag_imagen}
+            dockerImage = docker.build(registry)
 
             docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
             
