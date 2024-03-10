@@ -36,6 +36,7 @@ router.post('/registrar', function(req, res) {
     else if (!pw_regex.test(contrasena))
         res.status(422).json({ error: pw_error });
     else {
+        //Anaidir a base de datos
         pool.getConnection(async function(err, con) {
             if(err) res.status(500).json({ error: db_error });
             else {
