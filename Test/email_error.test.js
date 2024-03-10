@@ -24,3 +24,6 @@ describe('POST /registrar - Validación de correo electrónico', () => {
     expect(response.body.error).toEqual("El correo no tiene un formato válido, por favor, introduzca un correo válido."); // Usa la variable o string directamente
   });
 });
+
+
+//Prueba para hacer commit
