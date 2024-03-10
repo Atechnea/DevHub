@@ -103,10 +103,13 @@ pipeline {
     }*/
 
     stage('Deploy') {
+
       steps {
-        echo 'Generando nueva version...'
-        docker.withRegistry( '', registryCredential ) { 
-          dockerImage.push() 
+        script { 
+          echo 'Generando nueva version...'
+          docker.withRegistry( '', registryCredential ) { 
+            dockerImage.push() 
+          }
         }
       }
     }
