@@ -88,10 +88,18 @@ pipeline {
         dir('Test') {
           script {
             //Sube la nueva
+            try {
+              echo 'Eliminando version actual...'
+              sh 'docker stop ${nombre_contenedor}'
+              sh 'docker rm ${nombre_contenedor}'
+              sh 'docker rmi ${imagen_contenedor}:${tag_imagen}'
+            } catch (Exception e) {
+              echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
+            }
+
+            //Sube la nueva
             echo 'Creando version actual...'
-            
-            sh 'docker images'
-            //dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            sh 'docker build -t ${imagen_contenedor}:${tag_imagen} .'
           }
         }
       }
