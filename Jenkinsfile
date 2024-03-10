@@ -84,8 +84,12 @@ pipeline {
         dir('Test') {
           script {
             //Sube la nueva
-            echo 'Creando version actual...'
-            dockerImage = docker.build("${env.registry}/${imagen_contenedor}:${tag_imagen}", '.')
+            withdockerRegistry(credentialsId: registryCredential) { 
+              echo 'Creando version actual...'
+              sh 'docker build -t ${imagen_contenedor}:${tag_imagen} .'
+              sh 'docker push'
+            }
+
           }
         }
         
