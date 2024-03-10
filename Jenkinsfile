@@ -89,7 +89,9 @@ pipeline {
           script {
             //Sube la nueva
             echo 'Creando version actual...'
-            dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            
+            sh 'docker images'
+            //dockerImage = docker.build registry + ":$BUILD_NUMBER"
           }
         }
       }
