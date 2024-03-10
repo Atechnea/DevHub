@@ -10,7 +10,7 @@ pipeline {
     nodejs "node"
   }
 
-  enviorement
+  environment 
   {
     registry "joseantoniotortosa/devhub"
   }
