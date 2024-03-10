@@ -61,9 +61,8 @@ pipeline {
       steps {
         script {
           echo 'Generando nueva versión...'
-          docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
-            dockerImage.push("${env.BUILD_NUMBER}")
-            dockerImage.push("latest")
+          docker.withRegistry('', registryCredential) {
+            dockerImage.push()
           }
         }
       }
