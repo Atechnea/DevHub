@@ -85,7 +85,7 @@ pipeline {
           script {
             //Sube la nueva
             echo 'Creando version actual...'
-            dockerImage = docker.build("${registry}/${imagen_contenedor}:${tag_imagen}")
+            dockerImage = docker.build("${env.registry}/${imagen_contenedor}:${tag_imagen}")
           }
         }
         
