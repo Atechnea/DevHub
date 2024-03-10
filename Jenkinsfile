@@ -49,7 +49,7 @@ pipeline {
       }
     }
 
-    
+    /*
     stage('Build') {
       steps {
         dir('Test') {
@@ -70,14 +70,42 @@ pipeline {
         sh 'docker build -t ${imagen_contenedor}:${tag_imagen} .'
         
       }
+    }*/
+
+    stage('Build') {
+      steps {
+        dir('Test') {
+          script {
+            //Sube la nueva
+            echo 'Creando version actual...'
+             dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          }
+        }
+        
+
+        
+      }
     }
-    
+
+    /*
     stage('Deploy') {
       steps {
         echo 'Generando nueva version...'
         sh 'docker run -d -p ${puerto_contenedor}:${puerto_contenedor} --name ${nombre_contenedor} ${imagen_contenedor}:${tag_imagen}'
       }
+    }*/
+
+    stage('Deploy') {
+      steps {
+        echo 'Generando nueva version...'
+        docker.withRegistry( '', registryCredential ) { 
+          dockerImage.push() 
+        }
     }
+
+
+
+
   }
 
 }
