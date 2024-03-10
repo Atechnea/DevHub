@@ -10,9 +10,9 @@ pipeline {
     nodejs "node"
   }
 
-  enviorement
+  environment 
   {
-    registry "joseantoniotortosa/devhub"
+    registry = "joseantoniotortosa/devhub"
   }
 
 //Red local
