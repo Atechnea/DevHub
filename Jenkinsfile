@@ -18,13 +18,13 @@ pipeline {
 
 
 //Red local
-/*
+
   parameters {
     string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
     string(name: 'imagen_contenedor', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
     string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
-  }*/
+  }
 
   stages {
     stage('Install') {
@@ -90,7 +90,7 @@ pipeline {
           script {
             //Sube la nueva
             echo 'Creando version actual...'
-             dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            dockerImage = docker.build("${registry}/${imagen_contenedor}:${tag_imagen}")
           }
         }
         
