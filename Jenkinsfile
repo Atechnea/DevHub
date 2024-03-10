@@ -10,20 +10,15 @@ pipeline {
     nodejs "node"
   }
 
-    environment { 
-      registry = 'joseantoniotortosa/devhub' 
-      registryCredential = 'id' 
-      dockerImage = '' 
-    }
-
-
 //Red local
-
   parameters {
     string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
     string(name: 'imagen_contenedor', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
     string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
+    string(name: 'registry', defaultValue: 'joseantoniotortosa/devhub', description: 'Registro')
+    string(name: 'registryCredential', defaultValue: 'id', description: 'Credenciales')
+    string(name: 'dockerImage', defaultValue: '', description: 'Imagen docker')
   }
 
   stages {
