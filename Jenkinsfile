@@ -48,13 +48,11 @@ pipeline {
     // Docker Hub
     stage('Build') {
       steps {
-        dir('Test') {
           script {
             // Sube la nueva
             echo 'Creando versión actual...'
             dockerImage = docker.build(registry)
           }
-        }
       }
     }
 
