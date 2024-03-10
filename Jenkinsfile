@@ -49,7 +49,7 @@ pipeline {
       steps {
           script {
             echo 'Creando versión actual...'
-            dockerImage = docker.build(registry)
+            dockerImage = docker.build()
           }
       }
     }
