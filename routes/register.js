@@ -41,6 +41,7 @@ router.post('/registrar', function(req, res) {
             if(err) res.status(500).json({ error: db_error });
             else {
                 try {
+                    //Crear hash password
                     var hashedpw = await bcrypt.hash(contrasena, 10);
                     var sql = "INSERT INTO usuarios (usuario, nombre, apellido, email, contrasena, es_empresa) VALUES (?, ?, ?, ?, ?, ?)";
                     con.query(sql, [usuario, nombre, apellido, email, hashedpw, empresa], function(err, result) {
