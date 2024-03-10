@@ -12,7 +12,8 @@ pipeline {
 
   environment 
   {
-    registry = "joseantoniotortosa/devhub"
+    registry = 'joseantoniotortosa/devhub'
+    dockerImage = ''
   }
 
 //Red local
@@ -22,7 +23,6 @@ pipeline {
     string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
     string(name: 'registryCredential', defaultValue: 'id', description: 'Credenciales')
-    string(name: 'dockerImage', defaultValue: '', description: 'Imagen docker')
   }
 
   stages {
@@ -97,9 +97,19 @@ pipeline {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
 
+            dockerImage = docker build -t ${imagen_contenedor}:${tag_imagen}
+
+            docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
+            
+            dockerImage.push("${env.BUILD_NUMBER}")
+            dockerImage.push("latest")
+        }
+}
+
+            /*
             //Sube la nueva
             echo 'Creando version actual...'
-            sh 'docker build -t ${imagen_contenedor}:${tag_imagen} .'
+            sh 'docker build -t ${imagen_contenedor}:${tag_imagen} .'*/
           }
         }
       }
