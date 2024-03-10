@@ -44,7 +44,7 @@ router.post('/registrar', function(req, res) {
                     var sql = "INSERT INTO usuarios (usuario, nombre, apellido, email, contrasena, es_empresa) VALUES (?, ?, ?, ?, ?, ?)";
                     con.query(sql, [usuario, nombre, apellido, email, hashedpw, empresa], function(err, result) {
                         con.release();
-                        if(err) 
+                        if(err)
                             res.status(422).json({ error: exists_error });
                         else
                             res.send("");
