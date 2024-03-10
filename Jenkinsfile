@@ -37,7 +37,7 @@ pipeline {
         script {
           if (currentBuild.result == 'FAILURE') {
             echo 'Los tests han fallado. Realizando acción específica...'
-            error 'Los tests han fallado.' // Marca la etapa como fallida
+            error 'Los tests han fallado.' //Si los test no funcionan, marcamos la etapa como fallida
           } else {
             echo 'Los tests han pasado satisfactoriamente.'
           }
@@ -45,18 +45,15 @@ pipeline {
       }
     }
 
-    // Docker Hub
     stage('Build') {
       steps {
           script {
-            // Sube la nueva
             echo 'Creando versión actual...'
             dockerImage = docker.build(registry)
           }
       }
     }
 
-    // Docker Hub
     stage('Deploy') {
       steps {
         script {
