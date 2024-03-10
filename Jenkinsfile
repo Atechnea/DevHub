@@ -16,6 +16,8 @@ pipeline {
       dockerImage = '' 
     }
 
+
+//Red local
 /*
   parameters {
     string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
@@ -23,7 +25,7 @@ pipeline {
     string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
   }*/
-
+ //asd
   stages {
     stage('Install') {
       steps {
@@ -56,6 +58,8 @@ pipeline {
       }
     }
 
+
+    //Red local
     /*
     stage('Build') {
       steps {
@@ -79,6 +83,7 @@ pipeline {
       }
     }*/
 
+    //Docker Hub
     stage('Build') {
       steps {
         dir('Test') {
@@ -94,6 +99,7 @@ pipeline {
       }
     }
 
+    //Red local
     /*
     stage('Deploy') {
       steps {
@@ -102,6 +108,7 @@ pipeline {
       }
     }*/
 
+    //Docker Hub
     stage('Deploy') {
 
       steps {
