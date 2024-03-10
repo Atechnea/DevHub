@@ -10,15 +10,19 @@ pipeline {
     nodejs "node"
   }
 
+    environment { 
+      registry = "joseantoniotortosa/devhub" 
+      registryCredential = 'id' 
+      dockerImage = '' 
+    }
 
+/*
   parameters {
     string(name: 'nombre_contenedor', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
     string(name: 'imagen_contenedor', defaultValue: 'pagina_img', description: 'Nombre de la imagen docker.')
     string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
-  }
-
-  
+  }*/
 
   stages {
     stage('Install') {
@@ -26,7 +30,7 @@ pipeline {
         git branch: 'main', url: 'https://github.com/Atechnea/DevHub.git'
         dir('Test') {
           echo 'Descargando la ultima version...'
-          bat "npm install"
+          sh 'npm install'
         }
         
       }
@@ -38,7 +42,7 @@ pipeline {
           dir('Test') {
             echo 'Ejecutando los tests...'
             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                bat 'npx jest Test'
+                sh 'npx jest Test'
             }
           }
           script {
@@ -52,16 +56,16 @@ pipeline {
       }
     }
 
-    
+    /*
     stage('Build') {
       steps {
         dir('Test') {
           script {
             try {
               echo 'Eliminando version actual...'
-              bat "docker stop ${nombre_contenedor}"
-              bat "docker rm ${nombre_contenedor}"
-              bat "docker rmi ${imagen_contenedor}:${tag_imagen}"
+              sh 'docker stop ${nombre_contenedor}'
+              sh 'docker rm ${nombre_contenedor}'
+              sh 'docker rmi ${imagen_contenedor}:${tag_imagen}'
             } catch (Exception e) {
               echo 'Ha surgido un error al eliminar la version actual: ' + e.toString()
             }
@@ -70,17 +74,49 @@ pipeline {
         
         //Sube la nueva
         echo 'Creando version actual...'
-        bat "docker build -t ${imagen_contenedor}:${tag_imagen} ."
+        sh 'docker build -t ${imagen_contenedor}:${tag_imagen} .'
+        
+      }
+    }*/
+
+    stage('Build') {
+      steps {
+        dir('Test') {
+          script {
+            //Sube la nueva
+            echo 'Creando version actual...'
+             dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          }
+        }
+        
+
         
       }
     }
-    
+
+    /*
     stage('Deploy') {
       steps {
         echo 'Generando nueva version...'
-        bat "docker run -d -p ${puerto_contenedor}:${puerto_contenedor} --name ${nombre_contenedor} ${imagen_contenedor}:${tag_imagen}"
+        sh 'docker run -d -p ${puerto_contenedor}:${puerto_contenedor} --name ${nombre_contenedor} ${imagen_contenedor}:${tag_imagen}'
+      }
+    }*/
+
+    stage('Deploy') {
+
+      steps {
+        script { 
+          echo 'Generando nueva version...'
+          docker.withRegistry( '', registryCredential ) { 
+            dockerImage.push() 
+          }
+        }
       }
     }
+
+
+
+
   }
 
 }
