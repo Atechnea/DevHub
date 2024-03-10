@@ -11,7 +11,7 @@ pipeline {
   }
 
     environment { 
-      registry = "joseantoniotortosa/devhub" 
+      registry = 'joseantoniotortosa/devhu' 
       registryCredential = 'id' 
       dockerImage = '' 
     }
@@ -25,7 +25,7 @@ pipeline {
     string(name: 'tag_imagen', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
     string(name: 'puerto_contenedor', defaultValue: '3000', description: 'Puerto que usa el contenedor')
   }*/
- //asd
+
   stages {
     stage('Install') {
       steps {
