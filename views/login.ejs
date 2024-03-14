@@ -11,10 +11,10 @@
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-png" href="resources/devhub.png">
-    <title>DevHub - Registro</title>
+    <title>DevHub - Log in</title>
 </head>
-<body class="background-radial-gradient overflow-hidden">
-    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" id = "formregistro">
+<body class="background-radial-gradient overflow-hidden min-vh-100 d-flex flex-column">
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" id = "formlogin">
         <div class="row gx-lg-5 align-items-center mb-5">
           <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
             <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
@@ -33,29 +33,7 @@
     
             <div class="card bg-glass">
               <div class="card-body px-4 py-5 px-md-5">
-                <form class="formregistro">
-                  <!-- 2 columnas para nombre y apellido -->
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <input type="text" id="nombre" name="nombre" class="form-control" required/>
-                        <label class="form-label" for="nombre">Nombre</label>
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <input type="text" id="apellido" name="apellido" class="form-control" required/>
-                        <label class="form-label" for="apellido">Apellido</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- User input -->
-                  <div class="form-outline mb-4">
-                    <input type="text" id="usuario" name="usuario" class="form-control" required/>
-                    <label class="form-label" for="usuario">Usuario</label>
-                  </div>
-    
+                <form class="formlogin">
                   <!-- Email input -->
                   <div class="form-outline mb-4">
                     <input type="email" id="email" name="email" class="form-control" required/>
@@ -68,17 +46,9 @@
                     <label class="form-label" for="contrasena">Contraseña</label>
                   </div>
     
-                  <!-- Checkbox -->
-                  <div class="form-check d-flex justify-content-center mb-4">
-                    <input class="form-check-input me-2" type="checkbox" value=true id="empresa" name="empresa"/>
-                    <label class="form-check-label" for="empresa">
-                      ¿Eres una empresa?
-                    </label>
-                  </div>
-    
                   <!-- Submit button -->
                   <button type="submit" class="btn btn-primary btn-block mb-4">
-                    Registro
+                    Log in
                   </button>
                 </form>
               </div>
@@ -88,6 +58,6 @@
       </div>
 </body>
 
-<script src="javascripts/register.js"></script>
+<script src="javascripts/login.js"></script>
 
 </html>
