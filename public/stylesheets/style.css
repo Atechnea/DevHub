@@ -1,8 +1,10 @@
-/*Registro*/
-
 body {
-  /*padding: 50px;  No hace falta   */
+  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
 }
 
 .bg-glass {
@@ -48,4 +50,4 @@ body {
   background: radial-gradient(#44006b, #ad1fff);
   overflow: hidden;
 }
-/*/Registro*/
+
