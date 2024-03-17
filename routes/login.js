@@ -21,7 +21,6 @@ router.get('/', function(req, res) {
 router.post('/login', function(req, res) {
     //Recoger todos los fields del request body
     var { email, contrasena} = req.body;
-    
     //Validar datos
    if (!email_regex.test(email))
         res.status(422).json({ error: email_error });
