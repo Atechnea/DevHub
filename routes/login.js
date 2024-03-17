@@ -41,6 +41,7 @@ router.post('/login', function(req, res) {
                         const match = await bcrypt.compare(contrasena, result[0].contrasena);
                         if (match) { //Contrasena correcta
                             req.session.usuario=result[0];
+                            req.session.auth = true;
                             res.send("");
                         } else { //Contrasena incorrecta
                             res.status(401).json({ error: wrong_pw_error });

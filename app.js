@@ -20,11 +20,20 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(bd.sessionMiddleware)
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bd.sessionMiddleware);
+
+// Middleware para USER
+app.use((req, res, next) => {
+  // Obtén la información del usuario si está autenticado
+  if(req.session && req.session.auth) {
+    res.locals.usuario = req.session.usuario;
+  }
+  next();
+});
 
 // Routers
 app.use('/', indexRouter);
