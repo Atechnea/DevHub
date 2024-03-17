@@ -100,7 +100,7 @@ header{
 .lista li
 {
     margin-top: 20px;
-    padding: 10px;
+    padding: 5px;
     
 }
 .lista li a
@@ -110,10 +110,22 @@ header{
 }
 .lista li a:hover
 {
-    padding: 10px;
+    padding: 10px !important;
     background-color:rgba(192, 192, 192,0.1);
     border-radius: 20px;
     font-weight: bold;
+}
+
+.lista li a.crear-equipo
+{
+    padding: 10px;
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    border-radius: 20px;
+}
+
+.lista li a.crear-equipo:hover
+{
+    padding: 15px !important;
 }
 
 ul{
