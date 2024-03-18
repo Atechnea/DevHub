@@ -15,7 +15,7 @@
 </head>
 <body class="background-radial-gradient overflow-hidden">
     <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" id="perfil">
-        <div class="row gx-lg-5 align-items-center mb-5">
+        <div class="r   ow gx-lg-5 align-items-center mb-5">
             <div class="col-lg-12 mb-5 mb-lg-0">
                 <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
                     Perfil de Usuario
@@ -28,15 +28,15 @@
                         <div class="formperfil">
                             <div class="mb-4">
                                 <label for="nombreUsuario" class="form-label">Nombre de Usuario:</label>
-                                <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" value="Nombre de usuario" disabled>
+                                <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" value="<%= userProfile.username %>" disabled>
                             </div>
                             <div class="mb-4">
                                 <label for="correoUsuario" class="form-label">Correo:</label>
-                                <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" value="correo@example.com" disabled>
+                                <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" value="<%= userProfile.email %>" disabled>
                             </div>
                             <div class="mb-4">
                                 <label for="rolUsuario" class="form-label">Rol de Usuario:</label>
-                                <input type="text" id="rolUsuario" name="rolUsuario" class="form-control" value="Desarrollador" disabled>
+                                <input type="text" id="rolUsuario" name="rolUsuario" class="form-control" value="<%= userProfile.role %>" disabled>
                             </div>
                         </div>
                     </div>
