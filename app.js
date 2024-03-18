@@ -7,6 +7,7 @@ const bd = require('./db/db');
 
 var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
+var loginRouter = require('./routes/login');
 var homedevRouter = require('./routes/homedev');
 var homeempRouter = require('./routes/homeemp');
 
@@ -24,10 +25,21 @@ app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bd.sessionMiddleware);
+
+// Middleware para USER
+app.use((req, res, next) => {
+  // Obtén la información del usuario si está autenticado
+  if(req.session && req.session.auth) {
+    res.locals.usuario = req.session.usuario;
+  }
+  next();
+});
 
 // Routers
 app.use('/', indexRouter);
 app.use('/registro', registerRouter);
+app.use('/login', loginRouter);
 app.use('/homedev', homedevRouter);
 app.use('/homeemp', homeempRouter);
 
