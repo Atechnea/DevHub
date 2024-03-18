@@ -3,10 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
   if(res.locals.usuario != null) {
-    //aniadir home empresa/usuario
-    res.render('index', { title: 'DevHub' });
+    if(res.locals.usuario.es_empresa == 1)
+      res.render('homeemp');
+    else
+      res.render('homedev');
   }
   else{//NO USUARIO en sesion
     res.redirect('login');
