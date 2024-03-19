@@ -34,6 +34,31 @@ a {
       transparent 100%);
 }
 
+.custom-btn {
+  display: none; /* Hide the radio buttons */
+}
+
+.custom-label {
+  margin-bottom: 0; /* Remove extra margin */
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: 1px solid #6610f2; /* $indigo-300 equivalent */
+  color: #6610f2; /* Text color */
+}
+
+.custom-label:hover {
+  background-color: #8c9eff; /* Light gray background on hover */
+}
+
+.custom-btn:checked + .custom-label {
+  background-color: #6610f2; /* $indigo-300 equivalent */
+  color: #fff; /* Text color */
+}
+
+#btn10 + .custom-label {
+  border-radius: 0%;
+}
+
 #radius-shape-1 {
   height: 220px;
   width: 220px;

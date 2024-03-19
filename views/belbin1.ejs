@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-png" href="resources/devhub.png">
+    <title>DevHub - Test de Belbin</title>
+</head>
+<body class="background-radial-gradient justify-content-center min-vh-100 d-flex flex-column">
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" id = "testform1">
+      <div class="row justify-content-center">
+        <div class="col mb-5 mb-lg-0 align-items-center">
+          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+  
+          <div class="card bg-glass">
+            <div class="card-body px-4 py-5 px-md-5 text-center">
+              <p class="fw-bold fs-5">Para cada sección, debes distribuir 10 puntos entre las frases
+                que creas más acordes a tu comportamiento.
+              </p>
+              <p class="fw-bold fs-5">Sección 1
+              </p>
+              <form class="testform">
+                <div class="btn-toolbar justify-content-center" role="toolbar">
+                  <div class="btn-group flex-wrap" role="group">
+                    <input type="radio" id="btn0" class="custom-btn" name="number" value="0">
+                    <label for="btn0" class="btn custom-label">0</label>
+
+                    <input type="radio" id="btn1" class="custom-btn" name="number" value="1">
+                    <label for="btn1" class="btn custom-label">1</label>
+
+                    <input type="radio" id="btn2" class="custom-btn" name="number" value="2">
+                    <label for="btn2" class="btn custom-label">2</label>
+
+                    <input type="radio" id="btn3" class="custom-btn" name="number" value="3">
+                    <label for="btn3" class="btn custom-label">3</label>
+
+                    <input type="radio" id="btn4" class="custom-btn" name="number" value="4">
+                    <label for="btn4" class="btn custom-label">4</label>
+
+                    <input type="radio" id="btn5" class="custom-btn" name="number" value="5">
+                    <label for="btn5" class="btn custom-label">5</label>
+
+                    <input type="radio" id="btn6" class="custom-btn" name="number" value="6">
+                    <label for="btn6" class="btn custom-label">6</label>
+
+                    <input type="radio" id="btn7" class="custom-btn" name="number" value="7">
+                    <label for="btn7" class="btn custom-label">7</label>
+
+                    <input type="radio" id="btn8" class="custom-btn" name="number" value="8">
+                    <label for="btn8" class="btn custom-label">8</label>
+
+                    <input type="radio" id="btn9" class="custom-btn" name="number" value="9">
+                    <label for="btn9" class="btn custom-label">9</label>
+
+                    <input type="radio" id="btn10" class="custom-btn" name="number" value="10">
+                    <label for="btn10" class="btn custom-label">10</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+  $(document).ready(function(){
+    $('.custom-btn').change(function(){
+      var selectedValue = $('input[name=number]:checked').val();
+      console.log('Selected button value: ' + selectedValue);
+    });
+  });
+</script>
+
+</html>
