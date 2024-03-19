@@ -1,16 +1,17 @@
 $(document).ready(function(){
-    $("#formregistro").on('submit', '.formregistro', function(event) {
+    $("#formlogin").on('submit', '.formlogin', function(event) {
         event.preventDefault();
 
         var formData = $(this).serialize();
-        
+
         //Envio form por ajax
         $.ajax({
         type: 'post',
-        url: 'registro/registrar',
+        url: 'login/login',
         data: formData,
         success: function(result) {
-            showToastr('success', 'Su cuenta ha sido creada con éxito', '');
+            showToastr('success', 'Se ha iniciado sesión', '');
+            window.location.href = '/';
         },
         error: function(xhr, status, error) {
             showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);

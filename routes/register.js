@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var pool = require('../db/db');
+var pool = require('../db/db').pool;
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 
@@ -14,7 +14,7 @@ const email_error = "El correo no tiene un formato válido, por favor, introduzc
 const name_error = "Nombre o Apellido no tiene un formato válido, debe estar formado solo de letras.";
 const pw_error = "La contraseña debe estar formada por al menos 8 caracteres, con una letra y un numero.";
 const db_error = "No se pudo conectar a la base de datos, por favor, inténtelo de nuevo más tarde.";
-const exists_error = "Este usuario o correo ya existe."
+const exists_error = "Este usuario o correo ya existe.";
 
 
 router.get('/', function(req, res) {

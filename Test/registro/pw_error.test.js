@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 // Asumimos que tienes un archivo de ruta que puedes importar aquí
-const router = require('../routes/register.js'); // Asegúrate de ajustar la ruta
+const router = require('../../routes/register.js'); // Asegúrate de ajustar la ruta
 app.use(router);
 
 describe('POST /registrar - Validación de contraseña', () => {

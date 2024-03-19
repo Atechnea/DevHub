@@ -1,0 +1,213 @@
+body{
+    background: rgba(31,30,35,255); 
+}
+
+header{
+    width: 100%;
+    background: rgba(24,23,28,255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo
+{
+    display: flex;
+    align-items: center;
+    color: aliceblue;
+    font-family: "Chivo Mono", monospace;
+    width: 40%;
+}
+
+.logo h1
+{
+    margin-left: 10px;
+}
+
+.logo img
+{
+    width: 60px;
+    height: 40px;
+    margin-left: 40px;
+
+}
+
+.input-group{
+    display: flex;
+    justify-content: center;
+}
+
+.perfil{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 40px;
+    color:rgb(255, 255, 255);
+}
+
+.datosperfil
+{
+    display: flex;
+    align-items: center;
+}
+
+.datosperfil span
+{
+    color:rgb(255, 255, 255);
+    font-family: "Chivo Mono", monospace;
+    margin-left: 10px;
+}
+
+.container-global{
+    display: flex;
+    height: 100vh;
+}
+
+.bienvenida
+{
+    
+    font-family: "Chivo Mono", monospace;
+    color:rgb(200, 200, 200);
+    width: 70%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.bienvenida h2{
+    font-size : 50px;
+}
+
+.bienvenida p{
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    -webkit-background-clip: text; /* Para navegadores WebKit (Chrome, Safari, etc.) */
+    background-clip: text;
+    color: transparent; /* Oculta el color del texto */
+}
+
+
+.lista{
+    border-right: 1px solid rgba(231, 231, 231, 0.2);
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.lista li
+{
+    margin-top: 20px;
+    padding: 5px;
+    
+}
+.lista li a
+{
+    font-family: "Chivo Mono", monospace;
+    color: #ffffff;
+}
+.lista li a:hover
+{
+    padding: 10px !important;
+    background-color:rgba(192, 192, 192,0.1);
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.lista li a.crear-equipo
+{
+    padding: 10px;
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    border-radius: 20px;
+}
+
+.lista li a.crear-equipo:hover
+{
+    padding: 15px !important;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+
+a:focus{
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+}
+
+.buscador {
+    width: 50%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.buscador form {
+    width: 100%;
+    height: 6vh;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+    backdrop-filter: blur(4px) saturate(180%);
+    font-family: "Chivo Mono", monospace;
+}
+
+.buscador input[type="text"] {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 24px 20px;
+    font-size: 20px;
+    color: white;
+
+}
+
+.buscador button {
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-left: 4px;
+    outline: none;
+}
+
+.buscador button:hover {
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%) !important;
+    color: black !important; /* Cambia el color del texto cuando el botón está activo */
+    background-clip: text; /* Para que el degradado solo aplique al texto */
+    -webkit-background-clip: text; /* Prefijo para navegadores webkit (como Chrome, Safari) */
+    -webkit-text-fill-color: transparent; /* Oculta el color del texto para que se muestre el degradado */
+
+}
+
+
+
+@media screen and (max-width:768px) {
+    .logo h1{
+        display: none;
+    }
+
+    .buscador form
+    {
+        width: 60%;
+    }
+    
+    header{
+        justify-content: baseline;
+    }
+
+    header>div{
+        width: auto;
+    }
+}
