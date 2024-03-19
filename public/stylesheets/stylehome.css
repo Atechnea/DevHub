@@ -116,11 +116,6 @@ header{
     display: none; /* Oculta los textos cuando la lista no está en hover */
 }
 
-.lista:hover .texto {
-    position: initial;
-}
-
-
 .lista li a
 {
     font-family: "Chivo Mono", monospace;
