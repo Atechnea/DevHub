@@ -1,52 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="icon" type="image/x-png" href="resources/devhub.png">
-    <title>DevHub - Perfil</title>
+    <title><%= title %></title>
     <style>
-        /* Estilos adicionales para la imagen de fondo y la imagen de perfil */
         body {
-            background: linear-gradient(to right, #191970, #800080); /* Gradiente de azul oscuro a morado oscuro */
-            color: #fff;
+            background-color: #0d1117; /* Negro de GitHub */
+            color: #c9d1d9; /* Blanco de GitHub */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center; /* Centra el contenido horizontalmente */
+            align-items: center; /* Centra el contenido verticalmente */
+            height: 100vh; /* Altura total de la ventana */
         }
-        .perfil-img {
-            width: 150px; /* Ajustar el tamaño según sea necesario */
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            border: 1px solid #30363d; /* Borde de GitHub */
+            border-radius: 6px; /* Bordes redondeados de GitHub */
+            overflow: hidden; /* Evitar que los bordes se desborden */
+            display: flex;
+            flex-direction: column; /* Apila los elementos verticalmente */
+            align-items: center; /* Centra los elementos horizontalmente */
+        }
+        .profile-info {
+            margin-top: 20px;
+            text-align: center; /* Alinea el texto al centro */
+        }
+        .profile-info p {
+            margin-bottom: 10px;
+            font-size: 16px; /* Tamaño del texto */
+        }
+        .profile-info p strong {
+            font-weight: bold;
+            color: #f0f6fc; /* Blanco brillante de GitHub */
+        }
+        .profile-name {
+            font-size: 24px; /* Tamaño del nombre */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .profile-image-container {
+            width: 150px;
             height: 150px;
             border-radius: 50%;
-            object-fit: cover;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff; /* Blanco */
+            cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+            position: relative; /* Permite posicionar la paleta de colores dentro del contenedor */
+            overflow: hidden; /* Evita que la paleta de colores se desborde */
+        }
+        .initials {
+            font-size: 64px; /* Tamaño de las iniciales */
+            color: black; /* Color de las iniciales por defecto */
+        }
+        .color-picker {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* La paleta de colores no se muestra por defecto */
+        }
+        input[type="color"] {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card bg-dark">
-                    <div class="card-body">
-                        <img src="ruta_de_la_imagen_de_perfil.jpg" alt="Imagen de perfil" class="perfil-img float-start me-3"> <!-- Imagen de perfil a la izquierda -->
-                        <h1 class="mb-4 display-5 fw-bold text-center">Perfil de Usuario</h1>
-                        <div class="formperfil">
-                            <div class="mb-3">
-                                <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" value="<%= userProfile.usuario %>" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" id="nombre" name="nombreUsuario" class="form-control" value="<%= userProfile.nombre + ' ' + userProfile.apellido %>" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" value="<%= userProfile.email %>" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" id="rolUsuario" name="rolUsuario" class="form-control" value="<%= userProfile.es_empresa ? 'Empresa' : 'Usuario' %>" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="profile-image-container" onclick="toggleColorPicker()">
+            <div id="initials" class="initials">
+                <% if (userProfile.foto) { %>
+                    <img id="preview" src="<%= userProfile.foto %>" alt="Foto de perfil">
+                <% } else { %>
+                    <%= userProfile.nombre.charAt(0) + userProfile.apellido.charAt(0) %>
+                <% } %>
+            </div>
+            <div id="color-picker" class="color-picker">
+                <input type="color" id="color-picker-input" onchange="changeBackgroundColor()">
             </div>
         </div>
+        <div class="profile-info">
+            <h1 class="profile-name"><%= userProfile.nombre %> <%= userProfile.apellido %></h1>
+            <p><strong>Usuario:</strong> <%= userProfile.usuario %></p>
+            <p><strong>Email:</strong> <%= userProfile.email %></p>
+            <p><strong>Tipo:</strong> <%= userProfile.es_empresa ? 'Empresa' : 'Usuario' %></p>
+        </div>
     </div>
+
+    <script>
+        function changeBackgroundColor() {
+            const colorPickerInput = document.getElementById('color-picker-input');
+            const profileImageContainer = document.querySelector('.profile-image-container');
+            const initials = document.getElementById('initials');
+
+            profileImageContainer.style.backgroundColor = colorPickerInput.value;
+
+            // Ocultar la paleta de colores después de seleccionar un color
+            const colorPicker = document.getElementById('color-picker');
+            colorPicker.style.display = 'none';
+
+            // Cambiar el color de las iniciales a negro si el color de fondo es muy claro
+            const color = getComputedStyle(profileImageContainer).getPropertyValue('background-color');
+            const rgb = color.match(/\d+/g);
+            const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+
+            if (brightness > 125) {
+                initials.style.color = 'black';
+            } else {
+                initials.style.color = 'white';
+            }
+        }
+
+        function toggleColorPicker() {
+            const colorPicker = document.getElementById('color-picker');
+            colorPicker.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
