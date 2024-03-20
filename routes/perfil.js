@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pool = require('../db/db').pool;
 const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+
 
 // Ruta para mostrar el perfil del usuario
 
@@ -11,7 +11,7 @@ router.get('/:id', function(req, res) {
 
     // Consultar la base de datos para obtener los datos del perfil del usuario con el ID proporcionado
     pool.getConnection(function(err, con) {
-        if(err) res.status(500).json({ error: db_error });
+        if(err) res.status(500).json({ error: "No se pudo conectar a la base de datos" });
         else {
             // Consultar la base de datos para obtener los datos del perfil del usuario con el ID proporcionado
             var sql = "SELECT usuario, nombre, apellido, email, es_empresa FROM usuarios WHERE id = ?";

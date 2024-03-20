@@ -3,40 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/jquery.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="icon" type="image/x-png" href="resources/devhub.png">
     <title>DevHub - Perfil</title>
+    <style>
+        /* Estilos adicionales para la imagen de fondo y la imagen de perfil */
+        body {
+            background: linear-gradient(to right, #191970, #800080); /* Gradiente de azul oscuro a morado oscuro */
+            color: #fff;
+        }
+        .perfil-img {
+            width: 150px; /* Ajustar el tamaño según sea necesario */
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-<body class="background-radial-gradient overflow-hidden">
-    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" id="perfil">
-        <div class="r   ow gx-lg-5 align-items-center mb-5">
-            <div class="col-lg-12 mb-5 mb-lg-0">
-                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-                    Perfil de Usuario
-                </h1>
-            </div>
-
-            <div class="col-lg-12 position-relative">
-                <div class="card bg-glass">
-                    <div class="card-body px-4 py-5 px-md-5">
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <img src="ruta_de_la_imagen_de_perfil.jpg" alt="Imagen de perfil" class="perfil-img float-start me-3"> <!-- Imagen de perfil a la izquierda -->
+                        <h1 class="mb-4 display-5 fw-bold text-center">Perfil de Usuario</h1>
                         <div class="formperfil">
-                            <div class="mb-4">
-                                <label for="nombreUsuario" class="form-label">Nombre de Usuario:</label>
+                            <div class="mb-3">
                                 <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" value="<%= userProfile.usuario %>" disabled>
                             </div>
-                            <div class="mb-4">
-                                <label for="correoUsuario" class="form-label">Correo:</label>
+                            <div class="mb-3">
+                                <input type="text" id="nombre" name="nombreUsuario" class="form-control" value="<%= userProfile.nombre + ' ' + userProfile.apellido %>" disabled>
+                            </div>
+                            <div class="mb-3">
                                 <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" value="<%= userProfile.email %>" disabled>
                             </div>
-                            <div class="mb-4">
-                                <label for="rolUsuario" class="form-label">Rol de Usuario:</label>
-                                <input type="text" id="rolUsuario" name="rolUsuario" class="form-control" value="<%= userProfile.es_empresa %>" disabled>
+                            <div class="mb-3">
+                                <input type="text" id="rolUsuario" name="rolUsuario" class="form-control" value="<%= userProfile.es_empresa ? 'Empresa' : 'Usuario' %>" disabled>
                             </div>
                         </div>
                     </div>
