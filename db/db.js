@@ -10,8 +10,10 @@ const pool = mysql.createPool({
     password: process.env.MYSQL_ADDON_PASSWORD,
     database: process.env.MYSQL_ADDON_DB,
     port: process.env.MYSQL_ADDON_PORT,
-    connectionLimit: 15
+    connectionLimit: 15
 });
+
+
 
 // Configure express-session to use MySQLStore
 const sessionStore = new MySQLStore({
