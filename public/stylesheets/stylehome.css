@@ -74,7 +74,6 @@ header{
     justify-content: center;
     align-items: center;
     margin: auto;
-    z-index: 1;
 }
 
 .bienvenida h2{
@@ -148,6 +147,10 @@ header{
 
 ul{
     list-style: none;
+}
+
+.lista li:hover .icono_crear path {
+    fill: #ffffff; /* Cambia el color del icono a blanco */
 }
 
 a:focus{
@@ -234,7 +237,7 @@ a:focus{
 
     .bienvenida h2
     {
-        height: 40px;
+        font-size : 40px;
     }
 }
 
