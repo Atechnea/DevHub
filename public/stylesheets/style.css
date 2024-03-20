@@ -42,16 +42,16 @@ a {
   margin-bottom: 0; /* Remove extra margin */
   cursor: pointer;
   padding: 0.5rem 1rem;
-  border: 1px solid #6610f2; /* $indigo-300 equivalent */
-  color: #6610f2; /* Text color */
+  border: 1px solid #44006b; /* $indigo-300 equivalent */
+  color: #44006b; /* Text color */
 }
 
 .custom-label:hover {
-  background-color: #8c9eff; /* Light gray background on hover */
+  background-color: #ad1fff; /* Light gray background on hover */
 }
 
 .custom-btn:checked + .custom-label {
-  background-color: #6610f2; /* $indigo-300 equivalent */
+  background-color: #44006b; /* $indigo-300 equivalent */
   color: #fff; /* Text color */
 }
 
@@ -78,3 +78,19 @@ a {
   overflow: hidden;
 }
 
+ /* Style for the header */
+ .header {
+  background: radial-gradient(#44006b, #ad1fff); 
+  color: white; /* White text color */
+  text-align: center; /* Center-align text */
+  padding: 20px; /* Add padding */
+  margin-bottom: 20px; /* Add margin */
+  border-radius: 20px;
+}
+
+/* Style for arrow icons */
+.arrow-icon {
+  font-size: 24px;
+  color: #ad1fff;
+  cursor: pointer;
+}
