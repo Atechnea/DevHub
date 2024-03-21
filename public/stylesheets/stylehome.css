@@ -77,7 +77,8 @@ header{
 }
 
 .bienvenida h2{
-    font-size : 50px;
+    font-size : 300%;
+    text-align: center;
 }
 
 .bienvenida p{
@@ -183,6 +184,7 @@ a:focus{
     padding: 24px 20px;
     font-size: 20px;
     color: white;
+    width: 85%;
 
 }
 
@@ -193,8 +195,7 @@ a:focus{
     border-radius: 4px;
     cursor: pointer;
     padding: 8px 12px;
-    margin-left: 4px;
-    outline: none;
+    width: 15%;
 }
 
 .buscador button:hover {
@@ -206,15 +207,8 @@ a:focus{
 
 }
 
-/* Contenedor del perfil con posición relativa */
-.perfil {
-    position: relative;
-    /* otros estilos */
-}
-
-
 /*Tamaño tablet*/
-@media screen and (max-width:768px) {
+@media screen and (min-width:560px) and (max-width:768px) {
 
     .logo h1{
         display: none;
@@ -234,11 +228,58 @@ a:focus{
     {
         width: 30%;
     }
+}
 
-    .bienvenida h2
+/*Vista movil*/
+@media screen and (max-width:560px) {
+
+    .container-global
     {
-        font-size : 40px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column-reverse;
     }
+
+    .buscador{
+        display: none;
+    }
+
+    .logo h1{
+        display: none;
+    }
+
+    .bienvenida h2{
+        font-size : 200%;
+    }
+
+    .lista ul
+    {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap
+    }
+
+    .lista
+    {
+        width: 100%;
+        border-top: 1px solid rgba(231, 231, 231, 0.2);
+        animation: none;
+    }
+
+    .lista:hover .texto {
+        display: none;
+    }
+
+    .lista:hover,
+    .lista:not(:hover) {
+        animation: none;
+    }
+
+    /* También puedes querer detener la animación del icono en hover */
+    .lista li:hover .icono_crear path {
+        animation: none;
+    }
+
 }
 
 @keyframes increaseSize {
@@ -250,11 +291,11 @@ a:focus{
     }
   }
 
-@keyframes decreaseSize {
-from {
-    width: 300px;
-}
-to {
-    width:100px;
-}
+    @keyframes decreaseSize {
+    from {
+        width: 300px;
+    }
+    to {
+        width:100px;
+    }
 }
