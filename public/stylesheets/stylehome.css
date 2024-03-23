@@ -22,11 +22,13 @@ header{
 
 .logo h1
 {
+    cursor: pointer;
     margin-left: 10px;
 }
 
 .logo img
 {
+    cursor: pointer;
     width: 60px;
     height: 40px;
     margin-left: 40px;
