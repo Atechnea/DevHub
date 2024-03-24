@@ -1,5 +1,5 @@
+//Despliegue del boton logout
 document.querySelector('.datosperfil').addEventListener('click', function(event) {
-    
     
     // Obtener el menú desplegable
     var menu = document.querySelector('dropdown-menu');
@@ -10,4 +10,13 @@ document.querySelector('.datosperfil').addEventListener('click', function(event)
     } else {
         menu.style.display = 'block';
     }
+});
+
+//Recarga de la pagina al pulsar en el logo
+document.getElementById("logo-img").addEventListener("click", function() {
+    window.location.href = "/home";
+});
+
+document.getElementById("logo-h1").addEventListener("click", function() {
+    window.location.href = "/home";
 });
