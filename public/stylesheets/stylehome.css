@@ -221,8 +221,9 @@ ul{
 
 }
 
-#staticBackdrop{
-    background-color: transparent !important; /* Cambia el color de fondo del modal con 50% de opacidad */
+#staticBackdrop
+{
+    background-color:rgba(31,30,35,255);
 }
 
 .modal-dialog
