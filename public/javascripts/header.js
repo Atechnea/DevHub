@@ -11,3 +11,11 @@ document.querySelector('.datosperfil').addEventListener('click', function(event)
         menu.style.display = 'block';
     }
 });
+
+document.getElementById("logo-img").addEventListener("click", function() {
+    window.location.href = "/home";
+});
+
+document.getElementById("logo-h1").addEventListener("click", function() {
+    window.location.href = "/home";
+});

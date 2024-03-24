@@ -171,10 +171,6 @@ ul{
     fill: #ffffff; /* Cambia el color del icono a blanco */
 }
 
-a:focus{
-    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
-}
-
 .buscador {
     width: 50%;
     height: 100%;
@@ -223,6 +219,42 @@ a:focus{
     -webkit-background-clip: text; /* Prefijo para navegadores webkit (como Chrome, Safari) */
     -webkit-text-fill-color: transparent; /* Oculta el color del texto para que se muestre el degradado */
 
+}
+
+#staticBackdrop{
+    background-color: transparent !important; /* Cambia el color de fondo del modal con 50% de opacidad */
+}
+
+.modal-dialog
+{
+    font-family: "Chivo Mono", monospace;
+}
+
+.modal-content
+{
+    border-radius: 10px !important;
+}
+
+#Cerrar
+{
+    background-color: red;
+    color: white;
+}
+
+#Aceptar
+{
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    color: white;
+}
+
+.btn
+{
+    border-radius: 10px !important;
+}
+
+.btn:hover
+{
+    font-weight:600;
 }
 
 /*Tamaño tablet*/
