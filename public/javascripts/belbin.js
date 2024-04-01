@@ -11,14 +11,25 @@ $(document).ready(function() {
           $("#dynamicFormContainer").html(response); // Load the response into the container
         },
         error: function(xhr, status, error) {
-          console.error("Error loading form:", error);
+          showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
         }
       });
     }
-  
+
+    function loadResults(data) {
+      $("#dynamicFormContainer").empty();
+      $("#dynamicFormContainer").append("<h3>").text("Estos son tus resultados:");
+      $("#dynamicFormContainer").append("<p>").text("Resultado 1: " + data.res1);
+      $("#dynamicFormContainer").append("<p>").text("Resultado 2: " + data.res2);
+      $("#dynamicFormContainer").append("<p>").text("Resultado 3: " + data.res3);
+      $("#dynamicFormContainer").append("<button>").addClass("btn btn-info").id("btn-exit").text("Listo");
+      $("#btn-exit").on("click", function() {
+        window.location.href = '/';
+      })
+    }
     // Load the form initially
     loadForm(seccion);
-  
+
     // Event listener for the arrow icon to dynamically load next form
     $(document).on("click", ".arrow-icon", function(e) {
       e.preventDefault();
@@ -105,8 +116,40 @@ $(document).ready(function() {
         resultados["Coordinador"] += parseInt(formData.find((e) => {return e.name == "btn7"}).value);
         resultados["Especialista"] += parseInt(formData.find((e) => {return e.name == "btn8"}).value);
         resultados["Cohesionador"] += parseInt(formData.find((e) => {return e.name == "btn9"}).value);
-      } 
-      //seccion = seccion + 1;
-      //loadForm(seccion);
+        $.ajax({
+          url:'/belbin/resultsupload',
+          method: "POST",
+          data: resultados,
+          success: function(response) {
+            //get user id
+            var user_id;
+            $.ajax({
+              url: '/login/userid',
+              type: 'GET',
+              success: function(res)  {
+                user_id = res;
+              }
+            })
+            //show test results
+            $.ajax({
+              url:'/belbin/results/' + user_id,
+              type: 'GET',
+              success: function(res) {
+                loadResults(res);
+              },
+              error: function(error) {
+                showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
+              }
+            })
+            return;
+          },
+          error: function(error, xhr) {
+            showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
+          }
+        })
+        return;
+      }
+      seccion = seccion + 1;
+      loadForm(seccion);
     });
   });

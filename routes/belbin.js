@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var pool = require('../db/db').pool;
+
+const db_error = "No se pudo conectar a la base de datos, por favor, inténtelo de nuevo más tarde.";
 
 // Sample form data
 const seccion1 = [
@@ -98,6 +101,18 @@ const titles = [
   "En relación a los problemas en los que estoy implicado cuando trabajo en equipo…"
 ]
 
+const belbin = [
+  "Coordinador",
+  "Impulsor",
+  "Cerebro",
+  "Monitor Evaluador",
+  "Implementador",
+  "Cohesionador",
+  "Investigador de Recursos",
+  "Finalizador",
+  "Especialista"
+]
+
 // Generate the form HTML
 function generateFormHTML(formData, seccion) {
   let formHTML = `<p class="fw-bold fs-5">Para cada sección, debes distribuir 10 puntos entre las frases que creas más acordes a tu comportamiento.</p> <p class="fw-bold fs-5">Sección ${seccion + 1}: ${titles[seccion]} </p><form id="testform" class="testform">`;
@@ -124,8 +139,33 @@ function generateFormHTML(formData, seccion) {
           </div>
       </div>
   </form>`;
-  
+
   return formHTML;
+}
+
+function generateBelbinResults(results, next) {
+  var max = {"res1": {"name": "", "res": -1},
+            "res2": {"name": "", "res": -1},
+            "res3": {"name": "", "res": -1}};
+  belbin.forEach((res, i) => {
+    if(parseInt(max["res1"]["res"]) < parseInt(results[res])) {
+      max["res3"]["name"] = max["res2"]["name"];
+      max["res3"]["res"] = max["res2"]["res"];
+      max["res2"]["name"] = max["res1"]["name"];
+      max["res2"]["res"] = max["res1"]["res"];
+      max["res1"]["name"] = res;
+      max["res1"]["res"] = results[res];
+    } else if (parseInt(max["res2"]["res"]) < parseInt(results[res])) {
+      max["res3"]["name"] = max["res2"]["name"];
+      max["res3"]["res"] = max["res2"]["res"];
+      max["res2"]["name"] = res;
+      max["res2"]["res"] = results[res];
+    } else if (parseInt(max["res3"]["res"]) < parseInt(results[res])) {
+      max["res3"]["name"] = res;
+      max["res3"]["res"] = results[res];
+    }
+  })
+  next(max);
 }
 
 // Serve the form HTML
@@ -134,6 +174,40 @@ router.get('/form/:id', (req, res) => {
   const formHTML = generateFormHTML(formData[id-1], id-1);
   res.send(formHTML);
 });
+
+router.post('/resultsupload', (req, res) => {
+  var results = req.body;
+
+  pool.getConnection(function(err,con) {
+    if(err) res.status(500).json({error: db_error});
+    else {
+      generateBelbinResults(results, function(max) {
+        var sql = "INSERT INTO belbin(id_usuario, res1, res2, res3) VALUES (?, ?, ?, ?)";
+        con.query(sql, [res.locals.usuario.id, max["res1"]["name"], max["res2"]["name"], max["res3"]["name"]], function(err, result) {
+          con.release();
+          res.send("");
+        })
+      });
+    }
+  })
+})
+
+router.get('/results/:id', (req, res) => {
+  var id = req.params.id;
+  pool.getConnection(function(err, con) {
+    if(err) res.status(500).json({error: db_error});
+    else {
+      var sql = "SELECT * FROM belbin WHERE id_usuario = ?";
+      con.query(sql, [id], function(err, result) {
+        con.release();
+        if(result.length == 0)
+          res.send(undefined);
+        else
+          res.send(result[0]);
+      })
+    }
+  })
+})
 
 // Serve form
 router.get('/', function(req, res, next) {
