@@ -9,125 +9,204 @@
             background: linear-gradient(to bottom, #241f30, #0d1117, #0d1117);
             color: #c9d1d9;
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .container {
             max-width: 800px;
-            padding: 20px;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            overflow: hidden;
+            margin: 0 auto;
+        }
+        .team-header {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            margin-bottom: 20px;
         }
-        .profile-info {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .profile-info p {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .profile-info p strong {
-            font-weight: bold;
-            color: #f0f6fc;
-        }
-        .profile-name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .profile-image-container {
-            width: 150px;
+        .team-avatar {
+            width: 150px; /* Tamaño del avatar del equipo */
             height: 150px;
             border-radius: 50%;
-            margin-bottom: 20px;
+            background-color: #ffffff;
+            margin-right: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #ffffff;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            flex-shrink: 0; /* Evitar que el avatar del equipo se haga más pequeño */
         }
-        .initials {
-            font-size: 64px;
-            color: black;
-        }
-        .color-picker {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-        }
-        input[type="color"] {
-            width: 30px;
-            height: 30px;
-            border: none;
+        .team-avatar img {
+            max-width: 100%;
+            max-height: 100%;
             border-radius: 50%;
-            cursor: pointer;
-            margin: 0 5px;
+        }
+        .team-info {
+            flex-grow: 1; /* El contenido se expandirá para llenar el espacio disponible */
+        }
+        .team-name {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .team-owner {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .team-objective {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .members-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .member-card {
+            width: calc(33.33% - 20px);
+            background-color: #30363d;
+            padding: 10px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            cursor: pointer; /* Cambia el cursor al pasar sobre las tarjetas de miembros */
+        }
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .member-avatar img {
+            width: 100%;
+            border-radius: 50%;
+        }
+        .member-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #f0f6fc;
+        }
+
+        /* Estilos para dispositivos con ancho máximo de 600px */
+        @media (max-width: 600px) {
+            .team-header {
+                flex-direction: column; /* Apila los elementos verticalmente */
+                align-items: flex-start; /* Alinea los elementos a la izquierda */
+            }
+            .team-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            .team-info {
+                text-align: center;
+            }
+            .member-card {
+                width: calc(50% - 20px); /* Dos miembros por fila */
+            }
+        }
+        /* Estilos para dispositivos con ancho máximo de 400px */
+        @media (max-width: 400px) {
+            .member-card {
+                width: 100%; /* Un miembro por fila */
+            }
+            .member-name {
+                display: none; /* Ocultar el nombre del miembro en pantallas muy pequeñas */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="profile-image-container" onclick="toggleColorPicker()">
-            <div id="initials" class="initials">
-                <%= teamInfo.initials %>
+        <div class="team-header">
+            <div class="team-avatar">
+                <div id="team-avatar">
+                    <!-- Imagen del equipo -->
+                </div>
             </div>
-            <div id="color-picker" class="color-picker">
-                <input type="color" id="color-picker-input" onchange="changeBackgroundColor()">
+            <div class="team-info">
+                <div class="team-name">
+                    <!-- Nombre del equipo -->
+                </div>
+                <div class="team-owner">
+                    <!-- Nombre del dueño -->
+                </div>
+                <div class="team-objective">
+                    <!-- Objetivo del equipo -->
+                </div>
             </div>
         </div>
-        <div class="profile-info">
-            <h1 class="profile-name"><%= teamInfo.name %></h1>
-            <p><strong>Objetivo:</strong> <%= teamInfo.objective %></p>
-            <% if (teamInfo.members.length > 0) { %>
-                <h2>Miembros:</h2>
-                <ul>
-                    <% teamInfo.members.forEach(member => { %>
-                        <li><%= member.name %> - Antigüedad: <%= member.joinDate %></li>
-                    <% }); %>
-                </ul>
-            <% } else { %>
-                <p><strong>No hay miembros en este equipo actualmente.</strong></p>
-            <% } %>
+        <div class="members-list">
+            <!-- Lista de miembros se agregará aquí dinámicamente -->
         </div>
     </div>
 
     <script>
-        function changeBackgroundColor() {
-            const colorPickerInput = document.getElementById('color-picker-input');
-            const profileImageContainer = document.querySelector('.profile-image-container');
-            const initials = document.getElementById('initials');
-
-            profileImageContainer.style.backgroundColor = colorPickerInput.value;
-
-            const colorPicker = document.getElementById('color-picker');
-            colorPicker.style.display = 'none';
-
-            const color = getComputedStyle(profileImageContainer).getPropertyValue('background-color');
-            const rgb = color.match(/\d+/g);
-            const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
-
-            if (brightness > 125) {
-                initials.style.color = 'black';
-            } else {
-                initials.style.color = 'white';
+        // Función para generar un color aleatorio en formato hexadecimal
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
             }
+            return color;
         }
 
-        function toggleColorPicker() {
-            const colorPicker = document.getElementById('color-picker');
-            colorPicker.style.display = 'block';
+        // Función para obtener las iniciales de un nombre
+        function getInitials(name) {
+            return name.split(' ').map(word => word.charAt(0)).join('');
         }
+
+        // Función para redirigir a la página de perfil
+        function redirectToProfile(username) {
+            // Simplemente se muestra cómo redirigir aquí, necesitarás implementar la lógica del servidor
+            window.location.href = '/perfil/' + username; // Reemplaza 'username' con el ID del usuario
+        }
+
+        // Datos del equipo y miembros (se asume que se obtienen del servidor)
+        var teamInfo = {
+            name: 'Nombre del Equipo',
+            owner: 'Nombre del Dueño',
+            objective: 'Objetivo del Equipo',
+            members: [
+                { name: 'miembro 1', username: '1' },
+                { name: 'miembro 2', username: '2' },
+                { name: 'miembro 3', username: '3' }
+                // Otros miembros...
+            ]
+        };
+
+        // Renderizar la información del equipo
+        document.querySelector('#team-avatar').textContent = getInitials(teamInfo.name);
+        document.querySelector('.team-name').textContent = teamInfo.name;
+        document.querySelector('.team-owner').textContent = 'Dueño: ' + teamInfo.owner;
+        document.querySelector('.team-objective').textContent = 'Objetivo: ' + teamInfo.objective;
+
+        // Renderizar la lista de miembros
+        var membersList = document.querySelector('.members-list');
+        teamInfo.members.forEach(function(member) {
+            var memberCard = document.createElement('div');
+            memberCard.classList.add('member-card');
+
+            var memberAvatar = document.createElement('div');
+            memberAvatar.classList.add('member-avatar');
+            memberAvatar.textContent = getInitials(member.name);
+            memberAvatar.style.backgroundColor = getRandomColor();
+
+            var memberName = document.createElement('div');
+            memberName.classList.add('member-name');
+            memberName.textContent = member.name;
+
+            memberCard.appendChild(memberAvatar);
+            memberCard.appendChild(memberName);
+
+            // Agregar el evento de clic para redirigir al perfil del miembro
+            memberCard.addEventListener('click', function() {
+                redirectToProfile(member.username);
+            });
+
+            membersList.appendChild(memberCard);
+        });
     </script>
 </body>
 </html>
