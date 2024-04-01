@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Equipo</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #241f30, #0d1117, #0d1117);
+            color: #c9d1d9;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-info {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .profile-info p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .profile-info p strong {
+            font-weight: bold;
+            color: #f0f6fc;
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .profile-image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .initials {
+            font-size: 64px;
+            color: black;
+        }
+        .color-picker {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        input[type="color"] {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-image-container" onclick="toggleColorPicker()">
+            <div id="initials" class="initials">
+                <%= teamInfo.initials %>
+            </div>
+            <div id="color-picker" class="color-picker">
+                <input type="color" id="color-picker-input" onchange="changeBackgroundColor()">
+            </div>
+        </div>
+        <div class="profile-info">
+            <h1 class="profile-name"><%= teamInfo.name %></h1>
+            <p><strong>Objetivo:</strong> <%= teamInfo.objective %></p>
+            <% if (teamInfo.members.length > 0) { %>
+                <h2>Miembros:</h2>
+                <ul>
+                    <% teamInfo.members.forEach(member => { %>
+                        <li><%= member.name %> - Antigüedad: <%= member.joinDate %></li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p><strong>No hay miembros en este equipo actualmente.</strong></p>
+            <% } %>
+        </div>
+    </div>
+
+    <script>
+        function changeBackgroundColor() {
+            const colorPickerInput = document.getElementById('color-picker-input');
+            const profileImageContainer = document.querySelector('.profile-image-container');
+            const initials = document.getElementById('initials');
+
+            profileImageContainer.style.backgroundColor = colorPickerInput.value;
+
+            const colorPicker = document.getElementById('color-picker');
+            colorPicker.style.display = 'none';
+
+            const color = getComputedStyle(profileImageContainer).getPropertyValue('background-color');
+            const rgb = color.match(/\d+/g);
+            const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+
+            if (brightness > 125) {
+                initials.style.color = 'black';
+            } else {
+                initials.style.color = 'white';
+            }
+        }
+
+        function toggleColorPicker() {
+            const colorPicker = document.getElementById('color-picker');
+            colorPicker.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
