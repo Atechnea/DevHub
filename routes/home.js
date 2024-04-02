@@ -1,4 +1,6 @@
+const { render } = require('ejs');
 var express = require('express');
+var pool = require('../db/db').pool;
 var router = express.Router();
 
 router.get('/', function(req, res) {
@@ -10,5 +12,46 @@ router.get('/', function(req, res) {
       }
 });
 
+router.post("/busqueda", function (request, response) {
+  console.log("He llegado");
+  response.status(200);
+  let nombre = request.body.busqueda;
+  let usuario = request.session.usuario;
+  const dao = request.dao;
+  if(usuario.es_empresa == 1){
+    pool.getConnection(async function(err, con) {
+      if(err) res.status(500).json({ error: buscar_error });
+      else{
+        console.log("He llegado dentro del");
+        const sql = `SELECT id, nombre, apellido, usuario 
+        FROM usuarios 
+        WHERE nombre LIKE ? AND es_empresa = false 
+        ORDER BY nombre DESC;`;
+        const query = `%${nombre}%`; // Ajusta la consulta para que funcione con 'LIKE'
+        con.query(sql, [query], function (err, desarrolladores) {
+          con.release();
+            if (err) {
+                callback(err, null);
+            } else {
+              console.log("He llegado dentro del render");
+                response.render('busqueda', {desarrolladores: desarrolladores});
+            }
+        });
+      }
+    })
+  }
+  else{
+
+  }
+  
+});
+
+/* dao.buscarDesarrollador(nombre, function (err, desarrollador) {
+      if (err) {
+        res.status(500).json({ error: buscar_error });
+      } else {
+          response.render("./busqueda", {desarrolladores:desarrollador, user:request.session.user?request.session.user:0});
+      }
+  });*/ 
 
 module.exports = router;

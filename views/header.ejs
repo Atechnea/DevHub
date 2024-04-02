@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital@0;1&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="icon" type="image/x-png" href="resources/devhub.png">
+    <link rel="icon" type="image/x-png" href="/resources/devhub.png">
     
     <title>DevHub - Home</title>
 </head>
@@ -23,15 +23,15 @@
 
         <!--Logo-->
         <div class="logo">
-            <img src="resources/devhub.png" alt="Logo" id="logo-img">
+            <img src="/resources/devhub.png" alt="Logo" id="logo-img">
             <h1 id="logo-h1">DevHub</h1>
         </div>
         
-        <!--Buscador-->
-        <div class="buscador" >
-            <form method="GET" action="#">
-                <input type="text" name="q" placeholder="¿Qué desea buscar?" autocomplete="off" spellcheck="false" required>
-                <button type="submit"><i class="fas fa-search"></i></button>
+         <!--Buscador-->
+         <div class="buscador" >
+            <form action="/home/busqueda" method="POST" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Buscar" name="busqueda" aria-label="Buscar">
+                <button class="btn btn-outline-dark" type="submit">Buscar</button>
             </form>
         </div>
 
