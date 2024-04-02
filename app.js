@@ -8,6 +8,7 @@ const bd = require('./db/db');
 var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
+var belbinRouter = require('./routes/belbin');
 var homeRouter = require('./routes/home');
 var userRouter = require('./routes/users');
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bd.sessionMiddleware);
@@ -42,6 +44,7 @@ app.use('/registro', registerRouter);
 app.use('/login', loginRouter);
 app.use('/home', homeRouter);
 app.use('/users', userRouter);
+app.use('/belbin', belbinRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
