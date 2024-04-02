@@ -15,10 +15,8 @@ const wrong_pw_error = "La contrasena no es correcta."
 
 router.post('/', function(req, res) {
     //Recoger todos los fields del request body
-    var  nombre = req.body;
-    var objetivo=document.getElementsByName("objetivo");
+    var {nombre, objetivo} = req.body;
     var idEmpresa=req.session.usuario.id;//id de usuario unico para cada empresa
-   ////
   // Validación de los datos
   if (!nombre || nombre.length < 1 || nombre.length > 30) {
     return res.status(422).json({ error: "El nombre debe tener entre 1 y 30 caracteres" });
