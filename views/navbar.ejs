@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital@0;1&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-png" href="resources/devhub.png">
     
     <title>DevHub - Home</title>
 </head>
@@ -47,7 +49,8 @@
               </svg> <span class="texto"> Perfil</span></a></li>
 
             <% if(usuario.es_empresa == 1) { %>
-                <li><a href="javascript:void(0)" class="crear-equipo"> <svg xmlns="http://www.w3.org/2000/svg" class="icono_crear" width="33" height="33" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16" >
+                <li><a href="" class="crear-equipo" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icono_crear" width="33" height="33" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16" >
                     <defs>
                         <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
                           <stop offset="6%" style="stop-color:#5244E9 ;stop-opacity:1" />
@@ -58,14 +61,18 @@
                     <path fill="url(#grad)" d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path fill="url(#grad)" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
                   </svg> <span class="texto"> Crear equipo</span></a></li>
-            <% } %>
+                  
+                  <%- include('CrearEquipo.ejs') %>
 
+            <% } %>
         </ul>
     </nav>
 
 </body>
 
-<script src="/javascripts/navbar.js"></script>
 
+<script src="/javascripts/navbar.js"></script>
+<script src="/javascripts/toastrFunctions.js"></script>
+<script src="/javascripts/crearequipo.js"></script>
 
 </html>

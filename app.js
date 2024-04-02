@@ -13,6 +13,7 @@ var belbinRouter = require('./routes/belbin');
 var homeRouter = require('./routes/home');
 var userRouter = require('./routes/users');
 var perfilRouter = require('./routes/perfil');
+var crearEquipoRouter = require('./routes/crearequipo');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/home', homeRouter);
 app.use('/users', userRouter);
 app.use('/belbin', belbinRouter);
 app.use('/perfil', perfilRouter);
+app.use('/crearequipo', crearEquipoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
