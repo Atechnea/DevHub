@@ -1,61 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/jquery.js"></script>
-    <link rel='stylesheet' href='/stylesheets/stylehome.css' />
-    <link rel='stylesheet' href='/stylesheets/equipo.css'/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css">
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital@0;1&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="icon" type="image/x-png" href="/resources/devhub.png">
-    
-    <title>DevHub - Home</title>
-   
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/jquery.js"></script>
+        <link rel='stylesheet' href='/stylesheets/stylehome.css' />
+        <link rel='stylesheet' href='/stylesheets/equipo.css'/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css">
+        <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital@0;1&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="icon" type="image/x-png" href="/resources/devhub.png">
+        
+        <title>DevHub - Home</title>
+    </head>
 <body>
+    <!--Añadimos header-->
+    <% include('header.ejs') %>
 
-     <!--Añadimos header-->
-     <% include('header.ejs') %>
+    <div class="container-global shadow-lg">
+        <!--Añadimos navbar-->
+        <% include('navbar.ejs') %>
 
-     <div class="container-global shadow-lg">
-         
-         <!--Añadimos navbar-->
-         <% include('navbar.ejs') %>
-         
-    <div class="cotenedor">
-        <div class="team-header">
-            <div class="team-avatar">
-                <div id="team-avatar">
-                    <!-- Imagen del equipo -->
+        <!-- Contenedor principal -->
+        <div class="contenedor">
+            <div class="team-header">
+                <div class="team-avatar">
+                    <div id="team-avatar"></div>
+                </div>
+                <div class="team-info">
+                    <div class="team-name"></div>
+                    <div class="team-owner"></div>
+                    <div class="team-objective"></div>
                 </div>
             </div>
-            <div class="team-info">
-                <div class="team-name">
-                    <!-- Nombre del equipo -->
-                </div>
-                <div class="team-owner">
-                    <!-- Nombre del dueño -->
-                </div>
-                <div class="team-objective">
-                    <!-- Objetivo del equipo -->
-                </div>
+            <div class="members-list">
+                <!-- Lista de miembros se agregará aquí dinámicamente -->
             </div>
-        </div>
-        <div class="members-list">
-            <!-- Lista de miembros se agregará aquí dinámicamente -->
         </div>
     </div>
 
     <script>
-        // Función para generar un color aleatorio en formato hexadecimal
         function getRandomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
@@ -65,47 +55,45 @@
             return color;
         }
 
-        // Función para obtener las iniciales de un nombre
         function getInitials(name) {
             return name.split(' ').map(word => word.charAt(0)).join('');
         }
 
-        // Función para redirigir a la página de perfil
         function redirectToProfile(id) {
-            window.location.href = '/perfil/' + id; // Reemplaza 'username' con el ID del usuario
+            window.location.href = '/perfil/' + id;
         }
 
         // Renderizar la información del equipo
-        document.querySelector('#team-avatar').textContent = getInitials(teamInfo.name);
-        document.querySelector('.team-name').textContent = teamInfo.name;
-        document.querySelector('.team-owner').textContent = 'Dueño: ' + teamInfo.owner;
-        document.querySelector('.team-objective').textContent = 'Objetivo: ' + teamInfo.objective;
+        document.querySelector('#team-avatar').textContent = getInitials('<%= teamInfo.name %>');
+        document.querySelector('.team-name').textContent = '<%= teamInfo.name %>';
+        document.querySelector('.team-owner').textContent = 'Dueño: <%= teamInfo.owner %>';
+        document.querySelector('.team-objective').textContent = 'Objetivo: <%= teamInfo.objective %>';
 
         // Renderizar la lista de miembros
         var membersList = document.querySelector('.members-list');
-        teamInfo.members.forEach(function(member) {
+        <% teamInfo.members.forEach(function(member) { %>
             var memberCard = document.createElement('div');
             memberCard.classList.add('member-card');
 
             var memberAvatar = document.createElement('div');
             memberAvatar.classList.add('member-avatar');
-            memberAvatar.textContent = getInitials(member.name);
+            memberAvatar.textContent = getInitials('<%= member.name %>');
             memberAvatar.style.backgroundColor = getRandomColor();
 
             var memberName = document.createElement('div');
             memberName.classList.add('member-name');
-            memberName.textContent = member.name;
+            memberName.textContent = '<%= member.name %>';
 
             memberCard.appendChild(memberAvatar);
             memberCard.appendChild(memberName);
 
             // Agregar el evento de clic para redirigir al perfil del miembro
             memberCard.addEventListener('click', function() {
-                redirectToProfile(member.id);
+                redirectToProfile('<%= member.id %>');
             });
 
             membersList.appendChild(memberCard);
-        });
+        <% }); %>
     </script>
 </body>
 </html>
