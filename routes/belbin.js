@@ -203,7 +203,7 @@ router.get('/results/:id', (req, res) => {
         if(result.length == 0)
           res.send(undefined);
         else
-          res.send(result[0]);
+          res.json(result[0]);
       })
     }
   })

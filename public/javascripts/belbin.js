@@ -18,17 +18,34 @@ $(document).ready(function() {
 
     function loadResults(data) {
       $("#dynamicFormContainer").empty();
-      $("#dynamicFormContainer").append("<h3>").text("Estos son tus resultados:");
-      $("#dynamicFormContainer").append("<p>").text("Resultado 1: " + data.res1);
-      $("#dynamicFormContainer").append("<p>").text("Resultado 2: " + data.res2);
-      $("#dynamicFormContainer").append("<p>").text("Resultado 3: " + data.res3);
-      $("#dynamicFormContainer").append("<button>").addClass("btn btn-info").id("btn-exit").text("Listo");
+      $("#dynamicFormContainer").html("<h3>Estos son tus resultados</h3>" + "<p>Resultado 1: " + data["res1"] + "</p>" + "<p>Resultado 2: " + data["res2"]+ "</p>" + "<p>Resultado 3: " + data["res3"] + "</p>" + '<button class="btn btn-light" id="btn-exit">Listo</button>');
       $("#btn-exit").on("click", function() {
         window.location.href = '/';
       })
     }
     // Load the form initially
-    loadForm(seccion);
+    $.ajax({
+      url: '/login/userid',
+      type: 'GET',
+      success: function(res)  {
+        var user_id = res;
+        //show test results
+        $.ajax({
+          url:'/belbin/results/' + user_id,
+          type: 'GET',
+          success: function(res) {
+            if (res) {
+              loadResults(res);
+            } else {
+              loadForm(seccion);
+            }
+          },
+          error: function(error) {
+            showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
+          }
+        })
+      }
+    })
 
     // Event listener for the arrow icon to dynamically load next form
     $(document).on("click", ".arrow-icon", function(e) {
@@ -128,17 +145,17 @@ $(document).ready(function() {
               type: 'GET',
               success: function(res)  {
                 user_id = res;
-              }
-            })
-            //show test results
-            $.ajax({
-              url:'/belbin/results/' + user_id,
-              type: 'GET',
-              success: function(res) {
-                loadResults(res);
-              },
-              error: function(error) {
-                showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
+                //show test results
+                $.ajax({
+                  url:'/belbin/results/' + user_id,
+                  type: 'GET',
+                  success: function(res) {
+                    loadResults(res);
+                  },
+                  error: function(error) {
+                    showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
+                  }
+                })
               }
             })
             return;

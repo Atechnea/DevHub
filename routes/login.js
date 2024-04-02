@@ -54,7 +54,7 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/userid', function(req, res) {
-    res.send(req.session.usuario.id);
-})
+    res.send(""+req.session.usuario.id);
+});
 
 module.exports = router;
