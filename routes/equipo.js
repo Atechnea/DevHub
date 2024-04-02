@@ -46,25 +46,31 @@ router.get('/:id', function(req, res) {
                                         con.release();
                                         res.status(500).json({ error: "Error al consultar la base de datos" });
                                     } else {
-                                        const memberIds = resultMembers.map(member => member.id_desarrollador);
-                                        
-                                        // Consultar la base de datos para obtener los nombres de los miembros
-                                        var sqlUserNames = "SELECT id, CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id IN (?)";
-                                        con.query(sqlUserNames, [memberIds], function(err, resultUserNames) {
-                                            con.release(); // Liberar la conexión a la base de datos
+                                        if (resultMembers.length === 0) {
+                                            con.release();
+                                            // Renderizar la plantilla con los datos del equipo sin miembros
+                                            res.render('equipo', { title: 'Información del Equipo', teamInfo: teamData });
+                                        } else {
+                                            const memberIds = resultMembers.map(member => member.id_desarrollador);
+                                            
+                                            // Consultar la base de datos para obtener los nombres de los miembros
+                                            var sqlUserNames = "SELECT id, CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id IN (?)";
+                                            con.query(sqlUserNames, [memberIds], function(err, resultUserNames) {
+                                                con.release(); // Liberar la conexión a la base de datos
 
-                                            if (err) {
-                                                res.status(500).json({ error: "Error al consultar la base de datos" });
-                                            } else {
-                                                // Agregar los miembros al objeto teamData
-                                                resultUserNames.forEach(function(member) {
-                                                    teamData.members.push({ id: member.id, name: member.nombre_completo });
-                                                });
+                                                if (err) {
+                                                    res.status(500).json({ error: "Error al consultar la base de datos" });
+                                                } else {
+                                                    // Agregar los miembros al objeto teamData
+                                                    resultUserNames.forEach(function(member) {
+                                                        teamData.members.push({ id: member.id, name: member.nombre_completo });
+                                                    });
 
-                                                // Renderizar la plantilla con los datos del equipo
-                                                res.render('equipo', { title: 'Información del Equipo', teamInfo: teamData });
-                                            }
-                                        });
+                                                    // Renderizar la plantilla con los datos del equipo
+                                                    res.render('equipo', { title: 'Información del Equipo', teamInfo: teamData });
+                                                }
+                                            });
+                                        }
                                     }
                                 });
                             }
