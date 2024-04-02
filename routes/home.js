@@ -13,7 +13,6 @@ router.get('/', function(req, res) {
 });
 
 router.post("/busqueda", function (request, response) {
-  console.log("He llegado");
   response.status(200);
   let nombre = request.body.busqueda;
   let usuario = request.session.usuario;
