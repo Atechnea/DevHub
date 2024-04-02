@@ -1,8 +1,7 @@
+const { render } = require('ejs');
 var express = require('express');
-const { listenerCount } = require('../app');
+var pool = require('../db/db').pool;
 var router = express.Router();
-
-const buscar_error = "Hubo un problema al buscar.";
 
 router.get('/', function(req, res) {
     if(res.locals.usuario != null) {
@@ -17,11 +16,13 @@ router.post("/busqueda", function (request, response) {
   console.log("He llegado");
   response.status(200);
   let nombre = request.body.busqueda;
-  const dao=request.dao;
+  let usuario = request.session.usuario;
+  const dao = request.dao;
   if(usuario.es_empresa == 1){
     pool.getConnection(async function(err, con) {
       if(err) res.status(500).json({ error: buscar_error });
       else{
+        console.log("He llegado dentro del");
         const sql = `SELECT id, nombre, apellido, usuario 
         FROM usuarios 
         WHERE nombre LIKE ? AND es_empresa = false 
@@ -32,7 +33,8 @@ router.post("/busqueda", function (request, response) {
             if (err) {
                 callback(err, null);
             } else {
-                callback(null, desarrolladores);
+              console.log("He llegado dentro del render");
+                response.render('busqueda', {desarrolladores: desarrolladores});
             }
         });
       }
@@ -51,6 +53,5 @@ router.post("/busqueda", function (request, response) {
           response.render("./busqueda", {desarrolladores:desarrollador, user:request.session.user?request.session.user:0});
       }
   });*/ 
-
 
 module.exports = router;
