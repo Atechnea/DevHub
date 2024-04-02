@@ -26,10 +26,10 @@
             <h1 id="logo-h1">DevHub</h1>
         </div>
         
-        <!--Buscador-->
-        <div class="buscador" >
-            <form method="GET" action="#">
-                <input type="text" name="q" placeholder="¿Qué desea buscar?" autocomplete="off" spellcheck="false" required>
+         <!--Buscador-->
+         <div class="buscador" >
+            <form action="/home/busqueda" method="POST" class="d-flex" role="search">
+                <input type="text" name="busqueda" placeholder="¿Qué desea buscar?" autocomplete="off" spellcheck="false">
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>
