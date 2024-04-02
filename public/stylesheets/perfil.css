@@ -1,0 +1,81 @@
+.contenedor {
+    color: #c9d1d9; /* Blanco de GitHub */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    padding: 20px; /* Añadido: espacio de relleno de 20px */
+    border: 1px solid #30363d; /* Añadido: Borde de GitHub */
+    border-radius: 6px; /* Añadido: Bordes redondeados de GitHub */
+    flex-direction: column; /* Añadido: Apila los elementos verticalmente */
+    align-items: center; /* Añadido: Centra los elementos horizontalmente */
+}
+
+/* Estilos para la sección de resultados de Belbin */
+.belbin-results {
+    margin-top: 60px;
+    margin-left: 60px; 
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+.belbin-results h2 {
+    color: #ffffff; /* Color de texto blanco */
+}
+
+
+
+.belbin-results p {
+    margin-bottom: 10px; /* Margen inferior */
+    color: #f0f6fc; /* Color de texto blanco */
+}
+
+.profile-info {
+    margin-top: 20px;
+    text-align: center; /* Alinea el texto al centro */
+}
+.profile-info p {
+    margin-bottom: 10px;
+    font-size: 16px; /* Tamaño del texto */
+}
+.profile-info p strong {
+    font-weight: bold;
+    color: #f0f6fc; /* Blanco brillante de GitHub */
+}
+.profile-name {
+    font-size: 24px; /* Tamaño del nombre */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.profile-image-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Blanco */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+    position: relative; /* Permite posicionar la paleta de colores dentro del contenedor */
+    overflow: hidden; /* Evita que la paleta de colores se desborde */
+}
+.initials {
+    font-size: 64px; /* Tamaño de las iniciales */
+    color: black; /* Color de las iniciales por defecto */
+}
+.color-picker {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* La paleta de colores no se muestra por defecto */
+}
+input[type="color"] {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 5px;
+}

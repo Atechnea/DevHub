@@ -9,6 +9,7 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
+    "bootstrap-vue": "^2.23.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
@@ -22,7 +23,8 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2",
-    "supertest": "^6.3.4"
+    "supertest": "^6.3.4",
+    "vue": "^2.7.16"
   },
   "description": "GPS Project",
   "main": "index.js",
