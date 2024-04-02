@@ -158,24 +158,12 @@
         }
 
         // Función para redirigir a la página de perfil
-        function redirectToProfile(username) {
-            
-            window.location.href = '/perfil/' + username; // Reemplaza 'username' con el ID del usuario
+        function redirectToProfile(id) {
+            window.location.href = '/perfil/' + id; // Reemplaza 'username' con el ID del usuario
         }
 
-        // Datos del equipo y miembros (se asume que se obtienen del servidor)
-        var teamInfo = {
-            name: 'Nombre del Equipo',
-            owner: 'Nombre del Dueño',
-            objective: 'Objetivo del Equipo',
-            members: [
-                { name: 'miembro 1', username: '1' },
-                { name: 'miembro 2', username: '2' },
-                { name: 'miembro 3', username: '3' }
-                // Otros miembros...
-            ]
-        };
-
+       
+    
         // Renderizar la información del equipo
         document.querySelector('#team-avatar').textContent = getInitials(teamInfo.name);
         document.querySelector('.team-name').textContent = teamInfo.name;
@@ -202,7 +190,7 @@
 
             // Agregar el evento de clic para redirigir al perfil del miembro
             memberCard.addEventListener('click', function() {
-                redirectToProfile(member.username);
+                redirectToProfile(member.id);
             });
 
             membersList.appendChild(memberCard);
