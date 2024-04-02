@@ -7,6 +7,7 @@
     <script src="/js/bootstrap.js"></script>
     <script src="/js/jquery.js"></script>
     <link rel='stylesheet' href='/stylesheets/stylehome.css' />
+    <link rel='stylesheet' href='/stylesheets/busqueda.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css">
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,36 +24,37 @@
     <!--Añadimos header-->
     <%- include('header.ejs') %>
 
-    <div class="container-global shadow-lg">
+    <div class="container-global shadow-lg" style="height: 80;">
         <!--Añadimos navbar-->
         <%- include('navbar.ejs') %>
-    
-        <div class="row text-center mx-auto align-items-center">
-            <h3>Desarrolladores encontrados: <%= desarrolladores.length %></h3>
-        </div>
-    
-        <% if(desarrolladores.length === 0) { %>
-            <div class="row text-center mx-auto align-items-center">
-                <h3>No se encontró desarrolladores</h3>
+        
+        <div class="espacio-busqueda">
+            
+            <div class="encontrados">
+                <h2>Desarrolladores encontrados: <%= desarrolladores.length %></h2>
             </div>
-        <% } else { %>
-            <% desarrolladores.forEach(function(desarr) { %>
-                <!-- Asegúrate de que cada tarjeta esté dentro de su propio "row" para que aparezcan una debajo de la otra -->
-                <div class="row mt-4">
-                    <div class="col-12 mx-auto">
-                        <div class="card text-center border-info" data-id="<%= desarr.id%>">
-                            <div class="card-body">
-                                <h2 class="card-title mx-auto" data-id="<%=desarr.id%>"><%= desarr.nombre %></h2>
-                                <h3 class="card-body mx-auto"><%= desarr.apellido %></h3>
-                                <h4 class="card-body mx-auto"><%= desarr.usuario %></h4>
-                            </div>
+        
+            <% if(desarrolladores.length === 0) { %>
+                <div class="row text-center mx-auto align-items-center">
+                    <h2>No se encontró desarrolladores</h2>
+                </div>
+            <% } else { %>
+                <% desarrolladores.forEach(function(desarr) { %>
+                    <!-- Asegúrate de que cada tarjeta esté dentro de su propio "row" para que aparezcan una debajo de la otra -->
+                    <div class="card text-center custom-card" data-id="<%= desarr.id%>">
+                        <div class="card-body">
+                            <h2 class="card-title mx-auto" data-id="<%=desarr.id%>"><%= desarr.nombre %></h2>
+                            <h3 class="card-body mx-auto"><%= desarr.apellido %></h3>
+                            <h4 class="card-body mx-auto"><%= desarr.usuario %></h4>
                         </div>
                     </div>
-                </div>
-            <% }); %>   
-        <% } %>
+                <% }); %>   
+            <% } %>
+
+
+        </div>
+        
     </div>
     
-        </div>
 
 </body>
