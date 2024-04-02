@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/x-png" href="/resources/devhub.png">
     
-    <title>DevHub - Busqueda de Desarrolladores</title>
+    <title>DevHub - Busqueda de Empresa</title>
 </head>
 <body>
 
@@ -31,21 +31,21 @@
         <div class="espacio-busqueda">
             
             <div class="encontrados">
-                <h2>Desarrolladores encontrados: <%= desarrolladores.length %></h2>
+                <h2>Empresas encontradas: <%= empresas.length %></h2>
             </div>
         
-            <% if(desarrolladores.length === 0) { %>
+            <% if(empresas.length === 0) { %>
                 <div class="row text-center mx-auto align-items-center">
-                    <h2>No se encontró desarrolladores</h2>
+                    <h2>No se encontró empresas</h2>
                 </div>
             <% } else { %>
-                <% desarrolladores.forEach(function(desarr) { %>
+                <% empresas.forEach(function(empresa) { %>
                     <!-- Asegúrate de que cada tarjeta esté dentro de su propio "row" para que aparezcan una debajo de la otra -->
-                    <div class="card link text-center custom-card" data-id="<%= desarr.id%>">
+                    <div class="card link text-center custom-card" data-id="<%= empresa.id%>">
                         <div class="card-body link">
-                            <h2 class="card-title link mx-auto" data-id="<%=desarr.id%>"><%= desarr.nombre %></h2>
-                            <h3 class="card-body mx-auto"><%= desarr.apellido %></h3>
-                            <h4 class="card-body mx-auto"><%= desarr.usuario %></h4>
+                            <h2 class="card-title link mx-auto" data-id="<%=empresa.id%>"><%= empresa.nombre %></h2>
+                            <h3 class="card-body mx-auto"><%= empresa.apellido %></h3>
+                            <h4 class="card-body mx-auto"><%= empresa.usuario %></h4>
                         </div>
                     </div>
                 <% }); %>   

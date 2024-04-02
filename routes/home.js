@@ -21,7 +21,6 @@ router.post("/busqueda", function (request, response) {
     pool.getConnection(async function(err, con) {
       if(err) res.status(500).json({ error: buscar_error });
       else{
-        console.log("He llegado dentro del");
         const sql = `SELECT id, nombre, apellido, usuario 
         FROM usuarios 
         WHERE nombre LIKE ? AND es_empresa = false 
@@ -32,7 +31,6 @@ router.post("/busqueda", function (request, response) {
             if (err) {
                 callback(err, null);
             } else {
-              console.log("He llegado dentro del render");
                 response.render('busqueda', {desarrolladores: desarrolladores});
             }
         });
@@ -40,17 +38,28 @@ router.post("/busqueda", function (request, response) {
     })
   }
   else{
+    pool.getConnection(async function(err, con) {
+      if(err) res.status(500).json({ error: buscar_error });
+      else{
+        const sql = `SELECT id, nombre, apellido, usuario 
+        FROM usuarios 
+        WHERE nombre LIKE ? AND es_empresa = true 
+        ORDER BY nombre DESC;`;
+        const query = `%${nombre}%`; // Ajusta la consulta para que funcione con 'LIKE'
+        con.query(sql, [query], function (err, empresas) {
+          con.release();
+            if (err) {
+                callback(err, null);
+            } else {
+                response.render('busquedaEmp', {empresas: empresas});
+            }
+        });
+      }
+    })
 
   }
   
 });
 
-/* dao.buscarDesarrollador(nombre, function (err, desarrollador) {
-      if (err) {
-        res.status(500).json({ error: buscar_error });
-      } else {
-          response.render("./busqueda", {desarrolladores:desarrollador, user:request.session.user?request.session.user:0});
-      }
-  });*/ 
 
 module.exports = router;
