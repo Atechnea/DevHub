@@ -41,9 +41,9 @@
             <% } else { %>
                 <% desarrolladores.forEach(function(desarr) { %>
                     <!-- Asegúrate de que cada tarjeta esté dentro de su propio "row" para que aparezcan una debajo de la otra -->
-                    <div class="card text-center custom-card" data-id="<%= desarr.id%>">
-                        <div class="card-body">
-                            <h2 class="card-title mx-auto" data-id="<%=desarr.id%>"><%= desarr.nombre %></h2>
+                    <div class="card link text-center custom-card" data-id="<%= desarr.id%>">
+                        <div class="card-body link">
+                            <h2 class="card-title link mx-auto" data-id="<%=desarr.id%>"><%= desarr.nombre %></h2>
                             <h3 class="card-body mx-auto"><%= desarr.apellido %></h3>
                             <h4 class="card-body mx-auto"><%= desarr.usuario %></h4>
                         </div>
