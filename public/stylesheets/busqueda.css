@@ -24,6 +24,7 @@ body
 }
 
 .custom-card {
+    cursor: pointer;
     margin-top: 25px;
     margin-left: 50px;
     margin-right: 50px;
