@@ -171,7 +171,8 @@ ul{
     fill: #ffffff; /* Cambia el color del icono a blanco */
 }
 
-a:active{
+
+a:focus{
     background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
 }
 
