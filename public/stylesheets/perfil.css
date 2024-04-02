@@ -12,6 +12,24 @@
     align-items: center; /* Añadido: Centra los elementos horizontalmente */
 }
 
+/* Estilos para la sección de resultados de Belbin */
+.belbin-results {
+    margin-top: 60px;
+    margin-left: 60px; 
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+.belbin-results h2 {
+    color: #ffffff; /* Color de texto blanco */
+}
+
+
+
+.belbin-results p {
+    margin-bottom: 10px; /* Margen inferior */
+    color: #f0f6fc; /* Color de texto blanco */
+}
+
 .profile-info {
     margin-top: 20px;
     text-align: center; /* Alinea el texto al centro */
