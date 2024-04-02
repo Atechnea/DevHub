@@ -4,6 +4,7 @@ body{
 
 header{
     width: 100%;
+    height: 8vh;
     background: rgba(24,23,28,255);
     display: flex;
     justify-content: space-between;
@@ -21,11 +22,13 @@ header{
 
 .logo h1
 {
+    cursor: pointer;
     margin-left: 10px;
 }
 
 .logo img
 {
+    cursor: pointer;
     width: 60px;
     height: 40px;
     margin-left: 40px;
@@ -42,11 +45,21 @@ header{
     display: flex;
     justify-content: flex-end;
     margin-right: 40px;
+    background-color: transparent;
     color:rgb(255, 255, 255);
+}
+
+.perfil span
+{
+    color:rgb(255, 255, 255);
+    font-family: "Chivo Mono", monospace;
+    margin-left: 10px;
 }
 
 .datosperfil
 {
+    border: none; /* Elimina el borde */
+    background-color: transparent;
     display: flex;
     align-items: center;
 }
@@ -58,6 +71,10 @@ header{
     margin-left: 10px;
 }
 
+.dropdown-menu {
+    animation: fadeIn 1s ease; /* Animación de opacidad durante 2 segundos */
+}   
+
 .container-global{
     display: flex;
     height: 100vh;
@@ -65,20 +82,20 @@ header{
 
 .bienvenida
 {
-    
     font-family: "Chivo Mono", monospace;
     color:rgb(200, 200, 200);
     width: 70%;
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     height: 100vh;
     justify-content: center;
     align-items: center;
+    margin: auto;
 }
 
 .bienvenida h2{
-    font-size : 50px;
+    font-size : 300%;
+    text-align: center;
 }
 
 .bienvenida p{
@@ -88,21 +105,34 @@ header{
     color: transparent; /* Oculta el color del texto */
 }
 
-
-.lista{
-    border-right: 1px solid rgba(231, 231, 231, 0.2);
-    width: 30%;
-    display: flex;
-    flex-direction: column;
+.nav{
     font-size: 30px;
+}
+
+.lista 
+{
+    border-right: 1px solid rgba(231, 231, 231, 0.2);
+}
+
+.lista:hover {
+    animation: increaseSize 0.5s forwards; /* Aplica la animación solo cuando se hace hover */
+}
+
+.lista:not(:hover) {
+    animation: decreaseSize 0.5s forwards; /* Aplica la animación solo cuando se hace hover */
 }
 
 .lista li
 {
     margin-top: 20px;
     padding: 5px;
-    
+    width: 300%;
 }
+
+.lista:not(:hover) .texto {
+    display: none; /* Oculta los textos cuando la lista no está en hover */
+}
+
 .lista li a
 {
     font-family: "Chivo Mono", monospace;
@@ -113,30 +143,33 @@ header{
     padding: 10px !important;
     background-color:rgba(192, 192, 192,0.1);
     border-radius: 20px;
-    font-weight: bold;
+    font-weight:600;
 }
 
 .lista li a.crear-equipo
 {
-    padding: 10px;
-    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
     border-radius: 20px;
+}
+
+.icono_crear
+{
+    transform: rotate(45deg);
 }
 
 .lista li a.crear-equipo:hover
 {
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
     padding: 15px !important;
+    color: #ffffff;
 }
 
 ul{
     list-style: none;
 }
 
-a{
-    text-decoration: none;
-    color: rgb(255, 255, 255);
+.lista li:hover .icono_crear path {
+    fill: #ffffff; /* Cambia el color del icono a blanco */
 }
-
 
 a:focus{
     background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
@@ -144,6 +177,7 @@ a:focus{
 
 .buscador {
     width: 50%;
+    height: 100%;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -151,7 +185,7 @@ a:focus{
 
 .buscador form {
     width: 100%;
-    height: 6vh;
+    height: 70%;
     background: rgba(255,255,255,0.2);
     display: flex;
     align-items: center;
@@ -168,6 +202,7 @@ a:focus{
     padding: 24px 20px;
     font-size: 20px;
     color: white;
+    width: 85%;
 
 }
 
@@ -178,8 +213,7 @@ a:focus{
     border-radius: 4px;
     cursor: pointer;
     padding: 8px 12px;
-    margin-left: 4px;
-    outline: none;
+    width: 15%;
 }
 
 .buscador button:hover {
@@ -191,23 +225,107 @@ a:focus{
 
 }
 
+/*Tamaño tablet*/
+@media screen and (min-width:560px) and (max-width:768px) {
 
+    .logo h1{
+        display: none;
+    }
+    
+    .logo
+    {
+        width: 20%;
+    }
 
-@media screen and (max-width:768px) {
+    .buscador
+    {
+        width: 50%;
+    }
+
+    .perfil
+    {
+        width: 30%;
+    }
+}
+
+/*Vista movil*/
+@media screen and (max-width:560px) {
+
+    .container-global
+    {
+        height: 100vh;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .buscador{
+        width: 0%;
+        display: none;
+    }
+
     .logo h1{
         display: none;
     }
 
-    .buscador form
-    {
-        width: 60%;
-    }
-    
-    header{
-        justify-content: baseline;
+    .bienvenida h2{
+        font-size : 200%;
     }
 
-    header>div{
-        width: auto;
+    .lista ul
+    {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap
+    }
+
+    .lista
+    {
+        width: 100%;
+        border-top: 1px solid rgba(231, 231, 231, 0.2);
+        animation: none;
+    }
+
+    .lista:hover .texto {
+        display: none;
+    }
+
+    .lista:hover,
+    .lista:not(:hover) {
+        animation: none;
+    }
+
+    /* También puedes querer detener la animación del icono en hover */
+    .lista li:hover .icono_crear path {
+        animation: none;
+    }
+
+    ul{
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+}
+
+@keyframes increaseSize {
+    from {
+      width: 100px;
+    }
+    to {
+      width: 300px; /* Cambia este valor según el tamaño deseado */
+    }
+  }
+
+    @keyframes decreaseSize {
+    from {
+        width: 300px;
+    }
+    to {
+        width:100px;
     }
 }
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
