@@ -22,37 +22,49 @@ router.get('/:id', function(req, res) {
                         con.release();
                         res.status(404).json({ error: "Equipo no encontrado" });
                     } else {
+                        const ownerId = result[0].dueno; // Obtener el ID del dueño del equipo
                         const teamData = {
                             name: result[0].nombre,
-                            owner: result[0].dueno,
+                            owner: '', // Inicializar el propietario del equipo
                             objective: result[0].objetivo,
                             members: [] // Inicializamos la lista de miembros
                         };
 
-                        // Consultar la base de datos para obtener los miembros del equipo
-                        var sqlMembers = "SELECT id_desarrollador FROM pertenece_equipo WHERE id_equipo = ?";
-                        con.query(sqlMembers, [teamId], function(err, resultMembers) {
+                        // Consultar la base de datos para obtener el nombre del dueño del equipo
+                        var sqlOwner = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id = ?";
+                        con.query(sqlOwner, [ownerId], function(err, resultOwner) {
                             if (err) {
                                 con.release();
                                 res.status(500).json({ error: "Error al consultar la base de datos" });
                             } else {
-                                const memberIds = resultMembers.map(member => member.id_desarrollador);
-                                
-                                // Consultar la base de datos para obtener los nombres de los miembros
-                                var sqlUserNames = "SELECT id, CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id IN (?)";
-                                con.query(sqlUserNames, [memberIds], function(err, resultUserNames) {
-                                    con.release(); // Liberar la conexión a la base de datos
+                                teamData.owner = resultOwner[0].nombre_completo; // Establecer el nombre del dueño
 
+                                // Consultar la base de datos para obtener los miembros del equipo
+                                var sqlMembers = "SELECT id_desarrollador FROM pertenece_equipo WHERE id_equipo = ?";
+                                con.query(sqlMembers, [teamId], function(err, resultMembers) {
                                     if (err) {
+                                        con.release();
                                         res.status(500).json({ error: "Error al consultar la base de datos" });
                                     } else {
-                                        // Agregar los miembros al objeto teamData
-                                        resultUserNames.forEach(function(member) {
-                                            teamData.members.push({ id: member.id, name: member.nombre_completo });
-                                        });
+                                        const memberIds = resultMembers.map(member => member.id_desarrollador);
+                                        
+                                        // Consultar la base de datos para obtener los nombres de los miembros
+                                        var sqlUserNames = "SELECT id, CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id IN (?)";
+                                        con.query(sqlUserNames, [memberIds], function(err, resultUserNames) {
+                                            con.release(); // Liberar la conexión a la base de datos
 
-                                        // Renderizar la plantilla con los datos del equipo
-                                        res.render('equipo', { title: 'Información del Equipo', teamInfo: teamData });
+                                            if (err) {
+                                                res.status(500).json({ error: "Error al consultar la base de datos" });
+                                            } else {
+                                                // Agregar los miembros al objeto teamData
+                                                resultUserNames.forEach(function(member) {
+                                                    teamData.members.push({ id: member.id, name: member.nombre_completo });
+                                                });
+
+                                                // Renderizar la plantilla con los datos del equipo
+                                                res.render('equipo', { title: 'Información del Equipo', teamInfo: teamData });
+                                            }
+                                        });
                                     }
                                 });
                             }
