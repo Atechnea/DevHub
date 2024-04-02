@@ -6,11 +6,13 @@ var logger = require('morgan');
 const bd = require('./db/db');
 
 var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
 var belbinRouter = require('./routes/belbin');
 var homeRouter = require('./routes/home');
 var userRouter = require('./routes/users');
+var perfilRouter = require('./routes/perfil');
 
 var app = express();
 
@@ -40,11 +42,13 @@ app.use((req, res, next) => {
 
 // Routers
 app.use('/', indexRouter);
+app.use('/users', usersRouter);
 app.use('/registro', registerRouter);
 app.use('/login', loginRouter);
 app.use('/home', homeRouter);
 app.use('/users', userRouter);
 app.use('/belbin', belbinRouter);
+app.use('/perfil', perfilRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
