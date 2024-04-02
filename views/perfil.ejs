@@ -49,8 +49,19 @@
                     <p><strong>Tipo:</strong> <%= userProfile.es_empresa ? 'Empresa' : 'Usuario' %></p>
                 </div>
             </div>
-    
-              
+
+            <div class="belbin-results">
+                <h2>Resultados de Belbin</h2>
+                <% if (userProfile.res1 && userProfile.res2 && userProfile.res3) { %>
+                    <p><strong>Resultado 1:</strong> <%= userProfile.res1 %></p>
+                    <p><strong>Resultado 2:</strong> <%= userProfile.res2 %></p>
+                    <p><strong>Resultado 3:</strong> <%= userProfile.res3 %></p>
+                <% } else { %>
+                    <p>No hay resultados de Belbin disponibles.</p>
+                <% } %>
+
+            
+
         </div>
 
 </body>
