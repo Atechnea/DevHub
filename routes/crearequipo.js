@@ -17,7 +17,7 @@ router.post('/', function(req, res) {
     //Recoger todos los fields del request body
     var  nombre = req.body;
     var objetivo=document.getElementsByName("objetivo");
-    var nombreEmpresa=req.session.usuario.id;//id de usuario unico para cada empresa
+    var idEmpresa=req.session.usuario.id;//id de usuario unico para cada empresa
    ////
   // Validación de los datos
   if (!nombre || nombre.length < 1 || nombre.length > 30) {
@@ -32,7 +32,7 @@ router.post('/', function(req, res) {
             return res.status(500).json({ error: "No se pudo conectar a la base de datos, por favor, inténtelo de nuevo más tarde." });
         }
 
-        const sqlNombreEnUso = "SELECT COUNT(*) AS count FROM equipo WHERE nombre = ? AND idEmpresa = ?";
+        const sqlNombreEnUso = "SELECT COUNT(*) AS count FROM equipo WHERE nombre = ? AND dueno = ?";
         connection.query(sqlNombreEnUso, [nombre, idEmpresa], function(err, results) {
             if (err) {
                 console.error(err);
@@ -45,7 +45,7 @@ router.post('/', function(req, res) {
                 return res.status(422).json({ error: "El nombre ya está en uso por otro equipo de esta empresa" });
             } else {
                 // Insertar el nuevo equipo
-                const sqlInsertarEquipo = "INSERT INTO equipo (nombre, objetivo, idEmpresa) VALUES (?, ?, ?)";
+                const sqlInsertarEquipo = "INSERT INTO equipo (nombre, objetivo, dueno) VALUES (?, ?, ?)";
                 connection.query(sqlInsertarEquipo, [nombre, objetivo, idEmpresa], function(err, results) {
                     connection.release();
                     if (err) {
