@@ -1,0 +1,61 @@
+.modal
+{
+    background: rgba(31,30,35,255);
+}
+
+.modal-content
+{
+    background: rgba(31,30,35,255);
+    border: 1px solid rgba(231, 231, 231, 1) !important;
+    border-radius: 10px !important;
+    font-family: "Chivo Mono", monospace;
+    color:#ffffff;
+}
+
+.modal-header
+{
+    border-bottom: 0px !important;
+}
+
+.modal-footer
+{
+    border-top: 0px !important;
+}
+
+.btn-close{
+    fill: white !important;
+}
+
+.form-control
+{
+    background: rgba(31,30,35,255);
+    color: #ffffff;
+}
+
+.form-control::placeholder
+{
+    color: #ffffff;
+}
+
+
+#Cerrar
+{
+    color: white;
+    border: 1px solid rgba(231, 231, 231, 0.2);
+}
+
+#Aceptar
+{
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    color: white;
+}
+
+.btn
+{
+    border-radius: 10px !important;
+}
+
+.btn:hover
+{
+    font-weight:600;
+}

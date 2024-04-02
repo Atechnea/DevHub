@@ -221,43 +221,6 @@ ul{
 
 }
 
-#staticBackdrop
-{
-    background-color:rgba(31,30,35,255);
-}
-
-.modal-dialog
-{
-    font-family: "Chivo Mono", monospace;
-}
-
-.modal-content
-{
-    border-radius: 10px !important;
-}
-
-#Cerrar
-{
-    background-color: red;
-    color: white;
-}
-
-#Aceptar
-{
-    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
-    color: white;
-}
-
-.btn
-{
-    border-radius: 10px !important;
-}
-
-.btn:hover
-{
-    font-weight:600;
-}
-
 /*Tamaño tablet*/
 @media screen and (min-width:560px) and (max-width:768px) {
 
