@@ -10,6 +10,11 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %>. Usuario: <%= usuario.usuario %></p>
+    <p>Welcome to <%= title %>. Redirecting to Register...</p>
   </body>
+  <script>
+    $(document).ready(function() {
+      window.location = window.location + "registro";
+    })
+  </script>
 </html>
