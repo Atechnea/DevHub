@@ -13,11 +13,6 @@ const pool = mysql.createPool({
     connectionLimit: 15
 });
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/develop
 // Configure express-session to use MySQLStore
 const sessionStore = new MySQLStore({
     createDatabaseTable:true
