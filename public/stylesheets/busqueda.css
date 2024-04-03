@@ -1,0 +1,36 @@
+body
+{
+    font-family: "Chivo Mono", monospace !important;
+    color:rgb(200, 200, 200) !important;
+    overflow-y:hidden;
+}
+
+.espacio-busqueda
+{
+    overflow-y:auto;
+    overflow-x: hidden;
+    width: 100%;
+    display: flex;
+    align-items:stretch;
+    flex-direction: column;
+    height: 92vh;
+}
+
+.encontrados
+{
+    width: 100%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.custom-card {
+    cursor: pointer;
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 25px;
+
+    background: rgba(31,30,35,255) !important; 
+    border: 1px solid rgba(231, 231, 231, 1) !important;
+    color: white !important;
+}

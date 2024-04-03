@@ -1,0 +1,38 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/CrearEquipo.css">
+</head>
+
+<div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <form class="formequipo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title">Crear equipo</h1>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z"/>
+              </svg>
+            </button>          
+          </div>
+          <div class="modal-body">
+
+            <div class="form-outline mb-4">
+              <label class="form-label">Nombre</label>
+              <input id="NombreEquipo" class="form-control" name ="nombre" placeholder="Introduzca el nombre del equipo" required/>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Objetivo</label>
+              <textarea class="form-control" id="Objetivo" name ="objetivo" rows="4" placeholder="Introduzca el objetivo del equipo"></textarea>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" id="Cerrar" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn" id="Aceptar">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>
+

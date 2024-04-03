@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.js"></script>
+    <link rel='stylesheet' href='/stylesheets/stylehome.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css">
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/x-png" href="/resources/devhub.png">
+    
+    <title>DevHub - Home</title>
+</head>
+<body>
+
+    <!--Añadimos header-->
+    <%- include('header.ejs') %>
+
+        <div class="container-global shadow-lg">
+            
+            <!--Añadimos navbar-->
+            <%- include('navbar.ejs') %>
+
+            <!--Diferenciamos usuarios navbar-->
+            <% if(usuario.es_empresa == 1) { %>
+                <div class="bienvenida">
+                    <h2>Bienvenido/a a DevHub</h2>
+                    <p>(versión empresa)</p>
+                </div>
+            <% } else { %>
+                <div class="bienvenida">
+                    <h2>Bienvenido/a a DevHub</h2>
+                    <p>(versión desarrollador)</p>
+                </div>
+            <% } %>
+              
+        </div>
+
+</body>

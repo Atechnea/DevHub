@@ -1,16 +1,16 @@
 $(document).ready(function(){
-    $("#formregistro").on('submit', '.formregistro', function(event) {
+    $("#staticBackdrop").on('submit', '.formequipo', function(event) {
         event.preventDefault();
 
         var formData = $(this).serialize();
-        
+
         //Envio form por ajax
         $.ajax({
         type: 'post',
-        url: 'registro/registrar',
+        url: '/crearequipo',
         data: formData,
         success: function(result) {
-            showToastr('success', 'Su cuenta ha sido creada con éxito', '');
+            showToastr('success', 'Exíto', '');
         },
         error: function(xhr, status, error) {
             showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);

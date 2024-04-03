@@ -3,7 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'DevHub' });
+  if(res.locals.usuario != null) {
+    res.render('home');
+  }
+  else{//NO USUARIO en sesion
+    res.redirect('login');
+  }
 });
 
 module.exports = router;

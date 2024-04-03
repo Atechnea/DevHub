@@ -1,0 +1,119 @@
+body {
+    background: linear-gradient(to bottom, #241f30, #0d1117, #0d1117);
+    color: #c9d1d9;
+    font-family: "Chivo Mono", monospace;
+    box-sizing: border-box;
+}
+.contenedor  {
+
+    
+    display: flex;
+    margin-top: 50px !important;
+    margin-left: 50px !important;
+    align-items: stretch;
+
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+
+}
+.team-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.team-avatar {
+    width: 150px; /* Tamaño del avatar del equipo */
+    height: 150px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* Evitar que el avatar del equipo se haga más pequeño */
+}
+.team-avatar img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+}
+.team-info {
+    color: white;
+    flex-grow: 1; /* El contenido se expandirá para llenar el espacio disponible */
+}
+.team-name {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.team-owner {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.team-objective {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+.members-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+.member-card {
+    width: calc(33.33% - 20px);
+    background-color: #30363d;
+    padding: 10px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Cambia el cursor al pasar sobre las tarjetas de miembros */
+    border: 1px solid rgba(231, 231, 231, 0.2);
+}
+.member-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.member-avatar img {
+    width: 100%;
+    border-radius: 50%;
+}
+.member-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f0f6fc;
+}
+
+/* Estilos para dispositivos con ancho máximo de 600px */
+@media (max-width: 600px) {
+    .team-header {
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos a la izquierda */
+    }
+    .team-avatar {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .team-info {
+        text-align: center;
+    }
+    .member-card {
+        width: calc(50% - 20px); /* Dos miembros por fila */
+    }
+}
+/* Estilos para dispositivos con ancho máximo de 400px */
+@media (max-width: 400px) {
+    .member-card {
+        width: 100%; /* Un miembro por fila */
+    }
+    .member-name {
+        display: none; /* Ocultar el nombre del miembro en pantallas muy pequeñas */
+    }
+}

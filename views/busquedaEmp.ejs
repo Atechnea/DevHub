@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.js"></script>
+    <link rel='stylesheet' href='/stylesheets/stylehome.css' />
+    <link rel='stylesheet' href='/stylesheets/busqueda.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css">
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/x-png" href="/resources/devhub.png">
+    
+    <title>DevHub - Busqueda de Empresa</title>
+</head>
+<body>
+
+    <!--Añadimos header-->
+    <%- include('header.ejs') %>
+
+    <div class="container-global shadow-lg" style="height: 80;">
+        <!--Añadimos navbar-->
+        <%- include('navbar.ejs') %>
+        
+        <div class="espacio-busqueda">
+            
+            <div class="encontrados">
+                <h2>Empresas encontradas: <%= empresas.length %></h2>
+            </div>
+        
+            <% if(empresas.length === 0) { %>
+                <div class="row text-center mx-auto align-items-center">
+                    <h2>No se encontró empresas</h2>
+                </div>
+            <% } else { %>
+                <% empresas.forEach(function(empresa) { %>
+                    <!-- Asegúrate de que cada tarjeta esté dentro de su propio "row" para que aparezcan una debajo de la otra -->
+                    <div class="card link text-center custom-card" data-id="<%= empresa.id%>">
+                        <div class="card-body link">
+                            <h2 class="card-title link mx-auto" data-id="<%=empresa.id%>"><%= empresa.nombre %></h2>
+                            <h3 class="card-body mx-auto"><%= empresa.apellido %></h3>
+                            <h4 class="card-body mx-auto"><%= empresa.usuario %></h4>
+                        </div>
+                    </div>
+                <% }); %>   
+            <% } %>
+
+
+        </div>
+        
+    </div>
+    
+
+</body>
+
+<script src="/javascripts/busqueda.js"></script>
+
+</html>
