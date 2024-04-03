@@ -11,6 +11,8 @@ $(document).ready(function(){
         data: formData,
         success: function(result) {
             showToastr('success', 'Exíto', '');
+            $("#staticBackdrop").modal('hide');
+            $(".modal-backdrop").hide();
         },
         error: function(xhr, status, error) {
             showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
