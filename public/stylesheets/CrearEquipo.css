@@ -3,6 +3,13 @@
     background: rgba(31,30,35,255);
 }
 
+.form-control:focus {
+    background: transparent !important;
+    color: #ffffff;
+    box-shadow: none;
+    border-color: #A870FF;
+  }
+
 .modal-content
 {
     background: rgba(31,30,35,255);
