@@ -97,6 +97,30 @@
     
                 membersList.appendChild(memberCard);
             <% }); %>
+            
+                            // Crear y agregar el botón de 'Añadir Integrante'
+                var addButton = document.createElement('div');
+                addButton.classList.add('member-card'); // Usamos el mismo estilo que las tarjetas de miembro
+
+                var addAvatar = document.createElement('div');
+                addAvatar.classList.add('member-avatar');
+                addAvatar.textContent = '+'; // Un simple '+' para indicar añadir
+                addAvatar.style.backgroundColor = getRandomColor(); // Un color que destaque, como verde
+
+                var addText = document.createElement('div');
+                addText.classList.add('member-name');
+                addText.textContent = 'Invitar Integrante';
+
+                addButton.appendChild(addAvatar);
+                addButton.appendChild(addText);
+
+                // Evento de clic para el botón de añadir
+                addButton.addEventListener('click', function() {
+                    window.location.href = '/ruta-para-añadir-integrante'; // Asumiendo que tienes una ruta para esto
+                });
+
+                membersList.appendChild(addButton);
+            
         </script>
 
 </body>
