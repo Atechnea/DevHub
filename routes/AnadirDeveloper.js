@@ -11,6 +11,11 @@ router.post('/', function(req, res) {
   // Validación de los datos
 
  
+  if (!nombre || nombre.length < 1 || nombre.length > 30) {
+    return res.status(422).json({ error: "El nombre debe tener entre 1 y 30 caracteres" });
+} else if (!objetivo || objetivo.length > 120) {
+    return res.status(422).json({ error: "El objetivo debe tener menos de 120 caracteres" });
+} else {
     // Verificar si el nombre del equipo ya está en uso por la misma empresa
     pool.getConnection(function(err, connection) {
         if (err) {
@@ -45,7 +50,7 @@ router.post('/', function(req, res) {
             }
         });
     });
-    
+}
 });
 
 module.exports = router;

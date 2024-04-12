@@ -98,7 +98,7 @@
                 membersList.appendChild(memberCard);
             <% }); %>
             
-                            // Crear y agregar el botón de 'Añadir Integrante'
+                // Crear y agregar el botón de 'Añadir Integrante'
                 var addButton = document.createElement('div');
                 addButton.classList.add('member-card'); // Usamos el mismo estilo que las tarjetas de miembro
 
@@ -116,12 +116,17 @@
 
                 // Evento de clic para el botón de añadir
                 addButton.addEventListener('click', function() {
-                    window.location.href = '/ruta-para-añadir-integrante'; // Asumiendo que tienes una ruta para esto
+                    $("#staticBackdrop2").modal('show');
                 });
 
                 membersList.appendChild(addButton);
             
         </script>
 
+        <%- include('AnadirDeveloper.ejs') %>
+
 </body>
 
+<script src="/javascripts/AnadirDeveloper.js"></script>
+
+</html>
