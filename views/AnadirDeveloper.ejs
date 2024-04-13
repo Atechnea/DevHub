@@ -24,8 +24,17 @@
               </div>
 
               <div class="mostrar_resultados">
-                  <!-- Mostrar resultados aquí-->
-              </div>
+                <% if (resultados.length > 0) { %>
+                    <ul>
+                        <% resultados.forEach(function(desarrollador) { %>
+                            <li><%= desarrollador.nombre %> <%= desarrollador.apellido %> - <%= desarrollador.id %></li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p>No se encontraron desarrolladores que coincidan con la búsqueda.</p>
+                <% } %>
+            </div>
+            
 
             </div>
           </div>
