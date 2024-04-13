@@ -89,7 +89,7 @@ router.post('/:id', function(req, res) {
 
     const sql = `
         SELECT id, nombre, apellido FROM usuarios 
-        WHERE (nombre LIKE ? OR apellido LIKE ?) AND id NOT IN (
+        WHERE (nombre LIKE ? OR apellido LIKE ?) AND es_empresa = false AND id NOT IN (
             SELECT id_desarrollador FROM pertenece_equipo WHERE id_equipo = ?
         )
     `;
