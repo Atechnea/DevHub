@@ -8,7 +8,7 @@ router.post('/:equipoId', function(req, res) {
     const equipoId = req.params.equipoId; // Obtener el equipoId de los parámetros de la URL
 
     const sql = `
-        SELECT id, nombre, apellido FROM desarrolladores 
+        SELECT id, nombre, apellido FROM usuarios 
         WHERE (nombre LIKE ? OR apellido LIKE ?) AND id NOT IN (
             SELECT id_desarrollador FROM pertenece_equipo WHERE id_equipo = ?
         )

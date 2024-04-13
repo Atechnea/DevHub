@@ -29,8 +29,23 @@ $(document).ready(function() {
             url: '/equipo/' + equipoId,
             data: { busqueda: busqueda },
             success: function(data) {
-                // Actualizar la sección de resultados con los datos recibidos del servidor
-                $(".mostrar_resultados").html(data);
+                // Generar el HTML para los resultados
+                var resultadosHTML = '';
+                data.forEach(function(resultado) {
+                    resultadosHTML += '<div class="resultado" data-usuario-id="' + resultado.id + '">';
+                    resultadosHTML += '<div class="nombre">' + resultado.nombre + ' ' + resultado.apellido + '</div>';
+                    resultadosHTML += '</div>';
+                    resultadosHTML += '<hr>'; // Agregar línea horizontal
+                });
+
+                // Insertar los resultados en el contenedor
+                $(".mostrar_resultados").html(resultadosHTML);
+
+                // Manejar el clic en los resultados para dirigirse a /perfil/ddelusuaroselecconado
+                $(".resultado").click(function() {
+                    var usuarioId = $(this).data("usuario-id");
+                    window.location.href = '/perfil/' + usuarioId;
+                });
             },
             error: function(xhr, status, error) {
                 // Manejar errores si la solicitud falla

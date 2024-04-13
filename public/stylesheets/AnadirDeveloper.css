@@ -57,6 +57,8 @@
 
 }
 
+
+
 .busqueda_developer input[type="text"] {
     background: transparent;
     flex: 1;
@@ -97,3 +99,16 @@
     width: 80%;
 }
 
+.resultado {
+    text-align: center; /* Centrar el contenido */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre los resultados */
+}
+
+.resultado .nombre {
+    display: inline-block; /* Hacer que los nombres y apellidos estén en la misma línea */
+    margin-right: 5px; /* Agregar un pequeño espacio entre el nombre y el apellido */
+}
+
+.resultado .apellido {
+    text-align: right; /* Mover el texto del apellido hacia la derecha */
+}
