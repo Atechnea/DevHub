@@ -5,7 +5,8 @@ body {
     box-sizing: border-box;
 }
 .contenedor  {
-
+    position: relative; 
+    z-index: 1;
     
     display: flex;
     margin-top: 50px !important;
