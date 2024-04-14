@@ -3,6 +3,25 @@ const router = express.Router();
 const pool = require('../db/db').pool; 
 const bcrypt = require('bcrypt');
 
+router.post('/envio_invitacion', function(req,res) {
+    const empId = req.body.empId;
+    const equipoId = req.body.equipoId;
+    const desId = req.body.desId;
+    const sql = "INSERT INTO invitaciones(id_empresa, id_equipo, id_desarrollador) VALUES (?, ? ,?)";
+    pool.getConnection(function(err, con) {
+        if (err) {
+            return res.status(500).json({ error: "Error de conexión a la base de datos" });
+        }
+        con.query(sql, [empId, equipoId, desId], function(err, results) {
+            con.release();
+            if(err) {
+                return res.status(500).json({ error: "Error al insertar en la base de datos" });
+            }
+            res.send("ok");
+        })
+    })
+});
+
 router.post('/:equipoId', function(req, res) {
     const busqueda = req.body.busqueda;
     const equipoId = req.params.equipoId; // Obtener el equipoId de los parámetros de la URL
@@ -29,25 +48,6 @@ router.post('/:equipoId', function(req, res) {
             res.json(resultados); // Enviar resultados como JSON
         });
     });
-});
-
-router.post('/envio_invitacion', function(req,res) {
-    const empId = req.body.empId;
-    const equipoId = req.body.equipoId;
-    const desId = req.body.desId;
-    const sql = "INSERT INTO invitaciones(id_empresa, id_equipo, id_desarrollador) VALUES (?, ? ,?)";
-    pool.getConnection(function(err, con) {
-        if (err) {
-            return res.status(500).json({ error: "Error de conexión a la base de datos" });
-        }
-        con.query(sql, [empId, equipoId, desId], function(err, results) {
-            con.release();
-            if(err) {
-                return res.status(500).json({ error: "Error al insertar en la base de datos" });
-            }
-            res.send("ok");
-        })
-    })
 });
 
 module.exports = router;
