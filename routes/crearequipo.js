@@ -50,19 +50,3 @@ router.post('/', function(req, res) {
 
 module.exports = router;
 
-
-
-
-
-
-
-   /* ///////////////////
-    //Validar datos
-    if (nombre.length > 30)
-        res.status(422).json({ error: "El nombre debe tener menos de 30 caracteres" });
-    else if (objetivo.length > 120)
-        res.status(422).json({ error: "El objetivo debe tener menos de 120 caracteres" });
-
-});
-
-module.exports = router;*/

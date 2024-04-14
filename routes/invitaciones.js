@@ -31,4 +31,23 @@ router.post('/:equipoId', function(req, res) {
     });
 });
 
+router.post('/envio_invitacion', function(req,res) {
+    const empId = req.body.empId;
+    const equipoId = req.body.equipoId;
+    const desId = req.body.desId;
+    const sql = "INSERT INTO invitaciones(id_empresa, id_equipo, id_desarrollador) VALUES (?, ? ,?)";
+    pool.getConnection(function(err, con) {
+        if (err) {
+            return res.status(500).json({ error: "Error de conexión a la base de datos" });
+        }
+        con.query(sql, [empId, equipoId, desId], function(err, results) {
+            con.release();
+            if(err) {
+                return res.status(500).json({ error: "Error al insertar en la base de datos" });
+            }
+            res.send("ok");
+        })
+    })
+});
+
 module.exports = router;

@@ -43,14 +43,33 @@ $(document).ready(function() {
 
                 // Manejar el clic en los resultados para dirigirse a /perfil/ddelusuaroselecconado
                 $(".resultado").click(function() {
-                    var usuarioId = $(this).data("usuario-id");
-                    window.location.href = '/perfil/' + usuarioId;
+                    var desId = $(this).data("usuario-id");
+                    $.ajax({
+                        type: 'GET',
+                        url: '/login/userid',
+                        success: function(data) {
+                            var empId = data;
+                            var datos = {equipoId, desId, empId};
+                            $.ajax({
+                                type: 'POST',
+                                url: '/invitaciones/envio_invitacion',
+                                data: datos,
+                                success: function(data) {
+                                    //mostrar toast enviado
+                                    console.log("Invitación enviada!"); //Borrar cuando esté hecho el toast
+                                },
+                                error: function(xhr, status, error) {
+                                    //mostrar toast error
+                                    console.error(xhr.responseText); //Borrar cuando esté hecho el toast
+                                }
+                            })
+                        }
+                    })
                 });
             },
             error: function(xhr, status, error) {
                 // Manejar errores si la solicitud falla
                 console.error(xhr.responseText); // Imprimir la respuesta del servidor en la consola
-                
                 alert('Error al buscar desarrolladores');
             }
         });
