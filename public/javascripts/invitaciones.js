@@ -56,10 +56,12 @@ $(document).ready(function() {
                                 data: datos,
                                 success: function(data) {
                                     //mostrar toast enviado
-                                    console.log("Invitación enviada!"); //Borrar cuando esté hecho el toast
+                                    showToastr('success', 'Se ha enviado la invitación con éxito', '');
+
                                 },
                                 error: function(xhr, status, error) {
                                     //mostrar toast error
+                                    showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
                                     console.error(xhr.responseText); //Borrar cuando esté hecho el toast
                                 }
                             })
