@@ -4,12 +4,12 @@ var pool = require('../db/db').pool;
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 
-const user_regex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+const user_regex = /^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
 const name_regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
 const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const pw_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-const user_error = "Usuario no tiene un formato válido, debe estar formado solo de letras, numeros, _ y . , los caracteres especiales no pueden estar ni al principio ni al final y debe tener entre 8 y 20 caracteres.";
+const user_error = "Usuario no tiene un formato válido, debe estar formado solo de letras, numeros, _ y . , los caracteres especiales no pueden estar ni al principio ni al final y debe tener entre 3 y 20 caracteres.";
 const email_error = "El correo no tiene un formato válido, por favor, introduzca un correo válido.";
 const name_error = "Nombre o Apellido no tiene un formato válido, debe estar formado solo de letras.";
 const pw_error = "La contraseña debe estar formada por al menos 8 caracteres, con una letra y un numero.";
