@@ -5,11 +5,12 @@
     align-items: center; /* Centra los elementos horizontalmente */
     justify-content: center; /* Centra los elementos verticalmente */
     margin-bottom: 2%; /* Aumenta el espacio entre las tarjetas */
+    margin-top: 2%;
     margin-left: 2%; /* Aumenta el espacio entre las tarjetas */
     color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 6px 2px rgb(109, 62, 217); /* Agrega una sombra en todos los bordes */
+    box-shadow: 0px 0px 6px 2px rgb(99, 50, 213); /* Agrega una sombra en todos los bordes */
 }
 
 

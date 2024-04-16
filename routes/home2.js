@@ -22,6 +22,7 @@ router.get('/', function(req, res) {
                 teamName: "Equipo 3",
                 invitationId: "789",
             },
+            
             {
                 senderName: "Empresa AAAA",
                 recipient: "2",
