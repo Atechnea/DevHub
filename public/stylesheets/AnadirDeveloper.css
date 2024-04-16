@@ -1,6 +1,7 @@
 .modal
 {
     background: rgba(31,30,35,255);
+    overflow-y: auto;
 }
 
 .modal-header
@@ -54,10 +55,7 @@
     backdrop-filter: blur(4px) saturate(180%);
     font-family: "Chivo Mono", monospace;
     border: 1px solid rgba(231, 231, 231, 1);
-
 }
-
-
 
 .busqueda_developer input[type="text"] {
     background: transparent;
@@ -96,12 +94,20 @@
     margin-top: 10px;
     border-radius: 20px;
     background: rgba(255,255,255,0.2);
+    padding-left: 20px;
+    padding-right: 20px;
+
     width: 80%;
 }
 
 .resultado {
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center; /* Centrar el contenido */
     cursor: pointer; /* Cambiar el cursor al pasar sobre los resultados */
+    border-bottom: 1px solid rgba(231, 231, 231, 0.2);
 }
 
 .resultado .nombre {

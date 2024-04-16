@@ -35,7 +35,6 @@ $(document).ready(function() {
                     resultadosHTML += '<div class="resultado" data-usuario-id="' + resultado.id + '">';
                     resultadosHTML += '<div class="nombre">' + resultado.nombre + ' ' + resultado.apellido + '</div>';
                     resultadosHTML += '</div>';
-                    resultadosHTML += '<hr>'; // Agregar línea horizontal
                 });
 
                 // Insertar los resultados en el contenedor
