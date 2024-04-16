@@ -9,18 +9,30 @@ router.get('/', function(req, res) {
                 recipient: "Juan Pérez",
                 teamName: "Equipo 1",
                 invitationId: "123",
+
+                idSender: 2,
+                idRecipient: 9,
+                idTeam:1,
             },
             {
                 senderName: "Empresa XYZ",
                 recipient: "Ana García",
                 teamName: "Equipo 2",
                 invitationId: "456",
+
+                idSender: 7,
+                idRecipient: 9,
+                idTeam:2,
             },
             {
                 senderName: "Empresa 123",
                 recipient: "2",
                 teamName: "Equipo 3",
                 invitationId: "789",
+
+                idSender: 2,
+                idRecipient: 8,
+                idTeam:1,
             },
             
             {
@@ -28,6 +40,10 @@ router.get('/', function(req, res) {
                 recipient: "2",
                 teamName: "Equipo 3",
                 invitationId: "729",
+
+                idSender: 8,
+                idRecipient: 2,
+                idTeam:2,
             }
         ];
 

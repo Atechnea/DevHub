@@ -36,13 +36,19 @@
                 <div class="container-invitations">
                     <% invitations.forEach(invitation=> { %>
                         <div class="invitation">
+                            <a href="/perfil/<%= invitation.idSender %>"> 
                             <div class="circle" style="background-color: rgb(<%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>)">
                                 <span class="initials">
                                     <%= invitation.senderName.split(' ').map(name => name.charAt(0)).join('') %>
                                 </span>
                 </div>
+                </a>
                 <div class="invitation-text">
-                    <p>Has sido invitado por <%= invitation.senderName %> para unirte al equipo <%= invitation.teamName %>.</p>
+                    <p>Has sido invitado por <a href="/perfil/<%= invitation.idSender %>"> <!-- Enlace a la página de la empresa -->
+                        <%= invitation.senderName %>
+                    </a> para unirte al equipo <a href="/equipo/<%= invitation.idTeam %>"> <!-- Enlace a la página del equipo -->
+                        <%= invitation.teamName %>
+                    </a>.</p>
                 </div>
                 <div class="invitation-buttons">
                    
