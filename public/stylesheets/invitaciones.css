@@ -91,6 +91,6 @@ a:link,
 a:visited,
 a:hover,
 a:active {
-    color: rgb(231, 107, 231); /* Cambia el color del texto */
+    color: rgb(194, 68, 194); /* Cambia el color del texto */
     text-decoration: none; /* Elimina el subrayado */
 }
