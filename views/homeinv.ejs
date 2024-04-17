@@ -118,7 +118,7 @@
                         if (response.ok) {
                             // Si la respuesta del servidor es exitosa, no es necesario mostrar ningún mensaje
                             // simplemente recargar la página si es necesario
-                            location.reload();
+                            alert('Invitación rechazada exitosamente. ');
                         } else if (response.status === 404) {
                             // Si la invitación no existe, mostrar un mensaje de error
                             alert('La invitación no existe');
@@ -129,6 +129,7 @@
                             // Si hay otro tipo de error, mostrar un mensaje genérico de error
                             alert('Error al rechazar la invitación');
                         }
+                        location.reload();
                     })
                     .catch(error => console.error('Error de red:', error));
             }
