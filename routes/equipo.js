@@ -26,6 +26,7 @@ router.get('/:id', function(req, res) {
                         const teamData = {
                             name: result[0].nombre,
                             owner: '', // Inicializar el propietario del equipo
+                            owner_id: ownerId,
                             objective: result[0].objetivo,
                             members: [] // Inicializamos la lista de miembros
                         };

@@ -97,6 +97,8 @@
     
                 membersList.appendChild(memberCard);
             <% }); %>
+
+            <% if(teamInfo.owner_id == usuario.id) { %>
             
                 // Crear y agregar el botón de 'Añadir Integrante'
                 var addButton = document.createElement('div');
@@ -138,7 +140,7 @@
                 });
 
                 membersList.appendChild(addButton);
-            
+        <% } %>
         </script>
 
         <%- include('invitaciones.ejs') %>
