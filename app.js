@@ -47,6 +47,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   // Obtén la información del usuario si está autenticado
   if(req.session && req.session.auth) {
+    res.locals.usuario = req.session.usuario;
     res.locals.num_invitaciones = 0;
     bd.pool.getConnection(async function(err, con) {
       if(err) 
@@ -55,8 +56,8 @@ app.use((req, res, next) => {
         const sql = `SELECT COUNT (*) AS num_invitaciones
         FROM invitaciones 
         WHERE id_desarrollador LIKE ? OR id_empresa LIKE ?`;
-        const query = `%${req.body.empId}%`; // Ajusta la consulta para que funcione con 'LIKE'
-
+        const query = `%${res.locals.usuario.id}%`; // Ajusta la consulta para que funcione con 'LIKE'
+        console.log(res.locals.usuario.id)
         con.query(sql, [query, query], function (err, numero) {
           con.release();
             if (err) {
