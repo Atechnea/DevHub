@@ -32,33 +32,36 @@
             <!--Añadimos navbar-->
             <%- include('navbar.ejs') %>
 
-                <!-- Contenedor de invitaciones -->
-                <div class="container-invitations">
-                    <% invitations.forEach(invitation=> { %>
-                        <div class="invitation">
-                            <a href="/perfil/<%= invitation.idSender %>"> 
-                            <div class="circle" style="background-color: rgb(<%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>)">
-                                <span class="initials">
-                                    <%= invitation.senderName.split(' ').map(name => name.charAt(0)).join('') %>
-                                </span>
-                </div>
-                </a>
-                <div class="invitation-text">
-                    <p>Has sido invitado por <a href="/perfil/<%= invitation.idSender %>"> <!-- Enlace a la página de la empresa -->
-                        <%= invitation.senderName %>
-                    </a> para unirte al equipo <a href="/equipo/<%= invitation.idTeam %>"> <!-- Enlace a la página del equipo -->
-                        <%= invitation.teamName %>
-                    </a>.</p>
-                </div>
-                <div class="invitation-buttons">
-                   
-                    <button class="accept-button" onclick="acceptInvitation('<%= invitation.invitationId %>')"><i class="fas fa-check"></i></button>
-                    <button class="reject-button" onclick="rejectInvitation('<%= invitation.invitationId %>')"><i class="fas fa-times"></i></button>
-                    
-                    
                 
-                </div></div><% }) %>
-                </div>
+                <% if (invitations.length === 0) { %>
+                    <div class="no-invitations-message">
+                        <h2>No hay Invitaciones</h2>
+                        <p>En este momento no tienes ninguna invitación pendiente.</p>
+                    </div>
+                <% } else { %>
+                    <!-- Contenedor de invitaciones -->
+                    <div class="container-invitations">
+                        <% invitations.forEach(invitation => { %>
+                            <div class="invitation">
+                                <a href="/perfil/<%= invitation.idSender %>">
+                                    <div class="circle" style="background-color: rgb(<%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>)">
+                                        <span class="initials">
+                                            <%= invitation.senderName.split(' ').map(name => name.charAt(0)).join('') %>
+                                        </span>
+                                    </div>
+                                </a>
+                                <div class="invitation-text">
+                                    <p>Has sido invitado por <a href="/perfil/<%= invitation.idSender %>"><%= invitation.senderName %></a> para unirte al equipo <a href="/equipo/<%= invitation.idTeam %>"><%= invitation.teamName %></a>.</p>
+                                </div>
+                                <div class="invitation-buttons">
+                                    <button class="accept-button" onclick="acceptInvitation('<%= invitation.invitationId %>')"><i class="fas fa-check"></i></button>
+                                    <button class="reject-button" onclick="rejectInvitation('<%= invitation.invitationId %>')"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
 
         </div>
 

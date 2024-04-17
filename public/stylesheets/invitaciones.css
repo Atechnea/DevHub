@@ -66,6 +66,35 @@
     color: white;
 }
 
+
+/* Estilos para el mensaje de "No hay Invitaciones" */
+.no-invitations-message {
+    position: relative;
+    font-family: "Chivo Mono", monospace;
+    color: rgb(200, 200, 200);
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    z-index: 1;
+}
+
+.no-invitations-message h2 {
+    font-size: 300%;
+    text-align: center;
+}
+
+.no-invitations-message p {
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    -webkit-background-clip: text; /* Para navegadores WebKit (Chrome, Safari, etc.) */
+    background-clip: text;
+    color: transparent; /* Oculta el color del texto */
+}
+
+
 @media (max-width: 768px) {
     /* Estilos para dispositivos con pantalla de hasta 768px de ancho */
     .invitation {
