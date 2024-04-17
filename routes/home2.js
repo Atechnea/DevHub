@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
                 INNER JOIN usuarios u ON i.id_empresa = u.id
                 INNER JOIN usuarios u2 ON i.id_desarrollador = u2.id
                 INNER JOIN equipo e ON i.id_equipo = e.id
-                WHERE i.id_desarrollador = ?;`;
+                WHERE i.id_desarrollador = ? and i.contestada = 0;`;
 
             con.query(sql, [idUsuario], function(err, results) {
                 con.release();
