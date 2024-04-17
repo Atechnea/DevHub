@@ -18,7 +18,6 @@ $(document).ready(function() {
     $("#staticBackdrop2").on('input', '.busqueda_developer input[name="busqueda"]', function() {
         // Obtener el valor de búsqueda
         var busqueda = $(this).val();
-        console.log("Búsqueda:", busqueda);
 
         // Obtener el ID del equipo
         var equipoId = ObtenerElIdDelEquipo();
