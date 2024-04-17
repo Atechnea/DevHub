@@ -18,6 +18,7 @@ var crearEquipoRouter = require('./routes/crearequipo');
 
 var homeRouter2 = require('./routes/home2');
 
+
 var app = express();
 
 // view engine setup
@@ -87,6 +88,7 @@ app.use('/perfil', perfilRouter);
 app.use('/crearequipo', crearEquipoRouter);
 
 app.use('/home2', homeRouter2);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

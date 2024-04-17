@@ -55,6 +55,71 @@ router.get('/', function(req, res) {
 });
 
 
+router.post('/acceptInvitation', function(req, res) {
+    const invitationId = req.body.invitationId;
+
+    // Primero, actualiza el estado de la invitación a contestada
+    pool.getConnection(function(err, con) {
+        if (err) {
+            console.error('Error al obtener una conexión de la pool:', err);
+            res.status(500).send('Error interno del servidor');
+            return;
+        }
+
+        const updateInvitationQuery = `
+            UPDATE invitaciones 
+            SET contestada = 1 
+            WHERE id = ?;
+        `;
+
+        con.query(updateInvitationQuery, [invitationId], function(err, results) {
+            if (err) {
+                console.error('Error al actualizar la invitación:', err);
+                res.status(500).send('Error interno del servidor');
+                return;
+            }
+
+            // Después, obtenemos la información del equipo al que se hizo la invitación
+            const getTeamQuery = `
+                SELECT id_equipo, id_desarrollador
+                FROM invitaciones 
+                WHERE id = ?;
+            `;
+
+            con.query(getTeamQuery, [invitationId], function(err, teamInfo) {
+                if (err) {
+                    console.error('Error al obtener la información del equipo:', err);
+                    res.status(500).send('Error interno del servidor');
+                    return;
+                }
+
+                const idEquipo = teamInfo[0].id_equipo;
+                const idDesarrollador = teamInfo[0].id_desarrollador;
+
+                // Finalmente, insertamos al desarrollador en el equipo
+                const insertDeveloperQuery = `
+                    INSERT INTO equipo_desarrollador (id_equipo, id_desarrollador)
+                    VALUES (?, ?);
+                `;
+
+                con.query(insertDeveloperQuery, [idEquipo, idDesarrollador], function(err, results) {
+                    con.release();
+                    if (err) {
+                        console.error('Error al agregar el desarrollador al equipo:', err);
+                        res.status(500).send('Error interno del servidor');
+                        return;
+                    }
+
+                    // Todo está bien, responder con éxito
+                    res.sendStatus(200);
+                });
+            });
+        });
+    });
+});
+
+
+
 router.post("/busqueda", function(request, response) {
     response.status(200);
     let nombre = request.body.busqueda;
