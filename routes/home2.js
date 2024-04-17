@@ -3,51 +3,49 @@ const router = express.Router();
 
 router.get('/', function(req, res) {
     if (res.locals.usuario != null) {
-        const invitations = [
-            {
-                senderName: "Empresa ABC",
-                recipient: "Juan Pérez",
-                teamName: "Equipo 1",
-                invitationId: "123",
 
-                idSender: 2,
-                idRecipient: 9,
-                idTeam:1,
-            },
-            {
-                senderName: "Empresa XYZ",
-                recipient: "Ana García",
-                teamName: "Equipo 2",
-                invitationId: "456",
+        const idUsuario = res.locals.usuario.id;
 
-                idSender: 7,
-                idRecipient: 9,
-                idTeam:2,
-            },
-            {
-                senderName: "Empresa 123",
-                recipient: "2",
-                teamName: "Equipo 3",
-                invitationId: "789",
-
-                idSender: 2,
-                idRecipient: 8,
-                idTeam:1,
-            },
-            
-            {
-                senderName: "Empresa AAAA",
-                recipient: "2",
-                teamName: "Equipo 3",
-                invitationId: "729",
-
-                idSender: 8,
-                idRecipient: 2,
-                idTeam:2,
+        pool.getConnection(function(err, con) {
+            if (err) {
+                console.error('Error al obtener una conexión de la pool:', err);
+                res.status(500).send('Error interno del servidor');
+                return;
             }
-        ];
 
-        res.render('homeinv', { invitations: invitations });
+            const sql = `
+                SELECT i.*, u.nombre AS senderName, u2.nombre AS recipient, e.nombre AS teamName
+                FROM invitaciones i
+                INNER JOIN usuarios u ON i.id_empresa = u.id
+                INNER JOIN usuarios u2 ON i.id_desarrollador = u2.id
+                INNER JOIN equipo e ON i.id_equipo = e.id
+                WHERE i.id_desarrollador = ?;`;
+
+            con.query(sql, [idUsuario], function(err, results) {
+                con.release();
+                if (err) {
+                    console.error('Error al ejecutar la consulta SQL:', err);
+                    res.status(500).send('Error interno del servidor');
+                    return;
+                }
+
+                // Procesar los resultados de la consulta y crear el arreglo de invitaciones
+                const invitations = results.map(invitation => {
+                    return {
+                        senderName: invitation.senderName,
+                        recipient: invitation.recipient,
+                        teamName: invitation.teamName,
+                        invitationId: invitation.id,
+                        idSender: invitation.id_empresa,
+                        idRecipient: invitation.id_desarrollador,
+                        idTeam: invitation.id_equipo
+                    };
+                });
+
+                // Renderizar la plantilla con las invitaciones
+                res.render('homeinv', { invitations: invitations });
+            });
+        });
     } else {
         res.redirect('login');
     }
