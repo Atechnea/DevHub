@@ -18,6 +18,7 @@
     <link rel="icon" type="image/x-png" href="/resources/devhub.png">
     <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
 
     <title>DevHub - Home</title>
 
@@ -81,23 +82,36 @@
                     },
                     body: JSON.stringify({ invitationId: invitationId })
                 })
-                .then(response => {
-                    if (response.ok) {
-                        // Recargar la página para reflejar los cambios
+                    .then(response => {
+                        if (response.ok) {
+                            // Si la respuesta del servidor es exitosa, mostrar un mensaje de éxito
+                            alert('Invitación aceptada exitosamente. Desarrollador agregado al equipo.');
+                            // Recargar la página para reflejar los cambios
+                            
+                        } else if (response.status === 404) {
+                            // Si la invitación no existe, mostrar un mensaje de error
+                            alert('La invitación no existe');
+                        } else if (response.status === 401) {
+                            // Si la invitación no existe, mostrar un mensaje de error
+                            alert('El equipo ya no existe');
+                        } else if (response.status === 500) {
+                            // Si el desarrollador ya está en el equipo, mostrar un mensaje informativo
+                            alert('El desarrollador ya pertenece al equipo');
+                        } else {
+                            // Si hay otro error, mostrar un mensaje genérico de error
+                            alert('Error al aceptar la invitación');
+                        }
                         location.reload();
-                    } else {
-                        console.error('Error al aceptar la invitación');
-                    }
-                })
-                .catch(error => console.error('Error de red:', error));
+                    })
+                    .catch(error => console.error('Error de red:', error));
             }
-        
+
             function rejectInvitation(invitationId) {
                 // Lógica para rechazar la invitación
                 console.log("Invitación rechazada:", invitationId);
             }
         </script>
-        
+
 </body>
 
 </html>

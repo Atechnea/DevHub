@@ -71,13 +71,14 @@ router.post('/acceptInvitation', function(req, res) {
         `;
 
         con.query(updateInvitationQuery, [invitationId], function(err, updateResult) {
-            con.release();
             if (err) {
+                con.release();
                 console.error('Error al marcar la invitación como contestada:', err);
                 return res.status(500).send('Error interno del servidor');
             }
 
             if (updateResult.affectedRows === 0) {
+                con.release();
                 return res.status(404).send('La invitación no existe');
             }
 
@@ -89,53 +90,80 @@ router.post('/acceptInvitation', function(req, res) {
 
             con.query(getInvitationInfoQuery, [invitationId], function(err, invitationInfo) {
                 if (err) {
+                    con.release();
                     console.error('Error al obtener información de la invitación:', err);
                     return res.status(500).send('Error interno del servidor');
                 }
 
                 if (invitationInfo.length === 0) {
+                    con.release();
                     return res.status(404).send('La invitación no existe');
                 }
 
                 const idEquipo = invitationInfo[0].id_equipo;
                 const idDesarrollador = invitationInfo[0].id_desarrollador;
 
-                const checkDeveloperInTeamQuery = `
+                // Consulta para verificar si el equipo existe
+                const checkTeamQuery = `
                     SELECT COUNT(*) as count
-                    FROM pertenece_equipo
-                    WHERE id_equipo = ? AND id_desarrollador = ?;
+                    FROM equipo
+                    WHERE id = ?;
                 `;
 
-                con.query(checkDeveloperInTeamQuery, [idEquipo, idDesarrollador], function(err, result) {
+                con.query(checkTeamQuery, [idEquipo], function(err, teamResult) {
                     if (err) {
-                        console.error('Error al verificar si el desarrollador ya pertenece al equipo:', err);
+                        con.release();
+                        console.error('Error al verificar si el equipo existe:', err);
                         return res.status(500).send('Error interno del servidor');
                     }
 
-                    const count = result[0].count;
-
-                    if (count > 0) {
-                        return res.status(200).send('El desarrollador ya pertenece al equipo');
+                    if (teamResult[0].count === 0) {
+                        con.release();
+                        // Si el equipo no existe, enviar un mensaje de error
+                        return res.status(401).send('El equipo al que se hace referencia no existe');
                     }
 
-                    const insertDeveloperQuery = `
-                        INSERT INTO pertenece_equipo (id_equipo, id_desarrollador)
-                        VALUES (?, ?);
+                    const checkDeveloperInTeamQuery = `
+                        SELECT COUNT(*) as count
+                        FROM pertenece_equipo
+                        WHERE id_equipo = ? AND id_desarrollador = ?;
                     `;
 
-                    con.query(insertDeveloperQuery, [idEquipo, idDesarrollador], function(err, insertResult) {
+                    con.query(checkDeveloperInTeamQuery, [idEquipo, idDesarrollador], function(err, result) {
                         if (err) {
-                            console.error('Error al agregar el desarrollador al equipo:', err);
+                            con.release();
+                            console.error('Error al verificar si el desarrollador ya pertenece al equipo:', err);
                             return res.status(500).send('Error interno del servidor');
                         }
 
-                        res.sendStatus(200);
+                        const count = result[0].count;
+
+                        if (count > 0) {
+                            con.release();
+                            return res.status(200).send('El desarrollador ya pertenece al equipo');
+                        }
+
+                        const insertDeveloperQuery = `
+                            INSERT INTO pertenece_equipo (id_equipo, id_desarrollador)
+                            VALUES (?, ?);
+                        `;
+
+                        con.query(insertDeveloperQuery, [idEquipo, idDesarrollador], function(err, insertResult) {
+                            con.release();
+                            if (err) {
+                                console.error('Error al agregar el desarrollador al equipo:', err);
+                                return res.status(500).send('Error interno del servidor');
+                            }
+
+                            return res.status(200).send('Invitación aceptada exitosamente. Desarrollador agregado al equipo.');
+                        });
                     });
                 });
             });
         });
     });
 });
+
 
 
 
