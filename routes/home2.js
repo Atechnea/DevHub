@@ -58,12 +58,10 @@ router.get('/', function(req, res) {
 router.post('/acceptInvitation', function(req, res) {
     const invitationId = req.body.invitationId;
 
-    // Primero, actualiza el estado de la invitación a contestada
     pool.getConnection(function(err, con) {
         if (err) {
             console.error('Error al obtener una conexión de la pool:', err);
-            res.status(500).send('Error interno del servidor');
-            return;
+            return res.status(500).send('Error interno del servidor');
         }
 
         const updateInvitationQuery = `
@@ -72,51 +70,75 @@ router.post('/acceptInvitation', function(req, res) {
             WHERE id = ?;
         `;
 
-        con.query(updateInvitationQuery, [invitationId], function(err, results) {
+        con.query(updateInvitationQuery, [invitationId], function(err, updateResult) {
+            con.release();
             if (err) {
-                console.error('Error al actualizar la invitación:', err);
-                res.status(500).send('Error interno del servidor');
-                return;
+                console.error('Error al marcar la invitación como contestada:', err);
+                return res.status(500).send('Error interno del servidor');
             }
 
-            // Después, obtenemos la información del equipo al que se hizo la invitación
-            const getTeamQuery = `
+            if (updateResult.affectedRows === 0) {
+                return res.status(404).send('La invitación no existe');
+            }
+
+            const getInvitationInfoQuery = `
                 SELECT id_equipo, id_desarrollador
                 FROM invitaciones 
                 WHERE id = ?;
             `;
 
-            con.query(getTeamQuery, [invitationId], function(err, teamInfo) {
+            con.query(getInvitationInfoQuery, [invitationId], function(err, invitationInfo) {
                 if (err) {
-                    console.error('Error al obtener la información del equipo:', err);
-                    res.status(500).send('Error interno del servidor');
-                    return;
+                    console.error('Error al obtener información de la invitación:', err);
+                    return res.status(500).send('Error interno del servidor');
                 }
 
-                const idEquipo = teamInfo[0].id_equipo;
-                const idDesarrollador = teamInfo[0].id_desarrollador;
+                if (invitationInfo.length === 0) {
+                    return res.status(404).send('La invitación no existe');
+                }
 
-                // Finalmente, insertamos al desarrollador en el equipo
-                const insertDeveloperQuery = `
-                    INSERT INTO equipo_desarrollador (id_equipo, id_desarrollador)
-                    VALUES (?, ?);
+                const idEquipo = invitationInfo[0].id_equipo;
+                const idDesarrollador = invitationInfo[0].id_desarrollador;
+
+                const checkDeveloperInTeamQuery = `
+                    SELECT COUNT(*) as count
+                    FROM pertenece_equipo
+                    WHERE id_equipo = ? AND id_desarrollador = ?;
                 `;
 
-                con.query(insertDeveloperQuery, [idEquipo, idDesarrollador], function(err, results) {
-                    con.release();
+                con.query(checkDeveloperInTeamQuery, [idEquipo, idDesarrollador], function(err, result) {
                     if (err) {
-                        console.error('Error al agregar el desarrollador al equipo:', err);
-                        res.status(500).send('Error interno del servidor');
-                        return;
+                        console.error('Error al verificar si el desarrollador ya pertenece al equipo:', err);
+                        return res.status(500).send('Error interno del servidor');
                     }
 
-                    // Todo está bien, responder con éxito
-                    res.sendStatus(200);
+                    const count = result[0].count;
+
+                    if (count > 0) {
+                        return res.status(400).send('El desarrollador ya pertenece al equipo');
+                    }
+
+                    const insertDeveloperQuery = `
+                        INSERT INTO pertenece_equipo (id_equipo, id_desarrollador)
+                        VALUES (?, ?);
+                    `;
+
+                    con.query(insertDeveloperQuery, [idEquipo, idDesarrollador], function(err, insertResult) {
+                        if (err) {
+                            console.error('Error al agregar el desarrollador al equipo:', err);
+                            return res.status(500).send('Error interno del servidor');
+                        }
+
+                        res.sendStatus(200);
+                    });
                 });
             });
         });
     });
 });
+
+
+
 
 
 
