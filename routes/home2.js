@@ -115,7 +115,7 @@ router.post('/acceptInvitation', function(req, res) {
                     const count = result[0].count;
 
                     if (count > 0) {
-                        return res.status(400).send('El desarrollador ya pertenece al equipo');
+                        return res.status(200).send('El desarrollador ya pertenece al equipo');
                     }
 
                     const insertDeveloperQuery = `
