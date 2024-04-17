@@ -167,6 +167,38 @@ router.post('/acceptInvitation', function(req, res) {
 
 
 
+router.post('/rejectInvitation', function(req, res) {
+    const invitationId = req.body.invitationId;
+
+    pool.getConnection(function(err, con) {
+        if (err) {
+            console.error('Error al obtener una conexión de la pool:', err);
+            return res.status(500).send('Error interno del servidor');
+        }
+
+        const updateInvitationQuery = `
+            UPDATE invitaciones 
+            SET contestada = 1 
+            WHERE id = ?;
+        `;
+
+        con.query(updateInvitationQuery, [invitationId], function(err, updateResult) {
+            con.release();
+            if (err) {
+                console.error('Error al marcar la invitación como contestada:', err);
+                return res.status(500).send('Error interno del servidor');
+            }
+
+            if (updateResult.affectedRows === 0) {
+                return res.status(404).send('La invitación no existe');
+            }
+
+            return res.status(200).send('Invitación rechazada exitosamente.');
+        });
+    });
+});
+
+
 
 
 

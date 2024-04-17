@@ -18,7 +18,7 @@
     <link rel="icon" type="image/x-png" href="/resources/devhub.png">
     <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    
+
 
     <title>DevHub - Home</title>
 
@@ -87,7 +87,7 @@
                             // Si la respuesta del servidor es exitosa, mostrar un mensaje de éxito
                             alert('Invitación aceptada exitosamente. Desarrollador agregado al equipo.');
                             // Recargar la página para reflejar los cambios
-                            
+
                         } else if (response.status === 404) {
                             // Si la invitación no existe, mostrar un mensaje de error
                             alert('La invitación no existe');
@@ -107,9 +107,32 @@
             }
 
             function rejectInvitation(invitationId) {
-                // Lógica para rechazar la invitación
-                console.log("Invitación rechazada:", invitationId);
+                fetch('home2/rejectInvitation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ invitationId: invitationId })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Si la respuesta del servidor es exitosa, no es necesario mostrar ningún mensaje
+                            // simplemente recargar la página si es necesario
+                            location.reload();
+                        } else if (response.status === 404) {
+                            // Si la invitación no existe, mostrar un mensaje de error
+                            alert('La invitación no existe');
+                        } else if (response.status === 500) {
+                            // Si hay un error interno del servidor, mostrar un mensaje de error
+                            alert('Error interno del servidor. Por favor, inténtelo de nuevo más tarde.');
+                        } else {
+                            // Si hay otro tipo de error, mostrar un mensaje genérico de error
+                            alert('Error al rechazar la invitación');
+                        }
+                    })
+                    .catch(error => console.error('Error de red:', error));
             }
+
         </script>
 
 </body>
