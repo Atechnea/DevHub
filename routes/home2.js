@@ -43,7 +43,7 @@ router.get('/', function(req, res) {
                         idRecipient: invitation.id_desarrollador,
                         idTeam: invitation.id_equipo
                     };
-                });
+                }); 
 
                 // Renderizar la plantilla con las invitaciones
                 res.render('homeinv', { invitations: invitations });

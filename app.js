@@ -55,7 +55,7 @@ app.use((req, res, next) => {
       else{
         const sql = `SELECT COUNT (*) AS num_invitaciones
         FROM invitaciones 
-        WHERE id_desarrollador LIKE ? OR id_empresa LIKE ?`;
+        WHERE id_desarrollador LIKE ?`;
         const query = `%${res.locals.usuario.id}%`; // Ajusta la consulta para que funcione con 'LIKE'
         con.query(sql, [query, query], function (err, numero) {
           con.release();
