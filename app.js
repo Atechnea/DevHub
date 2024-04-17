@@ -57,7 +57,6 @@ app.use((req, res, next) => {
         FROM invitaciones 
         WHERE id_desarrollador LIKE ? OR id_empresa LIKE ?`;
         const query = `%${res.locals.usuario.id}%`; // Ajusta la consulta para que funcione con 'LIKE'
-        console.log(res.locals.usuario.id)
         con.query(sql, [query, query], function (err, numero) {
           con.release();
             if (err) {
