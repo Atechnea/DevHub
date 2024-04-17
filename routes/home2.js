@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+var pool = require('../db/db').pool;
+const mysql = require('mysql2');
+
 router.get('/', function(req, res) {
     if (res.locals.usuario != null) {
 
@@ -14,7 +17,7 @@ router.get('/', function(req, res) {
             }
 
             const sql = `
-                SELECT i.*, u.nombre AS senderName, u2.nombre AS recipient, e.nombre AS teamName
+                SELECT i.*, CONCAT(u.nombre, ' ', u.apellido) AS senderName, u2.nombre AS recipient, e.nombre AS teamName
                 FROM invitaciones i
                 INNER JOIN usuarios u ON i.id_empresa = u.id
                 INNER JOIN usuarios u2 ON i.id_desarrollador = u2.id
