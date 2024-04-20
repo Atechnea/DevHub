@@ -20,8 +20,6 @@ document.getElementById('buscador').addEventListener('click', function() {
 
 $(document).ready(function() {
     // Función para actualizar el número de notificaciones
-
-    console.log('aka');
     function actualizarNotificaciones() {
         $.ajax({
             url: "/home", // Ajusta esta URL a tu backend
