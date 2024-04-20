@@ -76,19 +76,32 @@ header{
 }   
 
 .container-global{
+    width: 100%;
     display: flex;
     height: 100vh;
 }
 
-.bienvenida
+.contenedor-principal
 {
-    position: relative; 
-    font-family: "Chivo Mono", monospace;
-    color:rgb(200, 200, 200);
-    width: 70%;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    align-items: center;
+    justify-content: flex-start;
+    width: 90%;
+    height: auto;
+    z-index: 0;
+    height: 90%;
+    overflow-y: auto;
+}
+
+.bienvenida
+{
+    position: absolute;
+    font-family: "Chivo Mono", monospace;
+    color:rgb(200, 200, 200);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     justify-content: center;
     align-items: center;
     margin: auto;
@@ -108,8 +121,7 @@ header{
 }
 
 .nav{
-    position: relative; 
-    z-index: -1;
+    z-index: 3;
     font-size: 30px;
 }
 
@@ -128,7 +140,6 @@ header{
 
 .lista li
 {   
-    position: relative;
     margin-top: 20px;
     padding: 5px;
     width: 300%;
@@ -144,9 +155,12 @@ header{
     font-family: "Chivo Mono", monospace;
     color: #ffffff;
 }
+
+
+
 .lista li a:hover
 {
-    padding: 10px !important;
+    padding: 10px;
     background-color:rgba(192, 192, 192,0.1);
     border-radius: 20px;
     font-weight:600;
@@ -232,9 +246,27 @@ a:active{
 
 }
 
+/*Tamaño PC*/
+@media screen and (min-width:768px) 
+{
+    .lista li a:hover .numero_notificacion
+    {
+        left: 85px !important;
+        bottom: 20px !important;
+    }
+
+}
+
 
 /*Tamaño tablet*/
 @media screen and (min-width:560px) and (max-width:768px) {
+
+    .lista li a:hover .numero_notificacion
+    {
+        left: 85px !important;
+        bottom: 20px !important;
+    }
+
 
     .logo h1{
         display: none;
@@ -287,6 +319,11 @@ a:active{
         display: none;
     }
 
+    .bienvenida
+    {
+        height: 80%;
+    }
+
     .bienvenida h2{
         font-size : 200%;
     }
@@ -302,21 +339,21 @@ a:active{
     {
         width: 100%;
         border-top: 1px solid rgba(231, 231, 231, 0.2);
-        animation: none;
+        animation: none !important;
     }
 
     .lista:hover .texto {
-        display: none;
+        display: none !important;
     }
 
     .lista:hover,
     .lista:not(:hover) {
-        animation: none;
+        animation: none !important;
     }
 
     /* También puedes querer detener la animación del icono en hover */
     .lista li:hover .icono_crear path {
-        animation: none;
+        animation: none !important;
     }
 
     ul{
@@ -324,18 +361,38 @@ a:active{
         padding-right: 1rem;
     }
 
-    .lista:hover .numero_notificacion
+    .lista ul li
     {
-        left: 15px !important;
-        bottom: 5px !important;
-    }
-    
-    .lista li a:hover .numero_notificacion
-    {
-        display: none;
+        display: flex;
+        justify-content: center;
     }
 
+    .contenedor-principal
+    {
+        width: 100%;
+    }
 
+    .lista li a:hover {
+        /* Estilos que deseas aplicar cuando el ancho de la pantalla es igual o menor a 500px */
+        padding: initial; /* Cambiar el padding a su valor inicial */
+        background-color: initial; /* Cambiar el color de fondo a su valor inicial */
+        border-radius: initial; /* Cambiar el radio de borde a su valor inicial */
+        font-weight: initial; /* Cambiar el peso de la fuente a su valor inicial */
+    }
+
+    a:active{
+        background-image: initial;
+    }
+
+    .numero_notificacion
+    {
+        bottom: 10px !important;
+    }
+
+    .lista li a:hover .numero_notificacion {
+        left: auto !important; /* Elimina el valor de left */
+        bottom: 10px; /* Elimina el valor de bottom */
+    }
 }
 
 @keyframes increaseSize {
@@ -361,7 +418,6 @@ a:active{
     100% { opacity: 1; }
 }
 
-/*Notificacion*/
 .numero_notificacion
 {
     position: absolute;
@@ -384,15 +440,6 @@ a:active{
     animation: movement_notification 0.5s forwards; /* Aplica la animación solo cuando se hace hover */
     bottom: 5px;
 }
-
-.lista li a:hover .numero_notificacion
-{
-    left: 85px !important;
-    bottom: 20px !important;
-}
-
-
-
 @keyframes movement_notification {
     from {
         left: 15px;

@@ -15,6 +15,7 @@
     <script src="https://kit.fontawesome.com/e85b7404a5.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/x-png" href="/resources/devhub.png">
+    <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
     
     <title>DevHub - Home</title>
 </head>
@@ -28,19 +29,53 @@
             <!--Añadimos navbar-->
             <%- include('navbar.ejs') %>
 
-            <!--Diferenciamos usuarios navbar-->
-            <% if(usuario.es_empresa == 1) { %>
-                <div class="bienvenida">
-                    <h2>Bienvenido/a a DevHub</h2>
-                    <p>(versión empresa)</p>
-                </div>
-            <% } else { %>
+            <div class="contenedor-principal">
+                <% if(usuario.es_empresa == 0) { %>
+                        <div class="container-invitations">
+                            <% invitations.forEach(invitation => { %>
+                                <div class="invitation">
+                                    <a href="/perfil/<%= invitation.idSender %>">
+                                        <div class="circle" style="background-color: rgb(<%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>, <%= Math.floor(Math.random() * 256) %>)">
+                                            <span class="initials">
+                                                <%= invitation.senderName.split(' ').map(name => name.charAt(0)).join('') %>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <div class="invitation-text">
+                                        <p>Has sido invitado por <a href="/perfil/<%= invitation.idSender %>"><%= invitation.senderName %></a> para unirte al equipo <a href="/equipo/<%= invitation.idTeam %>"><%= invitation.teamName %></a>.</p>
+                                    </div>
+                                    <div class="invitation-buttons">
+                                        <button class="reject-button" onclick="rejectInvitation('<%= invitation.invitationId %>')"><i class="fas fa-times"></i></button>
+                                        <button class="accept-button" onclick="acceptInvitation('<%= invitation.invitationId %>')"><i class="fas fa-check"></i></button>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                <% } %>
+
                 <div class="bienvenida">
                     <h2>Bienvenido/a a DevHub</h2>
                     <p>(versión desarrollador)</p>
                 </div>
-            <% } %>
-              
+         
+            </div>
         </div>
 
+
+        <script>
+            // Funciones para aceptar y rechazar invitaciones
+            function acceptInvitation(invitationId) {
+                // Lógica para aceptar la invitación
+                console.log("Invitación aceptada:", invitationId);
+            }
+
+            function rejectInvitation(invitationId) {
+                // Lógica para rechazar la invitación
+                console.log("Invitación rechazada:", invitationId);
+            }
+        </script>
+
 </body>
+
+
+</html>
