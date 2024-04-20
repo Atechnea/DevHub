@@ -41,7 +41,7 @@ router.get('/', function(req, res) {
                     idRecipient: invitation.id_desarrollador,
                     idTeam: invitation.id_equipo
                 };
-            }); 
+            });
 
             // Renderizar la plantilla con las invitaciones
             res.render('home', { invitations: invitations });
@@ -61,9 +61,9 @@ router.post("/busqueda", function (request, response) {
     pool.getConnection(async function(err, con) {
       if(err) res.status(500).json({ error: buscar_error });
       else{
-        const sql = `SELECT id, nombre, apellido, usuario 
-        FROM usuarios 
-        WHERE nombre LIKE ? AND es_empresa = false 
+        const sql = `SELECT id, nombre, apellido, usuario
+        FROM usuarios
+        WHERE nombre LIKE ? AND es_empresa = false
         ORDER BY nombre DESC;`;
         const query = `%${nombre}%`; // Ajusta la consulta para que funcione con 'LIKE'
         con.query(sql, [query], function (err, desarrolladores) {

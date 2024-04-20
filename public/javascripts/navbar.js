@@ -13,8 +13,6 @@ document.getElementById('buscador').addEventListener('click', function() {
 
         perfil.style.width = '0%';
         perfil.style.display = 'none';
-
-
     }
 });
 
