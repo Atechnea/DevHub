@@ -56,11 +56,10 @@
                                     <p>Has sido invitado por <a href="/perfil/<%= invitation.idSender %>"><%= invitation.senderName %></a> para unirte al equipo <a href="/equipo/<%= invitation.idTeam %>"><%= invitation.teamName %></a>.</p>
                                 </div>
                                 <div class="invitation-buttons">
-                                    <button class="accept-button" onclick="acceptInvitation('<%=invitation.invitationId %>')"><i
+                                    <button id="accept-button" class="accept-button" onclick="acceptInvitation('<%=invitation.invitationId %>')" data-invitation-id="<%= invitation.invitationId %>"><i
                                                         class="fas fa-check"></i></button>
-                                                    <button class="reject-button"
-                                                        onclick="rejectInvitation('<%= invitation.invitationId %>')"><i
-                                                            class="fas fa-times"></i></button>
+                                    <button id="reject-button" class="reject-button" onclick="rejectInvitation('<%= invitation.invitationId %>')" data-invitation-id="<%= invitation.invitationId %>"><i
+                                            class="fas fa-times"></i></button>
                                         </div>
                                 </div>
                                 <% }) %>
@@ -68,11 +67,6 @@
                         <% } %>
         </div>
 
-        </div>
-
-
-
-        </div>
         <script>
             function acceptInvitation(invitationId) {
                 fetch('home2/acceptInvitation', {
@@ -82,28 +76,6 @@
                     },
                     body: JSON.stringify({ invitationId: invitationId })
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            // Si la respuesta del servidor es exitosa, mostrar un mensaje de éxito
-                            alert('Invitación aceptada exitosamente. Desarrollador agregado al equipo.');
-                            // Recargar la página para reflejar los cambios
-
-                        } else if (response.status === 404) {
-                            // Si la invitación no existe, mostrar un mensaje de error
-                            alert('La invitación no existe');
-                        } else if (response.status === 401) {
-                            // Si la invitación no existe, mostrar un mensaje de error
-                            alert('El equipo ya no existe');
-                        } else if (response.status === 500) {
-                            // Si el desarrollador ya está en el equipo, mostrar un mensaje informativo
-                            alert('El desarrollador ya pertenece al equipo');
-                        } else {
-                            // Si hay otro error, mostrar un mensaje genérico de error
-                            alert('Error al aceptar la invitación');
-                        }
-                        location.reload();
-                    })
-                    .catch(error => console.error('Error de red:', error));
             }
 
             function rejectInvitation(invitationId) {
@@ -114,28 +86,14 @@
                     },
                     body: JSON.stringify({ invitationId: invitationId })
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            // Si la respuesta del servidor es exitosa, no es necesario mostrar ningún mensaje
-                            // simplemente recargar la página si es necesario
-                            alert('Invitación rechazada exitosamente. ');
-                        } else if (response.status === 404) {
-                            // Si la invitación no existe, mostrar un mensaje de error
-                            alert('La invitación no existe');
-                        } else if (response.status === 500) {
-                            // Si hay un error interno del servidor, mostrar un mensaje de error
-                            alert('Error interno del servidor. Por favor, inténtelo de nuevo más tarde.');
-                        } else {
-                            // Si hay otro tipo de error, mostrar un mensaje genérico de error
-                            alert('Error al rechazar la invitación');
-                        }
-                        location.reload();
-                    })
-                    .catch(error => console.error('Error de red:', error));
             }
 
         </script>
 
 </body>
+
+
+<script src="/javascripts/toastrFunctions.js"></script>
+<script src="/javascripts/home.js"></script>
 
 </html>
