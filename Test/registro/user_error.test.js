@@ -21,6 +21,6 @@ describe('POST /registrar - Validación de correo electrónico', () => {
         empresa: false
       });
     expect(response.statusCode).toBe(422);
-    expect(response.body.error).toEqual("Usuario no tiene un formato válido, debe estar formado solo de letras, numeros, _ y . y los caracteres especiales no pueden estar ni al principio ni al final"); // Usa la variable o string directamente
+    expect(response.body.error).toEqual("Usuario no tiene un formato válido, debe estar formado solo de letras, numeros, _ y . , los caracteres especiales no pueden estar ni al principio ni al final y debe tener entre 8 y 20 caracteres."); // Usa la variable o string directamente
   });
 });

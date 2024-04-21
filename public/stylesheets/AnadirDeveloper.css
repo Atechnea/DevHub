@@ -1,0 +1,120 @@
+.modal
+{
+    background: rgba(31,30,35,255);
+    overflow-y: auto;
+}
+
+.modal-header
+{
+    display: flex;
+    justify-content: center;
+    border-bottom: 0px !important;
+}
+
+.modal-content
+{
+    height: auto;
+    position: relative;
+    background: rgba(31,30,35,255);
+    border: 1px solid rgba(231, 231, 231, 1) !important;
+    border-radius: 10px !important;
+    font-family: "Chivo Mono", monospace;
+    color:#ffffff;
+}
+
+.modal-content .equis
+{
+    position: absolute;
+    top: 5%; /* Ajusta la distancia desde la parte superior */
+    right: 2.5%; /* Ajusta la distancia desde la derecha */
+
+}
+
+.modal-body
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.busqueda_developer {
+    width: 80%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.busqueda_developer form {
+    width: 100%;
+    height: 70%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    backdrop-filter: blur(4px) saturate(180%);
+    font-family: "Chivo Mono", monospace;
+    border: 1px solid rgba(231, 231, 231, 1);
+}
+
+.busqueda_developer input[type="text"] {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 24px 20px;
+    font-size: 20px;
+    color: white;
+    width: 85%;
+
+}
+
+.busqueda_developer button {
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    width: 15%;
+}
+
+.busqueda_developer button:hover {
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%) !important;
+    color: black !important; /* Cambia el color del texto cuando el botón está activo */
+    background-clip: text; /* Para que el degradado solo aplique al texto */
+    -webkit-background-clip: text; /* Prefijo para navegadores webkit (como Chrome, Safari) */
+    -webkit-text-fill-color: transparent; /* Oculta el color del texto para que se muestre el degradado */
+
+}
+
+.mostrar_resultados
+{
+    height: auto;
+    border: 1px solid rgba(231, 231, 231, 1);
+    margin-top: 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    padding-left: 20px;
+    padding-right: 20px;
+
+    width: 80%;
+}
+
+.resultado {
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center; /* Centrar el contenido */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre los resultados */
+    border-bottom: 1px solid rgba(231, 231, 231, 0.2);
+}
+
+.resultado .nombre {
+    display: inline-block; /* Hacer que los nombres y apellidos estén en la misma línea */
+    margin-right: 5px; /* Agregar un pequeño espacio entre el nombre y el apellido */
+}
+
+.resultado .apellido {
+    text-align: right; /* Mover el texto del apellido hacia la derecha */
+}
