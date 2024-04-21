@@ -43,6 +43,36 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  // Obtén la información del usuario si está autenticado
+  if(req.session && req.session.auth) {
+    res.locals.usuario = req.session.usuario;
+    res.locals.num_invitaciones = 0;
+    bd.pool.getConnection(async function(err, con) {
+      if(err) 
+        res.status(500).json({ error: numero_invitaciones });
+      else{
+        const sql = `SELECT COUNT (*) AS num_invitaciones
+        FROM invitaciones 
+        WHERE id_desarrollador LIKE ? and contestada = 0`;
+        const query = `%${res.locals.usuario.id}%`; // Ajusta la consulta para que funcione con 'LIKE'
+        con.query(sql, [query, query], function (err, numero) {
+          con.release();
+            if (err) {
+              console.error("Error al ejecutar la consulta SQL:", err);
+            } else {
+              res.locals.num_invitaciones = numero[0].num_invitaciones;
+              next();
+            }
+        });
+      }
+    })
+  }
+  else {
+    next();
+  }
+});
+
 // Routers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

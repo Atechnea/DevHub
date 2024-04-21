@@ -1,0 +1,121 @@
+.container-invitations{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    z-index: 2;
+}
+
+.container-invitations a {
+    color: rgb(194, 68, 194); /* Cambia el color del texto */
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+/* Estilos adicionales para las invitaciones */
+.invitation {
+    display: flex;
+    background: rgba(31,30,35,255); 
+    flex-direction: row; /* Cambia la dirección del flexbox a columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
+    margin-bottom: 1%; /* Aumenta el espacio entre las tarjetas */
+    margin-top: 2%;
+    margin-left: 2%; /* Aumenta el espacio entre las tarjetas */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px 2px rgb(99, 50, 213); /* Agrega una sombra en todos los bordes */
+}
+
+
+.circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Cambia el radio para hacer el círculo más circular */
+    margin-right: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.initials {
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+}
+
+.circle.light-background .initials {
+    color: black;
+}
+
+.invitation-text {
+    margin-top: 2%;
+    margin-left: 2%;
+    text-align: center; /* Centra el texto dentro de la tarjeta */
+}
+
+.invitation-buttons {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    margin-left: 2%;
+}
+
+.accept-button,
+.reject-button {
+    margin: 5%; /* Espacio entre los botones */
+    padding: 10px 20px; /* Aumenta el tamaño de los botones */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.accept-button {
+    background-image: linear-gradient(225deg, #5244E9 6%, #A870FF 95%);
+    color: white;
+}
+
+.reject-button {
+    border: 1px solid rgba(231, 231, 231, 0.2);
+    background-color: transparent;
+    color: white;
+}
+
+@media screen and (min-width:560px) and (max-width:768px) {
+    /* Estilos para dispositivos con pantalla de hasta 768px de ancho */
+    .invitation {
+        padding: 15px; /* Reduce el padding en dispositivos más pequeños */
+    }
+
+    .circle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .initials {
+        font-size: 20px;
+    }
+
+    .accept-button,
+    .reject-button {
+        padding: 8px 16px; /* Reduce el tamaño de los botones en dispositivos más pequeños */
+    }
+}
+
+@media screen and (max-width:560px) {
+    /* Estilos para dispositivos con pantalla de hasta 768px de ancho */
+    .container-invitations
+    {
+        width: 95%;
+    }
+
+    .invitation {
+        padding: 15px; /* Reduce el padding en dispositivos más pequeños */
+    }
+
+}
+
+
+.container-invitations a {
+    color: rgb(194, 68, 194); /* Cambia el color del texto */
+    text-decoration: none; /* Elimina el subrayado */
+}
