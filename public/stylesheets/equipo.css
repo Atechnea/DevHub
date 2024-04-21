@@ -9,13 +9,12 @@ body {
     z-index: 1;
     
     display: flex;
-    margin-top: 50px !important;
-    margin-left: 50px !important;
     align-items: stretch;
-
     flex-direction: column;
     justify-content: flex-start;
-    width: 100%;
+    margin-top: 50px;
+    margin-left: 50px;
+    width: 80%;
 
 }
 .team-header {
@@ -61,7 +60,8 @@ body {
     flex-wrap: wrap;
 }
 .member-card {
-    width: calc(33.33% - 20px);
+
+    width: auto;
     background-color: #30363d;
     padding: 10px;
     margin-right: 20px;
@@ -96,29 +96,50 @@ body {
     border: 2px dashed rgba(231, 231, 231, 0.2); /* Borde discontinuo en la parte superior */
 }
 
-/* Estilos para dispositivos con ancho máximo de 600px */
-@media (max-width: 600px) {
-    .team-header {
-        flex-direction: column; /* Apila los elementos verticalmente */
-        align-items: flex-start; /* Alinea los elementos a la izquierda */
+/* Estilos para dispositivos con ancho máximo de 400px */
+@media screen and (max-width:560px){
+
+
+    .contenedor
+    {
+        width: auto;
+        display: flex;
+        margin-top: initial;
+        margin-left: initial;
+        overflow-y: auto;
     }
+
+
     .team-avatar {
-        margin-right: 0;
         margin-bottom: 20px;
     }
     .team-info {
         text-align: center;
     }
-    .member-card {
-        width: calc(50% - 20px); /* Dos miembros por fila */
+
+    .team-header {
+        display: flex;
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: center;    
     }
-}
-/* Estilos para dispositivos con ancho máximo de 400px */
-@media (max-width: 400px) {
+
+    .members-list {
+        display: flex;
+        justify-content: center;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .member-avatar
+    {
+        margin-left: 10px;
+    }
+
     .member-card {
-        width: 100%; /* Un miembro por fila */
+        width: auto; /* Un miembro por fila */
     }
     .member-name {
+        width: 0%;
         display: none; /* Ocultar el nombre del miembro en pantallas muy pequeñas */
     }
 }
