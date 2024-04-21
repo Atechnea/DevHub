@@ -3,15 +3,15 @@ $(document).ready(function(){
     $("#accept-button").click(function(event)  {
         event.preventDefault();
         var invitationId = $(this).data('invitation-id');
-
+        
         // Envío del formulario por AJAX
         $.ajax({
             type: 'post',
-            url: '/home2/rejectInvitation',
+            url: '/home/rejectInvitation',
             data: { invitationId: invitationId },
             success: function(result) {
                 // Si la solicitud es exitosa, mostrar un mensaje de éxito
-                showToastr('success', 'Se ha aceptado la invitación con éxito', );
+                showToastr('success', 'Se ha aceptado la invitación con éxito', '');
             },
             error: function(xhr, status, error) {
                 // Si hay un error, mostrar un mensaje de error
@@ -24,11 +24,11 @@ $(document).ready(function(){
     $("#reject-button").click(function(event)  {
         event.preventDefault();
         var invitationId = $(this).data('invitation-id');
-
+        console.log("Aqui")
         // Envío del formulario por AJAX
         $.ajax({
             type: 'post',
-            url: '/home2/rejectInvitation',
+            url: '/home/rejectInvitation',
             data: { invitationId: invitationId },
             success: function(result) {
                 // Si la solicitud es exitosa, mostrar un mensaje de éxito

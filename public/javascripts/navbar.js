@@ -13,15 +13,11 @@ document.getElementById('buscador').addEventListener('click', function() {
 
         perfil.style.width = '0%';
         perfil.style.display = 'none';
-
-
     }
 });
 
 $(document).ready(function() {
     // Función para actualizar el número de notificaciones
-
-    console.log('aka');
     function actualizarNotificaciones() {
         $.ajax({
             url: "/home", // Ajusta esta URL a tu backend

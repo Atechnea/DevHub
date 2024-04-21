@@ -98,7 +98,56 @@
     
                 membersList.appendChild(memberCard);
             <% }); %>
+
+            <% if(teamInfo.owner_id == usuario.id) { %>
+            
+                // Crear y agregar el botón de 'Añadir Integrante'
+                var addButton = document.createElement('div');
+                addButton.classList.add('member-card'); // Usamos el mismo estilo que las tarjetas de miembro
+                addButton.classList.add('nuevo-integrante');
+                
+                // Crear un nuevo elemento div para el avatar
+                var addAvatar = document.createElement('div');
+
+                // Crear un nuevo elemento div para el SVG
+                var svgContainer = document.createElement('div');
+                svgContainer.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="icono_crear" width="50" height="50" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16" style="margin: 10px">
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="6%" style="stop-color:#5244E9 ;stop-opacity:1" />
+                    <stop offset="95%" style="stop-color:#A870FF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#grad)" d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path fill="url(#grad)" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg> `;
+                // Agregar el div del SVG al avatar
+                addAvatar.appendChild(svgContainer);
+
+                // Agregar el avatar al botón
+                addButton.appendChild(addAvatar);
+
+                var addText = document.createElement('div');
+                addText.classList.add('member-name');
+                addText.textContent = 'Invitar Integrante';
+
+                addButton.appendChild(addAvatar);
+                addButton.appendChild(addText);
+
+                // Evento de clic para el botón de añadir
+                addButton.addEventListener('click', function() {
+                    $("#staticBackdrop2").modal('show');
+                });
+
+                membersList.appendChild(addButton);
+        <% } %>
         </script>
+
+        <%- include('invitaciones.ejs') %>
 
 </body>
 
+<script src="/javascripts/invitaciones.js"></script>
+
+</html>

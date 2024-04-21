@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const console = require('console')
 var pool = require('../db/db').pool;
 const mysql = require('mysql2');
 
@@ -26,6 +27,7 @@ router.get('/:id', function(req, res) {
                         const teamData = {
                             name: result[0].nombre,
                             owner: '', // Inicializar el propietario del equipo
+                            owner_id: ownerId,
                             objective: result[0].objetivo,
                             members: [] // Inicializamos la lista de miembros
                         };
@@ -81,5 +83,36 @@ router.get('/:id', function(req, res) {
         }
     });
 });
+
+// Ruta para manejar la búsqueda de desarrolladores en un equipo específico
+router.post('/:id', function(req, res) {
+    const busqueda = req.body.busqueda;
+    const equipoId = req.params.id; // Obtener el equipoId de los parámetros de la URL
+
+    const sql = `
+        SELECT id, nombre, apellido FROM usuarios 
+        WHERE (nombre LIKE ? AND apellido LIKE ?) AND es_empresa = 0 AND id NOT IN (
+            SELECT id_desarrollador FROM pertenece_equipo WHERE id_equipo = ?
+        )
+    `;
+
+    pool.getConnection(function(err, connection) {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Error de conexión a la base de datos" });
+        }
+
+        connection.query(sql, [`%${busqueda.split(" ")[0] || ""}%`, `%${busqueda.split(" ")[1] || ""}%`, equipoId], function(err, resultados) {
+            connection.release();
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "Error al consultar la base de datos", details: err });
+            }
+            res.json(resultados); // Enviar resultados como JSON
+        });
+    });
+});
+
+
 
 module.exports = router;
