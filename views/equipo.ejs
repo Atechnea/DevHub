@@ -87,13 +87,34 @@
                 var memberName = document.createElement('div');
                 memberName.classList.add('member-name');
                 memberName.textContent = '<%= member.name %>';
-    
+
+                var deletemember = document.createElement('button');
+                deletemember.classList.add('deletemember');
+                deletemember.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z"/>
+                    </svg> 
+                `;
+
                 memberCard.appendChild(memberAvatar);
                 memberCard.appendChild(memberName);
+
+                <% if(teamInfo.owner_id == usuario.id) { %>
+                    memberCard.appendChild(deletemember);
+                <% } %>
     
+                deletemember.addEventListener('click', function() {
+                    event.stopPropagation();
+
+                    /*Redirrecion de ejemplo cambiar aqui*/
+                    window.location.href = '/home';
+                })
+
                 // Agregar el evento de clic para redirigir al perfil del miembro
                 memberCard.addEventListener('click', function() {
-                    redirectToProfile('<%= member.id %>');
+                    if (!event.target.closest('.deletemember')) {
+                        redirectToProfile('<%= member.id %>');
+                    }
                 });
     
                 membersList.appendChild(memberCard);

@@ -60,7 +60,7 @@ body {
     flex-wrap: wrap;
 }
 .member-card {
-
+    position: relative;
     width: auto;
     background-color: #30363d;
     padding: 10px;
@@ -71,6 +71,7 @@ body {
     align-items: center;
     cursor: pointer; /* Cambia el cursor al pasar sobre las tarjetas de miembros */
     border: 1px solid rgba(231, 231, 231, 0.2);
+    z-index: 1;
 }
 .member-avatar {
     width: 50px;
@@ -96,9 +97,34 @@ body {
     border: 2px dashed rgba(231, 231, 231, 0.2); /* Borde discontinuo en la parte superior */
 }
 
+.member-card:hover .deletemember {
+    opacity: 1;
+}
+
+.deletemember:hover
+{   
+    background-color:rgba(192, 192, 192,0.1);
+    border-radius: 20px;
+    font-weight:600;
+}
+
+.deletemember
+{   
+    display: flex;
+    padding: 10px;
+    opacity: 0; 
+    transition: opacity 1s;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4; /* Asegura que esté encima del contenido */
+    background-color: transparent;
+    
+}
+
 /* Estilos para dispositivos con ancho máximo de 400px */
 @media screen and (max-width:560px){
-
 
     .contenedor
     {
@@ -108,7 +134,6 @@ body {
         margin-left: initial;
         overflow-y: auto;
     }
-
 
     .team-avatar {
         margin-bottom: 20px;
