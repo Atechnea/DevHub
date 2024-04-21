@@ -24,7 +24,6 @@ $(document).ready(function(){
     $("#reject-button").click(function(event)  {
         event.preventDefault();
         var invitationId = $(this).data('invitation-id');
-        console.log("Aqui")
         // Envío del formulario por AJAX
         $.ajax({
             type: 'post',
@@ -41,3 +40,24 @@ $(document).ready(function(){
         });
 
 });
+
+// Funciones para aceptar y rechazar invitaciones
+function acceptInvitation(invitationId) {
+    fetch('home/acceptInvitation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invitationId: invitationId })
+    })
+}
+
+function rejectInvitation(invitationId) {
+    fetch('home/rejectInvitation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invitationId: invitationId })
+    })
+}

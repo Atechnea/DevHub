@@ -61,30 +61,6 @@
             </div>
         </div>
 
-
-        <script>
-            // Funciones para aceptar y rechazar invitaciones
-            function acceptInvitation(invitationId) {
-                fetch('home/acceptInvitation', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ invitationId: invitationId })
-                })
-            }
-
-            function rejectInvitation(invitationId) {
-                fetch('home/rejectInvitation', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ invitationId: invitationId })
-                })
-            }
-        </script>
-
 </body>
 
 <script src="/javascripts/toastrFunctions.js"></script>
