@@ -91,7 +91,7 @@ router.post('/:id', function(req, res) {
 
     const sql = `
         SELECT id, nombre, apellido FROM usuarios 
-        WHERE (nombre LIKE ? AND apellido LIKE ?) AND es_empresa = 0 AND id NOT IN (
+        WHERE (nombre LIKE ? OR apellido LIKE ?) AND es_empresa = 0 AND id NOT IN (
             SELECT id_desarrollador FROM pertenece_equipo WHERE id_equipo = ?
         )
     `;
@@ -102,7 +102,7 @@ router.post('/:id', function(req, res) {
             return res.status(500).json({ error: "Error de conexión a la base de datos" });
         }
 
-        connection.query(sql, [`%${busqueda.split(" ")[0] || ""}%`, `%${busqueda.split(" ")[1] || ""}%`, equipoId], function(err, resultados) {
+        connection.query(sql, [`%${busqueda.split(" ")[0] || busqueda.split(" ")[1] || ""}%`, `%${busqueda.split(" ")[0] || busqueda.split(" ")[1] || ""}%`, equipoId], function(err, resultados) {
             connection.release();
             if (err) {
                 console.error(err);
