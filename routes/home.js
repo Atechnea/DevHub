@@ -5,7 +5,6 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
   if (res.locals.usuario != null) {
-    
     const idUsuario = res.locals.usuario.id;
     pool.getConnection(function(err, con) {
         if (err) {
