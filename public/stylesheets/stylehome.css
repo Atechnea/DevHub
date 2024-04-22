@@ -78,7 +78,19 @@ header{
 .container-global{
     width: 100%;
     display: flex;
-    height: 100vh;
+    height: 88vh;
+}
+
+.footer
+{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 4vh;
+    background: rgba(24,23,28,255);
+    color: rgba(255,255,255,0.2);
+    display: flex;
+    justify-content: center;
 }
 
 .contenedor-principal
@@ -101,7 +113,7 @@ header{
     color:rgb(200, 200, 200);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 87vh;
     justify-content: center;
     align-items: center;
     margin: auto;
@@ -392,6 +404,12 @@ a:active{
     .lista li a:hover .numero_notificacion {
         left: auto !important; /* Elimina el valor de left */
         bottom: 10px; /* Elimina el valor de bottom */
+    }
+
+    .footer
+    {
+        display: none;
+        height: 0vh;
     }
 }
 
