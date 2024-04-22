@@ -113,6 +113,31 @@ router.post('/:id', function(req, res) {
     });
 });
 
+router.post('/:id/deleteMember', function(req, res) {
+    const equipoId = req.body.equipoId;
+    const usuarioId = req.body.usuarioId;
+    console.log(equipoId);
+    console.log(usuarioId);
+    const sql = `DELETE FROM pertenece_equipo WHERE id_equipo = ? AND id_desarrollador = ?;`;
 
+    pool.getConnection(function(err, connection) {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Error de conexión a la base de datos" });
+        }
+
+       
+
+        connection.query(sql, [`${equipoId}`, `${usuarioId}`], function(err, resultados) {
+            connection.release();
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "Error al consultar la base de datos", details: err });
+            }
+            console.log(resultados)
+            res.json(resultados);
+        });
+    });
+});
 
 module.exports = router;
