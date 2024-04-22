@@ -44,6 +44,7 @@ router.get('/', function(req, res) {
             });
 
             // Renderizar la plantilla con las invitaciones
+            res.json({invitations});
             res.render('home', { invitations: invitations });
         });
     });
