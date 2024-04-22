@@ -39,6 +39,14 @@
     color: #ffffff;
 }
 
+.form-outline
+{
+    background: rgba(31,30,35,255);
+    width: 100%;
+    color: #ffffff;
+}
+
+
 .form-control::placeholder
 {
     color: #ffffff;
