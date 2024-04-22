@@ -7,7 +7,7 @@ $(document).ready(function(){
         // Envío del formulario por AJAX
         $.ajax({
             type: 'post',
-            url: '/home/rejectInvitation',
+            url: '/home/acceptInvitation',
             data: { invitationId: invitationId },
             success: function(result) {
                 // Si la solicitud es exitosa, mostrar un mensaje de éxito
@@ -51,29 +51,7 @@ $(document).ready(function(){
             // Este código se ejecutará después de 1 segundo
             location.reload(true);
           }, 2000); // 1000 milisegundos = 1 segundo
-        
 });
-
-// Funciones para aceptar y rechazar invitaciones
-function acceptInvitation(invitationId) {
-    fetch('home/acceptInvitation', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ invitationId: invitationId })
-    })
-}
-
-function rejectInvitation(invitationId) {
-    fetch('home/rejectInvitation', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ invitationId: invitationId })
-    })
-}
 
 
 function tiempo_recarga()
