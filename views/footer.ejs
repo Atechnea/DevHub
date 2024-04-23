@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 <body>
 
-    <div class="footer">
+    <div id="click-text" class="footer">
         Developed by Atechnea ©
     </div>
 
 </body>
 
 </html>
+
+<script>
+    // Select the text and confetti container
+    const clickText = document.getElementById('click-text');
+    const confettiContainer = document.getElementById('confetti-container');
+
+    // Function to trigger confetti
+    function triggerConfetti() {
+        // Create a new instance of ConfettiGenerator
+        const jsConfetti = new JSConfetti({confettiContainer});
+        jsConfetti.addConfetti({
+            emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
+        })
+
+        // Configure confetti settings
+        jsConfetti.render();
+
+        // Clean up after a delay
+        setTimeout(() => {
+            confetti.clear();
+        }, 5000); // Adjust the delay as needed
+    }
+
+    // Add click event listener to the text
+    if (confettiContainer) {
+        clickText.addEventListener('click', triggerConfetti);
+    }
+</script>

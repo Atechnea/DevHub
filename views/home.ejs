@@ -17,7 +17,7 @@
     <link rel="icon" type="image/x-png" href="/resources/devhub.png">
     <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
     <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
-    
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti"></script>
     <title>DevHub - Home</title>
 </head>
 <body>
@@ -25,7 +25,7 @@
     <!--Añadimos header-->
     <%- include('header.ejs') %>
 
-        <div class="container-global shadow-lg">
+        <div id="confetti-container" class="container-global shadow-lg">
             
             <!--Añadimos navbar-->
             <%- include('navbar.ejs') %>
