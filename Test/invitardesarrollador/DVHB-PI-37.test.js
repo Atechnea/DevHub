@@ -18,7 +18,7 @@ jest.mock('../../db/db.js', () => ({
               callback(null, { affectedRows: 1 });
             }
             else if(sql.includes('SELECT * FROM invitaciones WHERE id_empresa = ? AND id_equipo = ? AND id_desarrollador = ? AND contestada = 0')){
-              callback(null, [{ id_empresa: 2, id_equipo: 2, id_desarrollador: 23, contestada: 0}]);
+              callback(null,[]);
             }
             else{
               callback(null, { });
