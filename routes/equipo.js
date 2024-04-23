@@ -125,9 +125,6 @@ router.post('/:id/deleteMember', function(req, res) {
             console.error(err);
             return res.status(500).json({ error: "Error de conexión a la base de datos" });
         }
-
-       
-
         connection.query(sql, [`${equipoId}`, `${usuarioId}`], function(err, resultados) {
             connection.release();
             if (err) {
