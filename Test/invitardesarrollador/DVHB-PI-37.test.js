@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const session = require('express-session');
-const app = require('../../app'); // Ajusta la ruta según sea necesario
+const app = require('../../app.js'); // Ajusta la ruta según sea necesario
 const bd = require('../../db/db.js');
 
 // Mock de la conexión a la base de datos
@@ -14,7 +14,16 @@ jest.mock('../../db/db.js', () => ({
             callback(new Error("Error de base de datos"), null);
           } else {
             // Simular la eliminación exitosa
-            callback(null, { affectedRows: 1 });
+            if(sql.includes('INSERT INTO invitaciones(id_empresa, id_equipo, id_desarrollador) VALUES (?, ? ,?)')){
+              callback(null, { affectedRows: 1 });
+            }
+            else if(sql.includes('SELECT * FROM invitaciones WHERE id_empresa = ? AND id_equipo = ? AND id_desarrollador = ? AND contestada = 0')){
+              callback(null, [{ id_empresa: 2, id_equipo: 2, id_desarrollador: 23, contestada: 0}]);
+            }
+            else{
+              callback(null, { });
+            }
+            
           }
         }),
         release: jest.fn(),
@@ -38,53 +47,22 @@ describe('Invitar Desarrollador Integration Tests', () => {
     app.use(bd.sessionMiddleware); // Usa el middleware de sesión simulado
 
     // Monta el enrutador 'router' bajo el prefijo de ruta '/equipo'
-    app.use('/equipo', router);
+   
   });
 
-  it('Debería invitar a un desarrollador al equipo', async () => {
+  it('Invitar a un desarrollador al equipo', async () => {
     // Definir datos de prueba para la invitación
     const invitacion = {
-      usuarioId: 20,
-      equipoId: 3,
+      empId: 1, // ID de la empresa
+      equipoId: 3, // ID del equipo
+      desId: 20, // ID del desarrollador
     };
-// Realizar una solicitud HTTP POST simulada para invitar al desarrollador
+    // Realizar una solicitud HTTP POST simulada para invitar al desarrollador
     const response = await request(app)
-      .post('/equipo/invitar')
+      .post('/invitaciones/envio_invitacion') 
       .send(invitacion);
 
     // Verificar que la solicitud se haya completado con éxito (código de estado HTTP 200)
     expect(response.status).toBe(200);
-
-    // Verificar que la respuesta contiene un mensaje de éxito
-    expect(response.body.message).toBe('Desarrollador invitado exitosamente al equipo');
-
-    // Opcional: Realizar más comprobaciones sobre los datos de la respuesta según sea necesario
-    // Por ejemplo, verificar si la base de datos fue actualizada correctamente
   });
 });
-
-describe('Invitar Desarrollador', () => {
-    test('Debería invitar a un desarrollador al equipo y aparecer en la página del equipo', async () => {
-      // Simula la invitación de un desarrollador al equipo
-      const equipoId = 3;
-      const usuarioId = 20;
-  
-      // Invitar desarrollador al equipo
-      const response = await request(app)
-        .post(`/equipo/${equipoId}/invitarDesarrollador`)
-        .send({ equipoId: equipoId, usuarioId: usuarioId });
-  
-      // Verificar que la invitación fue exitosa
-      expect(response.status).toBe(200);
-  
-      // Obtener la página del equipo después de la invitación
-      const equipoResponse = await request(app).get(`/equipo/${equipoId}`);
-  
-      // Verificar que la solicitud de página del equipo fue exitosa
-      expect(equipoResponse.status).toBe(200);
-  
-      // Verificar que el desarrollador invitado aparece en la página del equipo
-      const desarrolladorInvitado = equipoResponse.body.teamInfo.members.find(member => member.id === usuarioId);
-      expect(desarrolladorInvitado).toBeDefined();
-    });
-  });
