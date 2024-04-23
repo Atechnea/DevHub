@@ -96,6 +96,10 @@ body {
     border: 2px dashed rgba(231, 231, 231, 0.2); /* Borde discontinuo en la parte superior */
 }
 
+.nuevo-integrante {
+    border: 2px dashed rgba(231, 231, 231, 0.2); /* Borde discontinuo en la parte superior */
+}
+
 /* Estilos para dispositivos con ancho máximo de 400px */
 @media screen and (max-width:560px){
 

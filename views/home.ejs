@@ -16,6 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/x-png" href="/resources/devhub.png">
     <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
+    <link rel="stylesheet" href="/stylesheets/invitaciones.css"> <!-- Agregar esta línea -->
     
     <title>DevHub - Home</title>
 </head>
@@ -45,8 +46,8 @@
                                         <p>Has sido invitado por <a href="/perfil/<%= invitation.idSender %>"><%= invitation.senderName %></a> para unirte al equipo <a href="/equipo/<%= invitation.idTeam %>"><%= invitation.teamName %></a>.</p>
                                     </div>
                                     <div class="invitation-buttons">
-                                        <button class="reject-button" onclick="rejectInvitation('<%= invitation.invitationId %>')"><i class="fas fa-times"></i></button>
-                                        <button class="accept-button" onclick="acceptInvitation('<%= invitation.invitationId %>')"><i class="fas fa-check"></i></button>
+                                        <button id="reject-button" class="reject-button" data-invitation-id="<%= invitation.invitationId %>"><i class="fas fa-times"></i></button>
+                                        <button id="accept-button" class="accept-button" data-invitation-id="<%= invitation.invitationId %>"><i class="fas fa-check"></i></button>
                                     </div>
                                 </div>
                             <% }) %>
@@ -78,5 +79,7 @@
 
 </body>
 
+<script src="/javascripts/toastrFunctions.js"></script>
+<script src="/javascripts/home.js"></script>
 
 </html>

@@ -16,7 +16,7 @@ describe('POST /registrar - Validación de correo electrónico', () => {
         usuario: 'usuarioPrueba', //usuario no valido (solo letras,numero,_)
         nombre: '++++++++++++',
         apellido: 'Apellido',
-        email: 'luisre@ucm.es', 
+        email: 'luisre@ucm.es',
         contrasena: 'Contrasea1',
         empresa: false
       });
