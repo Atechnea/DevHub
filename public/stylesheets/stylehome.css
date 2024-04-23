@@ -99,23 +99,10 @@ header{
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 90%;
+    width: 100%;
     height: auto;
     z-index: 0;
-    height: 90%;
-    overflow-y: auto;
-}
-
-.contenedor-principal
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 90%;
-    height: auto;
-    z-index: 0;
-    height: 90%;
+    height: 100%;
     overflow-y: auto;
 }
 
@@ -312,6 +299,12 @@ a:active{
         width: 30%;
     }
 
+    .lista
+    {
+        left: 10px !important;
+    }
+
+
 }
 
 /*Vista movil*/
@@ -390,11 +383,6 @@ a:active{
     {
         display: flex;
         justify-content: center;
-    }
-
-    .contenedor-principal
-    {
-        width: 100%;
     }
 
     .lista li a:hover {
@@ -486,3 +474,18 @@ a:active{
         bottom: 10px;
     }
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background:  rgba(31,30,35,255);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:  linear-gradient(225deg, #5244E9 6%, #A870FF 95%)
+  }
