@@ -91,6 +91,8 @@ header{
     color: rgba(255,255,255,0.2);
     display: flex;
     justify-content: center;
+    align-items: center;
+    font-family: "Chivo Mono", monospace;
 }
 
 .contenedor-principal
