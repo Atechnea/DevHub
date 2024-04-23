@@ -1,21 +1,30 @@
-document.getElementById('deletemember').addEventListener('click', function() {
-    // Realizar la solicitud AJAX al servidor
+var deleteButtons = document.getElementsByClassName('deletemember');
 
-    var usuarioId = this.getAttribute('data-usuario-id');
-    var equipoId = ObtenerElIdDelEquipo();
+// Iterar sobre cada botón de eliminación
+Array.from(deleteButtons).forEach(function(button) {
+    // Agregar un event listener para el clic en cada botón
+    button.addEventListener('click', function(event) {
+        // Obtener el ID del usuario asociado al botón
+        var usuarioId = button.getAttribute('id');
+        // Obtener el ID del equipo
+        var equipoId = ObtenerElIdDelEquipo();
 
-    $.ajax({
-        type: 'POST',
-        url: '/equipo/' + equipoId + '/deleteMember',
-        data: { equipoId: equipoId, usuarioId: usuarioId},
-        success: function(data) {
-            showToastr('success', 'Usuario eliminado correctamente', '');
-            tiempo_recarga()
-        },
-        error: function(xhr, status, error) {
-             showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
-             tiempo_recarga()
-        }
+        console.log(usuarioId);
+
+        // Realizar la solicitud AJAX al servidor
+        $.ajax({
+            type: 'POST',
+            url: '/equipo/' + equipoId + '/deleteMember',
+            data: { equipoId: equipoId, usuarioId: usuarioId},
+            success: function(data) {
+                showToastr('success', 'Usuario eliminado correctamente', '');
+                tiempo_recarga()
+            },
+            error: function(xhr, status, error) {
+                showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
+                tiempo_recarga()
+            }
+        });
     });
 });
 

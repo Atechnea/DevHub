@@ -1,6 +1,6 @@
 $(document).ready(function(){
     // Manejo del clic en el botón de aceptar
-    $("#accept-button").click(function(event)  {
+    $(".accept-button").click(function(event)  {
         event.preventDefault();
         var invitationId = $(this).data('invitation-id');
         
@@ -25,7 +25,7 @@ $(document).ready(function(){
 
 });
      
-    $("#reject-button").click(function(event)  {
+    $(".reject-button").click(function(event)  {
         event.preventDefault();
         var invitationId = $(this).data('invitation-id');
         // Envío del formulario por AJAX
