@@ -21,16 +21,9 @@
         // Create a new instance of ConfettiGenerator
         const jsConfetti = new JSConfetti({confettiContainer});
         jsConfetti.addConfetti({
-            emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
+            emojis: ['💻', '⚡️', '💥', '✨', '👩‍💻', '🤓', '👽', '🤑', '🚀', '👾'],
+            confettiNumber: 100,
         })
-
-        // Configure confetti settings
-        jsConfetti.render();
-
-        // Clean up after a delay
-        setTimeout(() => {
-            confetti.clear();
-        }, 5000); // Adjust the delay as needed
     }
 
     // Add click event listener to the text
