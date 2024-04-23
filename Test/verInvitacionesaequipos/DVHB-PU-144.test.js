@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const session = require('express-session');
-const router = require('../../routes/home');  // Ajustar la ruta según sea necesario
+const router = require('../../routes/home').router;  // Ajustar la ruta según sea necesario
 
 jest.mock('../../db/db.js', () => ({
     pool: {
@@ -48,7 +48,7 @@ describe('GET /', () => {
     });
 
     test('debe mostrar invitaciones cuando hay invitaciones pendientes', async () => {
-        const response = await request(app).get('/');
+        const response = await request(app).get('/').send({ modo: 'npx' });;
         expect(response.status).toBe(200);
         expect(response.body).toEqual({
             invitations: expect.arrayContaining([

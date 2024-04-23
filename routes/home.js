@@ -44,9 +44,17 @@ router.get('/', function(req, res) {
             });
 
             // Renderizar la plantilla con las invitaciones
-            //res.json({invitations});
-            res.render('home', { invitations: invitations });
+
+            
+            if(req.body.modo == "npx")
+                res.send({invitations});
+            else
+                res.render('home');
+                
+            
+            
         });
+        
     });
 } else {
     res.redirect('login');
