@@ -1,52 +1,284 @@
-// Importa las funciones y objetos necesarios para las pruebas
-const request = require('supertest');
-const app = require('../../routes/home.js'); // Reemplaza '../tu_app' con la ruta correcta a tu aplicación Express
-const pool = require('../../db/db.js'); // Reemplaza '../tu_pool' con la ruta correcta a tu pool de conexiones
+const {acceptInvitation, getInvitationInfo, checkTeam, checkDeveloperInTeam, insertDeveloper} = require('../../routes/home.js');
 
-// Mockear la conexión a la base de datos
-jest.mock('../../db/db.js', () => ({
-  getConnection: jest.fn(),
-}));
+describe('Función acceptInvitation', () => {
+  
+  it('Debería resolver la promesa si la invitación se actualiza correctamente', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores y actualizó una fila
+        callback(null, { affectedRows: 1 }); 
+      }),
+      release: jest.fn() 
+    };
 
-// Mockear los métodos de respuesta de Express
-const mockRes = () => {
-  const res = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.send = jest.fn().mockReturnValue(res);
-  return res;
-};
+    const invid = 123; // ID de la invitación
 
-describe('POST /acceptInvitation', () => {
-  it('debería devolver un error interno del servidor si falla la obtención de conexión', async () => {
-    // Configurar el mock para que la función de conexión devuelva un error
-    pool.getConnection.mockImplementationOnce((callback) => {
-      callback(new Error('Mocked connection error'));
-    });
-
-    const res = mockRes();
-    await request(app).post('/acceptInvitation').expect(500);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.send).toHaveBeenCalledWith('Error interno del servidor');
-  });
-
-  it('debería devolver un error interno del servidor si falla la actualización de la invitación', async () => {
-    // Configurar el mock para que la función de conexión devuelva una conexión simulada
-    pool.getConnection.mockImplementationOnce((callback) => {
-      callback(null, {
-        query: jest.fn().mockImplementationOnce((query, params, callback) => {
-          callback(new Error('Mocked query error'));
-        }),
-        release: jest.fn(),
+    return acceptInvitation(invid, conMock)
+      .then(() => {
+        // Verificar que la promesa se resuelve correctamente
+        expect(conMock.query).toHaveBeenCalledWith(expect.any(String), [invid], expect.any(Function));
+      })
+      .catch(error => {
+        // Si la promesa se rechaza, forzar que el test falle
+        expect(error).toBeNull();
       });
-    });
-
-    const res = mockRes();
-    await request(app).post('/acceptInvitation').expect(500);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.send).toHaveBeenCalledWith('Error interno del servidor');
   });
 
-  // Puedes seguir añadiendo más casos de prueba para cubrir otros escenarios de error y el caso de éxito
+  it('Debería rechazar la promesa con un mensaje de error 500 si ocurre un error interno del servidor', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular un error interno del servidor
+        callback(new Error('Error interno del servidor'), null); 
+      }),
+      release: jest.fn() 
+    };
+
+    const invid = 123; // ID de la invitación
+
+    return acceptInvitation(invid, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 500, msg: 'Error interno del servidor'});
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 404 si la invitación no existe', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores pero no actualizó ninguna fila
+        callback(null, { affectedRows: 0 }); 
+      }),
+      release: jest.fn() 
+    };
+
+    const invid = 123; // ID de la invitación
+
+    return acceptInvitation(invid, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 404, msg: 'La invitación no existe'});
+      });
+  });
 });
+
+describe('Función getInvitationInfo', () => {
+  
+  it('Debería resolver la promesa y devolver la información de la invitación si la consulta se ejecuta correctamente', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores y devolvió información de la invitación
+        callback(null, [{ id_equipo: 1, id_desarrollador: 2 }]); 
+      }),
+      release: jest.fn() 
+    };
+
+    const invid = 123; // ID de la invitación
+
+    return getInvitationInfo(invid, conMock)
+      .then(info => {
+        // Verificar que la promesa se resuelve correctamente y devuelve la información esperada
+        expect(info).toEqual({ idEquipo: 1, idDesarrollador: 2 });
+        expect(conMock.query).toHaveBeenCalledWith(expect.any(String), [invid], expect.any(Function));
+      })
+      .catch(error => {
+        // Si la promesa se rechaza, forzar que el test falle
+        expect(error).toBeNull();
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 500 si ocurre un error interno del servidor', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular un error interno del servidor
+        callback(new Error('Error interno del servidor'), null); 
+      }),
+      release: jest.fn() 
+    };
+
+    const invid = 123; // ID de la invitación
+
+    return getInvitationInfo(invid, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 500, msg: 'Error interno del servidor'});
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 404 si la invitación no existe', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores pero no devolvió ninguna información
+        callback(null, []); 
+      }),
+      release: jest.fn() 
+    };
+
+    const invid = 123; // ID de la invitación
+
+    return getInvitationInfo(invid, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 404, msg: 'La invitación no existe'});
+      });
+  });
+});
+
+
+describe('Función checkTeam', () => {
+  
+  it('Debería resolver la promesa si el equipo existe', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores y el equipo existe
+        callback(null, [{ count: 1 }]); 
+      }),
+      release: jest.fn() 
+    };
+
+    const idEquipo = 123; // ID del equipo existente
+
+    return checkTeam(idEquipo, conMock)
+      .then(() => {
+        // Verificar que la promesa se resuelve correctamente
+        expect(conMock.query).toHaveBeenCalledWith(expect.any(String), [idEquipo], expect.any(Function));
+      })
+      .catch(error => {
+        // Si la promesa se rechaza, forzar que el test falle
+        expect(error).toBeNull();
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 500 si ocurre un error interno del servidor', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular un error interno del servidor
+        callback(new Error('Error interno del servidor'), null); 
+      }),
+      release: jest.fn() 
+    };
+
+    const idEquipo = 123; // ID del equipo
+
+    return checkTeam(idEquipo, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 500, msg: 'Error interno del servidor'});
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 401 si el equipo no existe', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores pero el equipo no existe
+        callback(null, [{ count: 0 }]); 
+      }),
+      release: jest.fn() 
+    };
+
+    const idEquipo = 123; // ID del equipo
+
+    return checkTeam(idEquipo, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 401, msg: 'El equipo al que se hace referencia no existe'});
+      });
+  });
+});
+
+describe('Función checkDeveloperInTeam', () => {
+  
+  it('Debería resolver la promesa si el desarrollador no pertenece al equipo', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores y el desarrollador no pertenece al equipo
+        callback(null, [{ count: 0 }]); 
+      }),
+      release: jest.fn() 
+    };
+
+    const idEquipo = 123; // ID del equipo
+    const idDesarrollador = 456; // ID del desarrollador
+
+    return checkDeveloperInTeam(idEquipo, idDesarrollador, conMock)
+      .then(() => {
+        // Verificar que la promesa se resuelve correctamente
+        expect(conMock.query).toHaveBeenCalledWith(expect.any(String), [idEquipo, idDesarrollador], expect.any(Function));
+      })
+      .catch(error => {
+        // Si la promesa se rechaza, forzar que el test falle
+        expect(error).toBeNull();
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 500 si ocurre un error interno del servidor', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular un error interno del servidor
+        callback(new Error('Error interno del servidor'), null); 
+      }),
+      release: jest.fn() 
+    };
+
+    const idEquipo = 123; // ID del equipo
+    const idDesarrollador = 456; // ID del desarrollador
+
+    return checkDeveloperInTeam(idEquipo, idDesarrollador, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 500, msg: 'Error interno del servidor'});
+      });
+  });
+
+  it('Debería rechazar la promesa con un mensaje de error 200 si el desarrollador ya pertenece al equipo', () => {
+    const conMock = {
+      query: jest.fn((querySql, params, callback) => {
+        // Simular que la consulta se ejecutó sin errores pero el desarrollador ya pertenece al equipo
+        callback(null, [{ count: 1 }]); 
+      }),
+      release: jest.fn() 
+    };
+
+    const idEquipo = 123; // ID del equipo
+    const idDesarrollador = 456; // ID del desarrollador
+
+    return checkDeveloperInTeam(idEquipo, idDesarrollador, conMock)
+      .then(() => {
+        // Si la promesa se resuelve, forzar que el test falle
+        expect(true).toBe(false); // No debería llegar aquí
+      })
+      .catch(error => {
+        // Verificar que la promesa se rechaza con el error esperado
+        expect(error).toEqual({status: 200, msg: 'El desarrollador ya pertenece al equipo'});
+      });
+  });
+});
+
+

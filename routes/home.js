@@ -253,8 +253,28 @@ router.post('/acceptInvitation', function(req, res) {
     });
 });
 
+function rejectInvitation(invid, con) {
+    var promesa = new Promise(function(resolve, reject) {
+        const updateInvitationQuery = `
+          UPDATE invitaciones 
+          SET contestada = 1 
+          WHERE id = ?;
+      `;
 
+      con.query(updateInvitationQuery, [invid], function(err, updateResult) {
+          con.release();
+          if (err) {
+            reject({status: 500, msg: 'Error interno del servidor'});
+          }
 
+          if (updateResult.affectedRows === 0) {
+            reject({status: 404, msg: 'La invitación no existe'});
+          }
+          resolve({status: 200, msg: 'Invitación rechazada exitosamente.'});
+      });
+    })
+    return promesa;
+}
 
 router.post('/rejectInvitation', function(req, res) {
   const invitationId = req.body.invitationId;
@@ -264,28 +284,13 @@ router.post('/rejectInvitation', function(req, res) {
           console.error('Error al obtener una conexión de la pool:', err);
           return res.status(500).send('Error interno del servidor');
       }
-
-      const updateInvitationQuery = `
-          UPDATE invitaciones 
-          SET contestada = 1 
-          WHERE id = ?;
-      `;
-
-      con.query(updateInvitationQuery, [invitationId], function(err, updateResult) {
-          con.release();
-          if (err) {
-              console.error('Error al marcar la invitación como contestada:', err);
-              return res.status(500).send('Error interno del servidor');
-          }
-
-          if (updateResult.affectedRows === 0) {
-              return res.status(404).send('La invitación no existe');
-          }
-
-          return res.status(200).send('Invitación rechazada exitosamente.');
-      });
+      rejectInvitation(invitationId, con).then((result) => {
+        return res.status(result.status).send(result.msg);
+      }).catch((err) => {
+        return res.status(err.status).send(err.msg);
+      })
   });
 });
 
 
-module.exports = router;
+module.exports = {router, acceptInvitation, getInvitationInfo, checkTeam, checkDeveloperInTeam, insertDeveloper, rejectInvitation};
