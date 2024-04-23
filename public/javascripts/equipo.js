@@ -9,14 +9,11 @@ document.getElementById('deletemember').addEventListener('click', function() {
         url: '/equipo/' + equipoId + '/deleteMember',
         data: { equipoId: equipoId, usuarioId: usuarioId},
         success: function(data) {
-            
-            //Toast Aqui
-
+            showToastr('success', 'Usuario eliminado correctamente', '');
             tiempo_recarga()
         },
         error: function(xhr, status, error) {
-             //Toast Aqui
-
+             showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
              tiempo_recarga()
         }
     });
