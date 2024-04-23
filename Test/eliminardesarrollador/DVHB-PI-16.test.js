@@ -55,7 +55,8 @@ describe('Eliminar Desarrollador Integration Tests', () => {
       expect(response.status).toBe(200);
 
       // Obtener la página del equipo después de la eliminación
-      const equipoResponse = await request(app).get(`/equipo/${equipoId}`);
+      const equipoResponse = await request(app)
+        .get(`/equipo/${equipoId}`);
 
       // Verificar que la solicitud de página del equipo fue exitosa
       expect(equipoResponse.status).toBe(200);
