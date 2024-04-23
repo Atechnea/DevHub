@@ -49,10 +49,8 @@ router.get('/', function(req, res) {
             if(req.body.modo == "npx")
                 res.send({invitations});
             else
-                res.render('home');
+                res.render('home', {invitations});
                 
-            
-            
         });
         
     });

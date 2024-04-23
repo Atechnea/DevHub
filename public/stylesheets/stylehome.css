@@ -414,9 +414,14 @@ a:active{
         bottom: 10px !important;
     }
 
+    .lista:hover .numero_notificacion
+    {
+        animation: none !important;
+    }
+
     .lista li a:hover .numero_notificacion {
         left: auto !important; /* Elimina el valor de left */
-        bottom: 10px; /* Elimina el valor de bottom */
+        bottom: 100px; /* Elimina el valor de bottom */
     }
 
     .footer
