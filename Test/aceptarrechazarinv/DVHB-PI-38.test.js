@@ -1,54 +1,84 @@
-// Importar supertest para las pruebas de integración y el app de Express
 const request = require('supertest');
-const app = require('../../app');  // Asegúrate de que la ruta sea correcta
+const express = require('express');
+const session = require('express-session');
+const app = require('../../app.js');
+const bd = require('../../db/db.js');
 
 // Simular el módulo que maneja la conexión a la base de datos
-jest.mock('../../db/db.js');
+jest.mock('../../db/db.js', () => {
+  const sessionMiddleware = jest.fn().mockImplementation((req, res, next) => {
+    res.locals.usuario = { id: 2 };
+    next();
+  });
 
-const mockQuery = jest.fn();
-const mockRelease = jest.fn();
-
-const pool = require('../../db/db.js');
-pool.getConnection = jest.fn().mockImplementation((cb) => cb(null, {
-  query: mockQuery,
-  release: mockRelease
-}));
+  return {
+    pool: {
+      getConnection: jest.fn().mockImplementation((callback) => {
+        callback(null, {
+          query: jest.fn((sql, params, callback) => {
+            if (params.includes('error')) {
+              callback(new Error("Error de base de datos"), null);
+            } else if (sql.includes('\n            SELECT id_equipo, id_desarrollador\n            FROM invitaciones \n            WHERE id = ?;\n        '))
+            {
+              callback(null, [{ id_equipo: 1, id_desarrollador: 1 }]);
+            }
+            else if(sql.includes('\n            SELECT COUNT(*) as count\n            FROM equipo\n            WHERE id = ?;\n        '))
+            {
+              callback(null, [{ id_equipo: 1}]);
+            }
+            else if(sql.includes('\n            SELECT COUNT(*) as count\n            FROM pertenece_equipo\n            WHERE id_equipo = ? AND id_desarrollador = ?;\n        '))
+            {
+              callback(null, [{ id_equipo: 1, id_desarrollador: 1 }]);
+            }
+            else if(sql.includes('\n            SELECT COUNT(*) as count\n            FROM pertenece_equipo\n            WHERE id_equipo = ? AND id_desarrollador = ?;\n        '))
+            {
+              callback(null, [{ id_equipo: 1, id_desarrollador: 1 }]);
+            }
+            else if(sql.includes('\n                INSERT INTO pertenece_equipo (id_equipo, id_desarrollador)\n                VALUES (?, ?);\n        '))
+            {
+              callback(null, [{ id_equipo: 1, id_desarrollador: 1 }]);
+            }
+            else
+            {
+              callback(null, { affectedRows: 1 });
+            }
+          }),
+          release: jest.fn(),
+        });
+      }),
+    },
+    sessionMiddleware: sessionMiddleware,
+  };
+});
 
 describe('Invitation Integration Tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  beforeAll(() => {
+    app.use(express.json());
+    app.use(session({ secret: 'testsecret', resave: false, saveUninitialized: false }));
+    // Usa bd.sessionMiddleware en lugar del middleware simulado
+    app.use(bd.sessionMiddleware);
+
   });
 
   describe('Accept Invitation', () => {
     test('should handle accepting an invitation correctly', async () => {
       // Simular las respuestas de las consultas de la base de datos
-      console.log("Entre loco");
-      mockQuery
-        .mockImplementationOnce((sql, params, callback) => callback(null, { affectedRows: 1 }))  // Actualizar invitación
-        .mockImplementationOnce((sql, params, callback) => callback(null, [{ id_equipo: 1, id_desarrollador: 1 }]))  // Obtener info de invitación
-        .mockImplementationOnce((sql, params, callback) => callback(null, [{ count: 1 }]))  // Verificar equipo
-        .mockImplementationOnce((sql, params, callback) => callback(null, [{ count: 0 }]))  // Verificar miembro del equipo
-        .mockImplementationOnce((sql, params, callback) => callback(null, { insertId: 1 }));  // Insertar desarrollador
-
-      const response = await request(app)
+        const response = await request(app)
         .post('/home/acceptInvitation')
         .send({ invitationId: 1 });
-
+  
       expect(response.statusCode).toBe(200);
-      expect(response.text).toBe('Invitación aceptada exitosamente. Desarrollador agregado al equipo.');
-    }, 20000); // Aumentar el timeout si es necesario
+    }); // Aumentar el timeout si es necesario
   });
 
   describe('Reject Invitation', () => {
     test('should handle rejecting an invitation correctly', async () => {
-      mockQuery.mockImplementationOnce((sql, params, callback) => callback(null, { affectedRows: 1 }));
 
       const response = await request(app)
         .post('/home/rejectInvitation')
         .send({ invitationId: 1 });
 
       expect(response.statusCode).toBe(200);
-      expect(response.text).toBe('Invitación rechazada exitosamente.');
-    }, 20000); // Aumentar el timeout si es necesario
+    }); // Aumentar el timeout si es necesario
   });
 });

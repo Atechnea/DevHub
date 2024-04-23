@@ -129,7 +129,7 @@ function getInvitationInfo(invid, con) {
         const getInvitationInfoQuery = `
             SELECT id_equipo, id_desarrollador
             FROM invitaciones 
-             WHERE id = ?;
+            WHERE id = ?;
         `;
         con.query(getInvitationInfoQuery, [invid], function(err, invitationInfo) {
             if (err) {
