@@ -224,6 +224,7 @@ function insertDeveloper(idEquipo, idDesarrollador, con) {
 }
 
 router.post('/acceptInvitation', function(req, res) {
+    console.log("Entre loco al router de accept invitacion");
     const invitationId = req.body.invitationId;
     pool.getConnection(function(error, con) {
         if (error) {
