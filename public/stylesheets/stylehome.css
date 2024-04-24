@@ -171,7 +171,6 @@ header{
 }
 
 
-
 .lista li a:hover
 {
     padding: 10px;
@@ -260,6 +259,11 @@ a:active{
 
 }
 
+.explore
+{
+    display: none;
+}
+
 /*Tamaño PC*/
 @media screen and (min-width:768px) 
 {
@@ -311,6 +315,12 @@ a:active{
 
 /*Vista movil*/
 @media screen and (max-width:560px) {
+
+    .explore
+    {
+        display: block;
+    }
+
 
     .container-global
     {
