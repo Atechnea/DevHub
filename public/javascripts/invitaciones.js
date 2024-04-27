@@ -55,7 +55,8 @@ $(document).ready(function() {
                                 success: function(data) {
                                     //mostrar toast enviado
                                     showToastr('success', 'Se ha enviado la invitación con éxito', '');
-
+                                    $("#staticBackdrop2").modal('hide');
+                                    $(".modal-backdrop").hide();
                                 },
                                 error: function(xhr, status, error) {
                                     //mostrar toast error

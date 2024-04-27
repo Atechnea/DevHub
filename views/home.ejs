@@ -56,7 +56,13 @@
 
                 <div class="bienvenida">
                     <h2>Bienvenido/a a DevHub</h2>
-                    <p>(versión desarrollador)</p>
+
+
+                    <% if(usuario.es_empresa == 0) { %>
+                        <p>(versión desarrollador)</p>
+                    <% } else { %>
+                        <p>(versión empresa)</p>
+                    <% }%>
                 </div>
          
             </div>
