@@ -48,8 +48,12 @@ router.post('/registrar', function(req, res) {
                         con.release();
                         if(err)
                             res.status(422).json({ error: exists_error });
-                        else
+                        else {
+                            req.session.usuario={ usuario, nombre, apellido, email, empresa };
+                            req.session.auth = true;
                             res.send("");
+                        }
+
                     })
                 } catch(error) {
                     res.send("Error al cifrar");

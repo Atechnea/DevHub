@@ -11,6 +11,7 @@ $(document).ready(function(){
         data: formData,
         success: function(result) {
             showToastr('success', 'Su cuenta ha sido creada con éxito', '');
+            window.location.href = "/home";
         },
         error: function(xhr, status, error) {
             showToastr('error', 'Ha ocurrido un error', xhr.responseJSON.error);
